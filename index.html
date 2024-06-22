@@ -1,119 +1,177 @@
 <html>
-
-<head>
+  <head>
     <meta name="description" content="about Uzair Khan Ghori." />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@ukg___" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
     <script>
-        !function (t, e) {var o, n, p, r; e.__SV || (window.posthog = e, e._i = [], e.init = function (i, s, a) {function g(t, e) {var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () {t.push([e].concat(Array.prototype.slice.call(arguments, 0)))}} (p = t.createElement("script")).type = "text/javascript", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) {var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e}, u.people.toString = function () {return u.toString(1) + ".people (stub)"}, o = "capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a])}, e.__SV = 1)}(document, window.posthog || []);
-        posthog.init('phc_zVB02YVDbc38nloJ2brJrWd1qoTbizZLbbj8Gqs13wI', {
-            api_host: 'https://us.i.posthog.com', person_profiles: 'identified_only' // or 'always' to create profiles for anonymous users as well
-        })
+      !(function (t, e) {
+        var o, n, p, r;
+        e.__SV ||
+          ((window.posthog = e),
+          (e._i = []),
+          (e.init = function (i, s, a) {
+            function g(t, e) {
+              var o = e.split(".");
+              2 == o.length && ((t = t[o[0]]), (e = o[1])),
+                (t[e] = function () {
+                  t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+                });
+            }
+            ((p = t.createElement("script")).type = "text/javascript"),
+              (p.async = !0),
+              (p.src =
+                s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") +
+                "/static/array.js"),
+              (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(
+                p,
+                r
+              );
+            var u = e;
+            for (
+              void 0 !== a ? (u = e[a] = []) : (a = "posthog"),
+                u.people = u.people || [],
+                u.toString = function (t) {
+                  var e = "posthog";
+                  return (
+                    "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e
+                  );
+                },
+                u.people.toString = function () {
+                  return u.toString(1) + ".people (stub)";
+                },
+                o =
+                  "capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(
+                    " "
+                  ),
+                n = 0;
+              n < o.length;
+              n++
+            )
+              g(u, o[n]);
+            e._i.push([i, s, a]);
+          }),
+          (e.__SV = 1));
+      })(document, window.posthog || []);
+      posthog.init("phc_zVB02YVDbc38nloJ2brJrWd1qoTbizZLbbj8Gqs13wI", {
+        api_host: "https://us.i.posthog.com",
+        person_profiles: "identified_only", // or 'always' to create profiles for anonymous users as well
+      });
     </script>
     <link rel="canonical" href="http://ukg.bio" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            background-color: #2e3440;
-            color: #d8dee9;
-            font-family: Verdana, sans-serif;
-            line-height: 1.4;
-            font-size: 16px;
-            padding: 0 10px;
-            margin: 50px auto;
-            max-width: 650px;
-        }
+      body {
+        background-color: #2e3440;
+        color: #d8dee9;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+          "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        padding: 0 10px;
+        margin: 50px auto;
+        max-width: 650px;
+      }
 
-        a {
-            color: #88c0d0;
-            text-decoration: none;
-        }
+      a {
+        color: #88c0d0;
+        text-decoration: none;
+      }
 
-        a:hover {
-            color: #81a1c1;
-        }
+      a:hover {
+        color: #81a1c1;
+      }
 
-        #maincontent {
-            background-color: #3b4252;
-            max-width: 42em;
-            margin: 15px auto;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
+      #maincontent {
+        background-color: #3b4252;
+        max-width: 42em;
+        margin: 15px auto;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      }
 
-        h2 {
-            color: #e5e9f0;
-        }
+      h2 {
+        color: #e5e9f0;
+      }
 
-        p {
-            color: #eceff4;
-        }
+      p {
+        color: #eceff4;
+      }
 
-        ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
+      ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
 
-        li {
-            color: #d8dee9;
-            margin-bottom: 10px;
-        }
+      li {
+        color: #d8dee9;
+        margin-bottom: 10px;
+      }
 
-        ul li::before {
-            content: "• ";
-            color: #81a1c1;
-        }
+      ul li::before {
+        content: "• ";
+        color: #81a1c1;
+      }
 
-        p.notice {
-            background-color: #bf616a;
-            color: #eceff4;
-            padding: 10px;
-            border-radius: 4px;
-            margin-top: 20px;
-        }
+      p.notice {
+        background-color: #bf616a;
+        color: #eceff4;
+        padding: 10px;
+        border-radius: 4px;
+        margin-top: 20px;
+      }
     </style>
 
     <title>ukg!!!</title>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div id="maincontent" style="margin-top: 70px">
-        <h2>ukg.</h2>
+      <h2>ukg.</h2>
 
-        <p><strong>stuff about me</strong></p>
-        <ul>
-            <li>located in northern virginia.</li>
-        </ul>
+      <p><strong>stuff about me</strong></p>
+      <ul>
+        <li>located in northern virginia.</li>
+      </ul>
 
-        <p><strong>stuff i've done</strong></p>
-        <ul>
-            <li>created many <a href="https://github.com/uz-g/track">open source projects</a></li>
-            <li>ios app for <a href="https://i.inc">i.inc</a> [in progress]</li>
-            <li>self proclaimed best developer of vrc (vex robotics competition)</li>
-            <li>extensive web, swift, c++, and python development experience</li>
-            <li>member of buildspace S5</li>
-        </ul>
+      <p><strong>stuff i've done</strong></p>
+      <ul>
+        <li>
+          created many
+          <a href="https://github.com/uz-g/track">open source projects</a>
+        </li>
+        <li>ios app for <a href="https://i.inc">i.inc</a> [in progress]</li>
+        <li>
+          self proclaimed best developer of vrc (vex robotics competition)
+        </li>
+        <li>extensive web, swift, c++, and python development experience</li>
+        <li>member of buildspace S5</li>
+      </ul>
 
-        <p><strong>long term goal</strong></p>
-        <p>i want to make super fun roadsters</p>
-        <ul>
-            <li>like the old lotuses [the elise/exige]</li>
-            <li>light, simple, mid engine.</li>
-            <li>no unnecessary tech or features.</li>
-            <li>focused on great handling and driver enjoyment</li>
-        </ul>
+      <p><strong>long term goal</strong></p>
+      <p>i want to make super fun roadsters</p>
+      <ul>
+        <li>light, simple, mid engine.</li>
+        <li>no unnecessary tech or features.</li>
+        <li>focused on great handling and driver enjoyment</li>
+      </ul>
 
-        <p><strong>links</strong></p>
-        <ul>
-            <li><a href="https://x.com/ukg___">X</a></li>
-            <li><a href="https://github.com/uz-g">GitHub</a></li>
-            <li><a href="mailto:u@ukg.one">Email</a></li>
-        </ul>
+      <p><strong>links</strong></p>
+      <ul>
+        <li><a href="https://x.com/ukg___">X</a></li>
+        <li><a href="https://github.com/uz-g">GitHub</a></li>
+        <li><a href="mailto:u@ukg.one">Email</a></li>
+      </ul>
     </div>
-</body>
-
+  </body>
 </html>
-
-
