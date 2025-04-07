@@ -231,6 +231,12 @@
         transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         transform: translate(-50%, -50%);
       }
+
+      @media (hover: none) and (pointer: coarse), (max-width: 768px) {
+        .cursor-follower {
+          display: none;
+        }
+      }
     </style>
 
     <title>UKG.</title>
@@ -290,8 +296,8 @@
         const cursor = document.querySelector('.cursor-follower');
         
         // Smooth interpolation
-        cursorX += (mouseX - cursorX) * 0.32;
-        cursorY += (mouseY - cursorY) * 0.32;
+        cursorX += (mouseX - cursorX) * 0.36;
+        cursorY += (mouseY - cursorY) * 0.36;
         
         cursor.style.left = cursorX + 'px';
         cursor.style.top = cursorY + 'px';
