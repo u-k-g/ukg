@@ -2,7 +2,7 @@
   <head>
     <meta name="description" content="about Uzair Khan Ghori." />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@ukg___" />
+    <meta name="twitter:site" content="@uzairkghori" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><style>@media (prefers-color-scheme:dark){text{fill:white}}@media (prefers-color-scheme:light){text{fill:black}}</style><text x='50%' y='50%' text-anchor='middle' dominant-baseline='middle' font-size='100'>⁘</text></svg>" />
     <link
@@ -110,7 +110,7 @@
       }
 
       h4 {
-        color: #D2A5C4;
+        color: #DA70D6;
         margin-top: 25px;
         margin-bottom: 15px;
         letter-spacing: -0.01em;
@@ -147,7 +147,7 @@
       }
 
       ul ul li::before {
-        content: "⁜ ";
+        content: "※ ";
         color: #7DA0B3;
       }
 
@@ -168,6 +168,34 @@
         background: #2a2e3f;
         color: #f8f8f2;
       }
+
+      .link-preview {
+        position: relative;
+      }
+
+      .link-preview::before {
+        content: attr(data-preview);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 8px 12px;
+        background: #2a2e3f;
+        color: #a6accd;
+        font-size: 14px;
+        border-radius: 6px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease;
+        box-shadow: -4px -4px 8px rgba(255, 255, 255, .05), 4px 4px 8px rgba(0, 0, 0, 0.46);
+      }
+
+      .link-preview:hover::before {
+        opacity: 1;
+        visibility: visible;
+        bottom: calc(100% + 10px);
+      }
     </style>
 
     <title>UKG.</title>
@@ -186,18 +214,18 @@
           <ul>
             <li>cad (autodesk fusion)</li>
             <li>hardware</li>
-            <li>software <a href="https://github.com/u-k-g/e3pro">(klipper+motion control)</a></li>
+            <li>software <a href="https://github.com/u-k-g/e3pro" class="link-preview" data-preview="Config files for high speed modded 3D printer using Klipper">(klipper+motion control)</a></li>
           </ul>
         </li>
         <li>vex robotics competition
           <ul>
             <li>cad (prototyping => autodesk fusion)</li>
             <li>hardware (building the actual robot)</li>
-            <li>software <a href="https://github.com/u-k-g/monte-carlo-localization">(motion control + monte carlo localization)</a></li>
+            <li>software <a href="https://github.com/u-k-g/monte-carlo-localization" class="link-preview" data-preview="Robot motion control system using odometry and Monte Carlo localization">(motion control + monte carlo localization)</a></li>
             <li>documentation of building process</li>
           </ul>
         </li>
-        <li><a href="https://github.com/u-k-g/vacNAV">voice assisted computer navigation</a>
+        <li><a href="https://github.com/u-k-g/vacNAV" class="link-preview" data-preview="Voice-controlled computer navigation using LLMs">(voice assisted computer navigation)</a>
           <ul>
             <li>software (leveraging LLM's agentic abilities)</li>
           </ul>
@@ -207,9 +235,9 @@
 
       <h4>links</h4>
       <ul>
-        <li><a href="https://x.com/uzairkghori">X</a></li>
-        <li><a href="https://github.com/uz-g">GitHub</a></li>
-        <li><a href="mailto:u@ukg.one">Email</a></li>
+        <li><a href="https://x.com/uzairkghori" class="link-preview" data-preview="@uzairkghori on X">X</a></li>
+        <li><a href="https://github.com/uz-g" class="link-preview" data-preview="@uz-g on GitHub">GitHub</a></li>
+        <li><a href="mailto:u@ukg.one" class="link-preview" data-preview="u@ukg.one">Email</a></li>
       </ul>
     </div>
   </body>
