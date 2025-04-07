@@ -79,24 +79,50 @@
         padding: 0 24px;
         margin: 50px auto;
         max-width: 650px;
+        position: relative;
+        min-height: 100vh;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+          linear-gradient(to bottom, rgba(28, 30, 40, 0.8), rgba(28, 30, 40, 0.2)),
+          radial-gradient(circle at 15% 50%, rgba(110, 159, 173, 0.15), transparent 35%),
+          radial-gradient(circle at 85% 30%, rgba(218, 112, 214, 0.1), transparent 35%);
+        background-blend-mode: overlay;
+        opacity: 0.9;
+        filter: contrast(1.1) url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+        z-index: -1;
+      }
+
+      #maincontent {
+        background: rgba(28, 30, 40, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        max-width: 42em;
+        margin: 15px auto;
+        padding: 40px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 
+          0 4px 24px -1px rgba(0, 0, 0, 0.2),
+          0 1px 6px -1px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
       }
 
       a {
         color: #5DE4C7;
         text-decoration: none;
+        transition: color 0.2s ease;
       }
 
       a:hover {
         color: #7DA0B3;
-      }
-
-      #maincontent {
-        background-color: #1C1E28;
-        max-width: 42em;
-        margin: 15px auto;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: -6px -6px 16px rgba(255, 255, 255, .05), 6px 6px 16px rgba(0, 0, 0, 0.46), inset 6px 6px 16px rgba(0, 0, 0, 0.46), inset -6px -6px 16px rgba(255, 255, 255, 0.05);
       }
 
       h2, h4 {
@@ -136,7 +162,6 @@
         color: #7DA0B3;
       }
 
-      /* Add styles for nested lists */
       ul ul {
         padding-left: 20px;
         margin-top: 5px;
@@ -154,19 +179,6 @@
       p em {
         color: #6E9FAD;
         font-style: italic;
-      }
-
-      p.notice {
-        background-color: #d0679d;
-        color: #ffffff;
-        padding: 10px;
-        border-radius: 4px;
-        margin-top: 20px;
-      }
-
-      ::selection {
-        background: #2a2e3f;
-        color: #f8f8f2;
       }
 
       .link-preview {
@@ -198,6 +210,11 @@
         opacity: 1;
         visibility: visible;
         bottom: calc(100% + 10px);
+      }
+
+      ::selection {
+        background: rgba(42, 46, 63, 0.6);
+        color: #f8f8f2;
       }
     </style>
 
