@@ -5,7 +5,7 @@
     <meta name="twitter:site" content="@ukg___" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
 
@@ -65,14 +65,14 @@
     </script>
     <link rel="canonical" href="http://ukg.bio" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <style>
       body {
-        background-color: #2e3440;
-        color: #d8dee9;
-        font-family: Tahoma, Verdana, sans-serif;
+        background-color: #1C1E28;
+        color: #a6accd;
+        font-family: 'Space Grotesk', system-ui, sans-serif;
         line-height: 1.6;
         font-size: 16px;
         padding: 0 10px;
@@ -81,16 +81,16 @@
       }
 
       a {
-        color: #88c0d0;
+        color: #5DE4C7;
         text-decoration: none;
       }
 
       a:hover {
-        color: #81a1c1;
+        color: #7DA0B3;
       }
 
       #maincontent {
-        background-color: #3b4252;
+        background-color: #2a2e3f;
         max-width: 42em;
         margin: 15px auto;
         padding: 20px;
@@ -98,12 +98,26 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       }
 
+      h2, h4 {
+        font-family: 'Inter', system-ui, sans-serif;
+        font-weight: 800;
+      }
+
       h2 {
-        color: #e5e9f0;
+        color: #6E9FAD;
+        letter-spacing: -0.02em;
+      }
+
+      h4 {
+        color: #D2A5C4;
+        margin-top: 25px;
+        margin-bottom: 15px;
+        letter-spacing: -0.01em;
       }
 
       p {
-        color: #eceff4;
+        color: #a6accd;
+        letter-spacing: 0.01em;
       }
 
       ul {
@@ -112,21 +126,46 @@
       }
 
       li {
-        color: #d8dee9;
+        color: #a6accd;
         margin-bottom: 10px;
       }
 
       ul li::before {
-        content: "• ";
-        color: #81a1c1;
+        content: "✦ ";
+        color: #7DA0B3;
+      }
+
+      /* Add styles for nested lists */
+      ul ul {
+        padding-left: 20px;
+        margin-top: 5px;
+      }
+
+      ul ul li {
+        margin-bottom: 5px;
+      }
+
+      ul ul li::before {
+        content: "⁜ ";
+        color: #7DA0B3;
+      }
+
+      p em {
+        color: #6E9FAD;
+        font-style: italic;
       }
 
       p.notice {
-        background-color: #bf616a;
-        color: #eceff4;
+        background-color: #d0679d;
+        color: #ffffff;
         padding: 10px;
         border-radius: 4px;
         margin-top: 20px;
+      }
+
+      ::selection {
+        background: #2a2e3f;
+        color: #f8f8f2;
       }
     </style>
 
@@ -136,8 +175,35 @@
   <body>
     <div id="maincontent" style="margin-top: 70px">
       <h2>uzair khan ghori.</h2>
+      
+      <p><em>i build</em></p>
+      
+      <h4>projects</h4>
+      <ul>
+        <li>i heavily modified an ender 3 3d printer (fast)
+          <ul>
+            <li>cad (autodesk fusion)</li>
+            <li>hardware</li>
+            <li>software <a href="https://github.com/u-k-g/e3pro">(klipper+motion control)</a></li>
+          </ul>
+        </li>
+        <li>vex robotics competition
+          <ul>
+            <li>cad (prototyping => autodesk fusion)</li>
+            <li>hardware (building the actual robot)</li>
+            <li>software <a href="https://github.com/u-k-g/monte-carlo-localization">(motion control + monte carlo localization)</a></li>
+            <li>documentation of building process</li>
+          </ul>
+        </li>
+        <li><a href="https://github.com/u-k-g/vacNAV">voice assisted computer navigation</a>
+          <ul>
+            <li>software (leveraging LLM's agentic abilities)</li>
+          </ul>
+        </li>
+        <li>various react native applications</li>
+      </ul>
 
-      <p><strong>links</strong></p>
+      <h4>links</h4>
       <ul>
         <li><a href="https://x.com/uzairkghori">X</a></li>
         <li><a href="https://github.com/uz-g">GitHub</a></li>
