@@ -9,7 +9,7 @@
 - [hardware](https://x.com/uzairkghori/status/1851831278523293983)
 - software ([klipper+motion control](https://github.com/u-k-g/e3pro))
 
-### vex robotics competition (game playing robots)
+### [vex robotics competition (game playing robots)](https://x.com/uzairkghori/status/1909378820156555665)
 - cad (prototyping => autodesk fusion)
 - hardware (building the actual robot)
 - software ([motion control + monte carlo localization](https://github.com/u-k-g/monte-carlo-localization))
