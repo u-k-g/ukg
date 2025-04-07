@@ -4,7 +4,7 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@uzairkghori" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><style>@media (prefers-color-scheme:dark){text{fill:white}}@media (prefers-color-scheme:light){text{fill:black}}</style><text x='50%' y='50%' text-anchor='middle' dominant-baseline='middle' font-size='100'>⁘</text></svg>" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><style>@media (prefers-color-scheme:dark){text{fill:white}}@media (prefers-color-scheme:light){text{fill:black}} text{font-weight:900}</style><text x='50%' y='50%' text-anchor='middle' dominant-baseline='middle' font-size='100'>⁘</text></svg>" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
@@ -216,12 +216,28 @@
         background: rgba(42, 46, 63, 0.6);
         color: #f8f8f2;
       }
+
+      .cursor-follower {
+        width: 10px;
+        height: 10px;
+        background: rgba(110, 159, 173, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 99999;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        transform: translate(-50%, -50%);
+      }
     </style>
 
     <title>UKG.</title>
   </head>
 
   <body>
+    <div class="cursor-follower"></div>
     <div id="maincontent" style="margin-top: 70px">
       <h2>uzair khan ghori.</h2>
       
@@ -233,7 +249,7 @@
         <li>i heavily modified an ender 3 3d printer (fast)
           <ul>
             <li>cad (autodesk fusion)</li>
-            <li>hardware</li>
+            <li><a href="https://x.com/uzairkghori/status/1851831278523293983" class="link-preview" data-preview="voron stealthburnder to be mounted to my ender 3 pro">hardware</a></li>
             <li>software <a href="https://github.com/u-k-g/e3pro" class="link-preview" data-preview="Config files for high speed modded 3D printer using Klipper">(klipper+motion control)</a></li>
           </ul>
         </li>
@@ -260,5 +276,40 @@
         <li><a href="mailto:u@ukg.one" class="link-preview" data-preview="u@ukg.one">mail</a></li>
       </ul>
     </div>
+
+    <script>
+      let mouseX = 0, mouseY = 0;
+      let cursorX = 0, cursorY = 0;
+      
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      function animate() {
+        const cursor = document.querySelector('.cursor-follower');
+        
+        // Smooth interpolation
+        cursorX += (mouseX - cursorX) * 0.32;
+        cursorY += (mouseY - cursorY) * 0.32;
+        
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+
+      document.addEventListener('mouseenter', () => {
+        const cursor = document.querySelector('.cursor-follower');
+        cursor.style.opacity = '1';
+      });
+
+      document.addEventListener('mouseleave', () => {
+        const cursor = document.querySelector('.cursor-follower');
+        cursor.style.opacity = '0';
+      });
+    </script>
   </body>
 </html>
