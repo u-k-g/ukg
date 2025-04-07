@@ -526,7 +526,7 @@
           clearTimeout(messageTimeout);
           messageTimeout = setTimeout(() => {
             message.classList.remove('show');
-          }, 3000);
+          }, 5000);
         } else {
           cursor.classList.remove('special-mode');
           createRipple(mouseX, mouseY);
@@ -553,37 +553,6 @@
       }, 1500);
     }
 
-    // Trail effect for special mode
-    let trail = [];
-    const maxTrail = 5;
-
-    function createTrailDot() {
-      const dot = document.createElement('div');
-      dot.className = 'cursor-follower';
-      dot.style.opacity = '0';
-      document.body.appendChild(dot);
-      return dot;
-    }
-
-    // Initialize trail dots
-    for (let i = 0; i < maxTrail; i++) {
-      trail.push(createTrailDot());
-    }
-
-    function updateTrail() {
-      if (!isSpecialMode) {
-        trail.forEach(dot => dot.style.opacity = '0');
-        return;
-      }
-
-      trail.forEach((dot, i) => {
-        const delay = i * 0.1;
-        dot.style.opacity = (1 - i / maxTrail) * 0.3;
-        dot.style.transform = `translate(${cursorX}px, ${cursorY}px) scale(${1 - i * 0.15}) translate(-50%, -50%)`;
-        dot.style.transition = `all ${0.5 + delay}s cubic-bezier(0.19, 1, 0.22, 1)`;
-      });
-    }
-
     function animate() {
       const cursor = document.querySelector('.cursor-follower');
 
@@ -594,7 +563,6 @@
       cursor.style.left = cursorX + 'px';
       cursor.style.top = cursorY + 'px';
 
-      updateTrail();
       requestAnimationFrame(animate);
     }
 
