@@ -319,6 +319,7 @@
       border: 2px solid rgba(218, 112, 214, 0.4);
       box-shadow: 0 0 20px rgba(218, 112, 214, 0.2);
       animation: pulse 2s infinite ease-in-out;
+      filter: blur(1px);
     }
 
     .source-link {
@@ -442,10 +443,30 @@
     }
   </style>
 
+  <!-- Add CSS for the canvas -->
+  <style>
+    #fluid-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2; /* Place it behind the main body gradient/noise */
+      pointer-events: none; /* Allow clicks to pass through */
+    }
+
+    /* Adjust body z-index relative positioning if needed */
+    body::before {
+      /* ... existing styles ... */
+      z-index: -1; /* Ensure this is above the canvas */
+    }
+  </style>
+
   <title>UKG.</title>
 </head>
 
 <body>
+  <canvas id="fluid-canvas"></canvas>
   <div class="cursor-follower"></div>
   <div id="maincontent" style="margin-top: 70px">
     <h2><a href="https://x.com/uzairkghori" class="link-preview" data-preview="@uzairkghori on twitter"
@@ -577,6 +598,221 @@
       const cursor = document.querySelector('.cursor-follower');
       cursor.style.opacity = '0';
     });
+  </script>
+
+  <!-- WebGL Fluid Effect Script -->
+  <script id="vertex-shader" type="x-shader/x-vertex">
+    attribute vec2 a_position;
+    void main() {
+      gl_Position = vec4(a_position, 0.0, 1.0);
+    }
+  </script>
+
+  <script id="fragment-shader" type="x-shader/x-fragment">
+    precision highp float;
+    uniform vec2 u_resolution;
+    uniform vec2 u_mouse;
+    uniform float u_time;
+
+    // --- Noise functions (pseudo-random generator and Fractional Brownian Motion) ---
+    // 2D Random
+    float random (vec2 st) {
+        return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+    }
+
+    // 2D Noise based on Morgan McGuire @morgan3d
+    // https://www.shadertoy.com/view/4dS3Wd
+    float noise (in vec2 st) {
+        vec2 i = floor(st);
+        vec2 f = fract(st);
+
+        // Four corners in 2D of a tile
+        float a = random(i);
+        float b = random(i + vec2(1.0, 0.0));
+        float c = random(i + vec2(0.0, 1.0));
+        float d = random(i + vec2(1.0, 1.0));
+
+        // Smooth interpolation (Hermite Curve: 3t^2 - 2t^3)
+        vec2 u = f * f * (3.0 - 2.0 * f);
+        // Mix 4 corners percentages
+        return mix(a, b, u.x) +
+                (c - a)* u.y * (1.0 - u.x) +
+                (d - b) * u.x * u.y;
+    }
+
+    // Fractional Brownian Motion
+    #define NUM_OCTAVES 5
+    float fbm (in vec2 st) {
+        float value = 0.0;
+        float amplitude = 0.5;
+        float frequency = 0.0;
+        // Loop of octaves
+        for (int i = 0; i < NUM_OCTAVES; i++) {
+            value += amplitude * noise(st);
+            st *= 2.;
+            amplitude *= 0.5;
+        }
+        return value;
+    }
+    // --- End Noise functions ---
+
+    void main() {
+        vec2 st = gl_FragCoord.xy / u_resolution.xy; // Normalized coordinates (0.0 to 1.0)
+        st.x *= u_resolution.x / u_resolution.y; // Adjust for aspect ratio
+
+        vec2 mouse_norm = u_mouse / u_resolution.xy; // Normalized mouse (0.0 to 1.0)
+        mouse_norm.x *= u_resolution.x / u_resolution.y; // Adjust mouse for aspect ratio
+
+        vec2 warped_st = st;
+
+        // --- Mouse Interaction: Warp the space --- 
+        float mouse_dist = distance(st, mouse_norm);
+        float warp_strength = smoothstep(0.3, 0.0, mouse_dist) * 0.5; // Stronger warp near mouse
+
+        // Calculate a direction vector from mouse to pixel
+        vec2 dir = normalize(st - mouse_norm);
+        // Apply warp offset based on noise sampled at a different time/scale
+        float warp_offset_noise = noise(st * 3.0 + u_time * 0.2); 
+        warped_st += dir * warp_strength * warp_offset_noise; 
+        // --- End Mouse Interaction ---
+
+        // --- Animated Noise Pattern --- 
+        vec2 q = vec2(0.0);
+        q.x = fbm(warped_st + vec2(0.0, u_time * 0.1)); // FBM for x component, offset by time
+        q.y = fbm(warped_st + vec2(q.x + 1.0, u_time * 0.15 + 5.0)); // FBM for y, offset by x and time differently
+
+        vec2 r = vec2(0.0);
+        r.x = fbm(warped_st + q + vec2(1.7, 9.2) + 0.15 * u_time); // Use previous results to further distort input coords
+        r.y = fbm(warped_st + q + vec2(8.3, 2.8) + 0.126 * u_time); 
+
+        float final_noise = fbm(warped_st + r); // Final FBM calculation
+        // --- End Animated Noise Pattern ---
+
+        // --- Coloring --- 
+        // Map the noise value to a color gradient
+        vec3 color = mix(vec3(0.1, 0.05, 0.2), // Dark purple/blue
+                         vec3(0.6, 0.2, 0.5),  // Magenta/Pink
+                         smoothstep(0.3, 0.7, final_noise)); // Mix based on noise intensity
+        
+        color = mix(color, 
+                    vec3(0.8, 0.9, 1.0), // Lighter cyan/white highlights
+                    smoothstep(0.6, 0.8, final_noise)); 
+
+        // Add subtle mouse highlight effect (optional)
+        float highlight = smoothstep(0.1, 0.0, mouse_dist) * 0.3;
+        color += vec3(highlight);
+        // --- End Coloring ---
+
+        gl_FragColor = vec4(color, 1.0);
+    }
+  </script>
+
+  <script>
+    const canvas = document.getElementById('fluid-canvas');
+    const gl = canvas.getContext('webgl');
+    let mousePos = { x: 0, y: 0 };
+
+    if (!gl) {
+      console.error("WebGL not supported!");
+    } else {
+      const vertexShaderSource = document.getElementById('vertex-shader').text;
+      const fragmentShaderSource = document.getElementById('fragment-shader').text;
+
+      function createShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        const success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+        if (success) {
+          return shader;
+        }
+        console.error("Shader compile error:", gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+      }
+
+      function createProgram(gl, vertexShader, fragmentShader) {
+        const program = gl.createProgram();
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+        const success = gl.getProgramParameter(program, gl.LINK_STATUS);
+        if (success) {
+          return program;
+        }
+        console.error("Program link error:", gl.getProgramInfoLog(program));
+        gl.deleteProgram(program);
+      }
+
+      const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+      const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+      const program = createProgram(gl, vertexShader, fragmentShader);
+
+      const positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+      const resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
+      const mouseUniformLocation = gl.getUniformLocation(program, "u_mouse");
+      const timeUniformLocation = gl.getUniformLocation(program, "u_time");
+
+      const positionBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+      const positions = [
+        -1, -1,
+         1, -1,
+        -1,  1,
+        -1,  1,
+         1, -1,
+         1,  1,
+      ];
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+      function resizeCanvas() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas(); // Initial size
+
+      // --- Update mouse position slightly differently to match shader coordinates ---
+      let clientMouseX = 0;
+      let clientMouseY = 0;
+      document.addEventListener('mousemove', (e) => {
+          clientMouseX = e.clientX;
+          // Invert Y for WebGL coordinates (0,0 is bottom-left)
+          clientMouseY = window.innerHeight - e.clientY;
+      });
+      // Update the original mouse tracker too, if needed for other effects
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+      // --- End mouse update --- 
+
+      let startTime = Date.now();
+
+      function render() {
+        const currentTime = (Date.now() - startTime) * 0.001; // Time in seconds
+
+        // Smooth mouse position update
+        mousePos.x += (clientMouseX - mousePos.x) * 0.05;
+        mousePos.y += (clientMouseY - mousePos.y) * 0.05;
+
+        gl.useProgram(program);
+
+        gl.enableVertexAttribArray(positionAttributeLocation);
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+
+        gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
+        gl.uniform2f(mouseUniformLocation, mousePos.x, mousePos.y);
+        gl.uniform1f(timeUniformLocation, currentTime);
+
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+        requestAnimationFrame(render);
+      }
+
+      render(); // Start the animation loop
+    }
   </script>
 </body>
 
