@@ -1,4 +1,4 @@
 # links
 - [twitter](https://x.com/uzairkghori)
-- [website](ukg.one)
+- [website](https://ukg.one/)
 - [mail](mailto:u@ukg.one)
