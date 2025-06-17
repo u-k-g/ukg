@@ -65,7 +65,7 @@
       person_profiles: "identified_only", // or 'always' to create profiles for anonymous users as well
     });
   </script>
-  <link rel="canonical" href="http://ukg.bio" />
+  <link rel="canonical" href="http://ukg.one" />
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
     rel="stylesheet" />
@@ -214,19 +214,7 @@
       color: #7DA0B3;
     }
 
-    .source-link.show::before {
-      content: "✦ ";
-      color: transparent;
-      background: linear-gradient(90deg,
-          rgba(218, 112, 214, 1) 0%,
-          rgba(110, 159, 173, 1) 50%,
-          rgba(218, 112, 214, 1) 100%);
-      background-size: 200% auto;
-      animation: gradientFlow 3s ease infinite;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+
 
     ul ul {
       padding-left: 20px;
@@ -298,10 +286,12 @@
     }
 
     .cursor-follower {
-      width: 10px;
-      height: 10px;
-      background: rgba(110, 159, 173, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      width: 12px;
+      height: 12px;
+      background: rgba(218, 112, 214, 0.2);
+      border: 2px solid rgba(218, 112, 214, 0.4);
+      box-shadow: 0 0 20px rgba(218, 112, 214, 0.2);
+      animation: pulse 2s infinite ease-in-out;
       border-radius: 50%;
       position: fixed;
       pointer-events: none;
@@ -312,25 +302,9 @@
       transform: translate(-50%, -50%);
     }
 
-    .cursor-follower.special-mode {
-      width: 12px;
-      height: 12px;
-      background: rgba(218, 112, 214, 0.2);
-      border: 2px solid rgba(218, 112, 214, 0.4);
-      box-shadow: 0 0 20px rgba(218, 112, 214, 0.2);
-      animation: pulse 2s infinite ease-in-out;
-    }
 
-    .source-link {
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    }
 
-    .source-link.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
+
 
     @keyframes gradientFlow {
       0% {
@@ -346,93 +320,11 @@
       }
     }
 
-    .source-link.show a {
-      background: linear-gradient(90deg,
-          rgba(218, 112, 214, 1) 0%,
-          rgba(110, 159, 173, 1) 50%,
-          rgba(218, 112, 214, 1) 100%);
-      background-size: 200% auto;
-      animation: gradientFlow 3s ease infinite;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
 
-    .source-link.show a::before {
-      background-clip: padding-box;
-      -webkit-background-clip: padding-box;
-      -webkit-text-fill-color: #a6accd;
-    }
 
-    .cursor-follower.special-mode::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: inherit;
-      opacity: 0.5;
-      transform: scale(0);
-      transition: transform 0.5s ease-out;
-    }
 
-    @keyframes rippleEffect {
-      0% {
-        width: 0;
-        height: 0;
-        opacity: 0.8;
-      }
 
-      100% {
-        width: 500vmax;
-        height: 500vmax;
-        opacity: 0;
-      }
-    }
 
-    .ripple {
-      position: fixed;
-      border-radius: 50%;
-      pointer-events: none;
-      background: radial-gradient(circle,
-          rgba(218, 112, 214, 0.25) 0%,
-          rgba(218, 112, 214, 0.15) 30%,
-          rgba(218, 112, 214, 0.08) 60%,
-          transparent 80%);
-      transform: translate(-50%, -50%);
-      z-index: 99998;
-    }
-
-    .easter-egg-message {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100%);
-      background: rgba(42, 46, 63, 0.85);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      color: #a6accd;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-size: 14px;
-      opacity: 0;
-      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      z-index: 99999;
-    }
-
-    .easter-egg-message.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-
-    a:hover~.cursor-follower.special-mode {
-      transform: translate(-50%, -50%) scale(1.5);
-      background: rgba(94, 228, 199, 0.2);
-      border-color: rgba(94, 228, 199, 0.4);
-      box-shadow: 0 0 30px rgba(94, 228, 199, 0.2);
-    }
 
     @media (hover: none) and (pointer: coarse),
     (max-width: 768px) {
@@ -451,12 +343,12 @@
     <h2><a href="https://x.com/uzairkghori" class="link-preview" data-preview="@uzairkghori on twitter"
         style="color: inherit; text-decoration: none;" target="_blank">uzair khan ghori.</a></h2>
 
-    <p><em>passion for robotics and engineering</em></p>
+    <p><em>passion for engineering and robotics</em></p>
     <p><em>pursuing a bachelor's degree in engineering physics</em></p>
 
     <h4 class="with-tooltip" data-preview="things i've built and worked on">projects</h4>
     <ul>
-      <li>i heavily modified an ender 3 3d printer (fast)
+      <li>i heavily modified an ender 3 3d printer
         <ul>
           <li>cad (autodesk fusion)</li>
           <li><a href="https://x.com/uzairkghori/status/1851831278523293983" class="link-preview"
@@ -479,7 +371,13 @@
       <li><a href="https://github.com/u-k-g/vacNAV" class="link-preview"
           data-preview="voice-controlled computer navigation using LLMs" target="_blank">voice assisted computer navigation</a>
         <ul>
-          <li>software (leveraging LLM's agentic abilities)</li>
+          <li>leveraging LLM's agentic abilities</li>
+        </ul>
+      </li>
+      <li><a href="https://github.com/u-k-g/drone-pathgen" class="link-preview"
+          data-preview="GCOPTER wrapper packaged into an easy to use python library" target="_blank">drone path generation python library</a>
+        <ul>
+          <li>collision-free flight path generation in 3d environments</li>
         </ul>
       </li>
       <li>various react native applications</li>
@@ -491,12 +389,12 @@
       </li>
       <li><a href="https://github.com/u-k-g" class="link-preview" data-preview="@u-k-g on github" target="_blank">github</a></li>
       <li><a href="mailto:u@ukg.one" class="link-preview" data-preview="u@ukg.one">mail</a></li>
-      <li class="source-link"><a href="https://github.com/u-k-g/ukg" class="link-preview"
+      <li><a href="https://github.com/u-k-g/ukg" class="link-preview"
           data-preview="view the source code for this website" target="_blank">source</a></li>
     </ul>
   </div>
 
-  <div class="easter-egg-message">✦ you found the easter egg! check out the source code. ✦</div>
+
 
   <script>
     let mouseX = 0, mouseY = 0;
@@ -507,51 +405,7 @@
       mouseY = e.clientY;
     });
 
-    // Easter egg: pressing 'u'
-    let isSpecialMode = false;
-    let messageTimeout;
 
-    document.addEventListener('keypress', (e) => {
-      if (e.key.toLowerCase() === 'u') {
-        const cursor = document.querySelector('.cursor-follower');
-        const message = document.querySelector('.easter-egg-message');
-        const sourceLink = document.querySelector('.source-link');
-        cursor.style.transition = 'all 0.3s cubic-bezier(0.19, 1, 0.22, 1)';
-
-        if (!isSpecialMode) {
-          cursor.classList.add('special-mode');
-          createRipple(mouseX, mouseY);
-          message.classList.add('show');
-          sourceLink.classList.add('show');
-          clearTimeout(messageTimeout);
-          messageTimeout = setTimeout(() => {
-            message.classList.remove('show');
-          }, 5000);
-        } else {
-          cursor.classList.remove('special-mode');
-          createRipple(mouseX, mouseY);
-          message.classList.remove('show');
-          sourceLink.classList.remove('show');
-        }
-
-        isSpecialMode = !isSpecialMode;
-      }
-    });
-
-    function createRipple(x, y) {
-      const ripple = document.createElement('div');
-      ripple.className = 'ripple';
-      ripple.style.left = x + 'px';
-      ripple.style.top = y + 'px';
-      document.body.appendChild(ripple);
-
-      ripple.style.animation = 'rippleEffect 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards';
-
-      // Remove the ripple element after animation
-      setTimeout(() => {
-        ripple.remove();
-      }, 1500);
-    }
 
     function animate() {
       const cursor = document.querySelector('.cursor-follower');
