@@ -90,14 +90,14 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: 
+      background-image:
         linear-gradient(rgba(70, 90, 255, 0.08) 1px, transparent 1px),
         linear-gradient(90deg, rgba(70, 90, 255, 0.08) 1px, transparent 1px),
         url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0.15 0 0 0 0 0.17 0 0 0 0 0.19 0 0 0 0.25 0"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
       background-size: 20px 20px, 20px 20px, 80px 80px;
       background-position: 0 0;
-      mask: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.66) 50%, rgba(0,0,0,0) 100%);
-      -webkit-mask: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.66) 50%, rgba(0,0,0,0) 100%);
+      mask: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.66) 50%, rgba(0, 0, 0, 0) 100%);
+      -webkit-mask: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.66) 50%, rgba(0, 0, 0, 0) 100%);
       opacity: 1;
       z-index: -1;
     }
@@ -307,21 +307,6 @@
 
 
 
-    @keyframes gradientFlow {
-      0% {
-        background-position: 0% 50%;
-      }
-
-      50% {
-        background-position: 100% 50%;
-      }
-
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-
 
 
 
@@ -333,9 +318,90 @@
         display: none;
       }
     }
+
+    .button-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      row-gap: 12px;
+      column-gap: 8px;
+      margin-top: 20px;
+      max-width: 340px;
+    }
+
+    .action-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 160px;
+      height: 35px;
+      padding: 0 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      border: 1px solid;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      background: 
+        linear-gradient(rgba(70, 90, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(70, 90, 255, 0.08) 1px, transparent 1px),
+        url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0.15 0 0 0 0 0.17 0 0 0 0 0.19 0 0 0 0.25 0"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+      background-size: 20px 20px, 20px 20px, 80px 80px;
+      background-position: 0 14px, 0 14px, 0 14px;
+      background-color: #000000;
+      color: #c6c8d1;
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: inset 0 -2px 0 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .action-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .action-button:hover::before {
+      opacity: 1;
+    }
+
+    .button-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .button-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .button-key {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: lowercase;
+    }
   </style>
 
-  <title>UKG.</title>
+  <title>ukg.</title>
 </head>
 
 <body>
@@ -355,28 +421,33 @@
           <li><a href="https://x.com/uzairkghori/status/1851831278523293983" class="link-preview"
               data-preview="voron stealthburner i built to mount to the ender 3" target="_blank">hardware</a></li>
           <li>software <a href="https://github.com/u-k-g/e3pro" class="link-preview"
-              data-preview="tuned klipper config files for the high speed modded ender 3" target="_blank">(klipper+motion control)</a>
+              data-preview="tuned klipper config files for the high speed modded ender 3"
+              target="_blank">(klipper+motion control)</a>
           </li>
         </ul>
       </li>
-      <li><a href="https://x.com/uzairkghori/status/1909378820156555665" class="link-preview" data-preview="watch my vex robot in action" target="_blank">vex robotics competition (game playing robots)</a>
+      <li><a href="https://x.com/uzairkghori/status/1909378820156555665" class="link-preview"
+          data-preview="watch my vex robot in action" target="_blank">vex robotics competition (game playing robots)</a>
         <ul>
           <li>cad (prototyping in autodesk fusion)</li>
           <li>hardware (building the actual robot)</li>
           <li>software <a href="https://github.com/u-k-g/monte-carlo-localization" class="link-preview"
-              data-preview="robot motion control system using odometry and monte carlo localization" target="_blank">(motion control +
+              data-preview="robot motion control system using odometry and monte carlo localization"
+              target="_blank">(motion control +
               monte carlo localization)</a></li>
           <li>documentation of the building process</li>
         </ul>
       </li>
       <li><a href="https://github.com/u-k-g/vacNAV" class="link-preview"
-          data-preview="voice-controlled computer navigation using LLMs" target="_blank">voice-assisted computer navigation</a>
+          data-preview="voice-controlled computer navigation using LLMs" target="_blank">voice-assisted computer
+          navigation</a>
         <ul>
           <li>leveraging LLM's agentic abilities</li>
         </ul>
       </li>
       <li><a href="https://github.com/u-k-g/drone-pathgen" class="link-preview"
-          data-preview="GCOPTER wrapper packaged into an easy to use python library" target="_blank">drone path generation python library</a>
+          data-preview="GCOPTER wrapper packaged into an easy to use python library" target="_blank">drone path
+          generation python library</a>
         <ul>
           <li>collision-free flight path generation in 3d environments</li>
         </ul>
@@ -385,14 +456,48 @@
     </ul>
 
     <h4 class="with-tooltip" data-preview="where to find me">links</h4>
-    <ul>
-      <li><a href="https://x.com/uzairkghori" class="link-preview" data-preview="@uzairkghori on twitter" target="_blank">twitter</a>
-      </li>
-      <li><a href="https://github.com/u-k-g" class="link-preview" data-preview="@u-k-g on github" target="_blank">github</a></li>
-      <li><a href="mailto:u@ukg.one" class="link-preview" data-preview="u@ukg.one">mail</a></li>
-      <li><a href="https://github.com/u-k-g/ukg" class="link-preview"
-          data-preview="view the source code for this website" target="_blank">source</a></li>
-    </ul>
+    <div class="button-container">
+      <a href="https://x.com/uzairkghori" class="action-button" target="_blank">
+        <div class="button-content">
+          <svg class="button-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
+          x
+        </div>
+        <span class="button-key">T</span>
+      </a>
+      <a href="https://github.com/u-k-g" class="action-button" target="_blank">
+        <div class="button-content">
+          <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+          </svg>
+          github
+        </div>
+        <span class="button-key">G</span>
+      </a>
+      <a href="mailto:u@ukg.one" class="action-button">
+        <div class="button-content">
+          <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+          mail
+        </div>
+        <span class="button-key">M</span>
+      </a>
+      <a href="https://github.com/u-k-g/ukg" class="action-button" target="_blank">
+        <div class="button-content">
+          <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16,18 22,12 16,6" />
+            <polyline points="8,6 2,12 8,18" />
+          </svg>
+          source
+        </div>
+        <span class="button-key">S</span>
+      </a>
+    </div>
   </div>
 
 
