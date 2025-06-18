@@ -71,8 +71,8 @@
     rel="stylesheet" />
   <style>
     body {
-      background-color: #1C1E28;
-      color: #a6accd;
+      background-color: #000000;
+      color: #c6c8d1;
       font-family: 'Space Grotesk', system-ui, sans-serif;
       line-height: 1.6;
       font-size: 16px;
@@ -90,39 +90,40 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background:
-        linear-gradient(to bottom, rgba(28, 30, 40, 0.8), rgba(28, 30, 40, 0.2)),
-        radial-gradient(circle at 15% 50%, rgba(110, 159, 173, 0.15), transparent 35%),
-        radial-gradient(circle at 85% 30%, rgba(218, 112, 214, 0.1), transparent 35%);
-      background-blend-mode: overlay;
-      opacity: 0.9;
-      filter: contrast(1.1) url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+      background-image: 
+        linear-gradient(rgba(70, 90, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(70, 90, 255, 0.08) 1px, transparent 1px),
+        url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0.15 0 0 0 0 0.17 0 0 0 0 0.19 0 0 0 0.25 0"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+      background-size: 20px 20px, 20px 20px, 80px 80px;
+      background-position: 0 0;
+      mask: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.66) 50%, rgba(0,0,0,0) 100%);
+      -webkit-mask: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.66) 50%, rgba(0,0,0,0) 100%);
+      opacity: 1;
       z-index: -1;
     }
 
     #maincontent {
-      background: rgba(28, 30, 40, 0.7);
+      background: rgba(16, 18, 25, 0.8);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       max-width: 42em;
       margin: 15px auto;
       padding: 40px;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(132, 160, 198, 0.08);
       box-shadow:
-        0 4px 24px -1px rgba(0, 0, 0, 0.2),
-        0 1px 6px -1px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        0 4px 24px -1px rgba(0, 0, 0, 0.4),
+        0 1px 6px -1px rgba(0, 0, 0, 0.3);
     }
 
     a {
-      color: #5DE4C7;
+      color: #91acd1;
       text-decoration: none;
       transition: color 0.2s ease;
     }
 
     a:hover {
-      color: #7DA0B3;
+      color: #84a0c6;
     }
 
     h2,
@@ -132,16 +133,16 @@
     }
 
     h2 {
-      color: #6E9FAD;
+      color: #84a0c6;
       letter-spacing: -0.02em;
       margin-bottom: 15px;
     }
 
     h2 a {
       background: linear-gradient(90deg,
-          rgba(218, 112, 214, 1) 0%,
-          rgba(110, 159, 173, 1) 50%,
-          rgba(218, 112, 214, 1) 100%);
+          rgba(132, 160, 198, 1) 0%,
+          rgba(132, 160, 198, 1) 50%,
+          rgba(132, 160, 198, 1) 100%);
       background-size: 200% auto;
       animation: gradientFlow 3s ease infinite;
       -webkit-background-clip: text;
@@ -152,11 +153,11 @@
     h2 a::before {
       background-clip: padding-box;
       -webkit-background-clip: padding-box;
-      -webkit-text-fill-color: #a6accd;
+      -webkit-text-fill-color: #c6c8d1;
     }
 
     h4 {
-      color: #DA70D6;
+      color: #a093c7;
       margin-top: 25px;
       margin-bottom: 15px;
       letter-spacing: -0.01em;
@@ -174,17 +175,17 @@
       left: 0;
       transform: translateY(-10px);
       padding: 8px 12px;
-      background: rgba(42, 46, 63, 0.35);
+      background: rgba(34, 39, 54, 0.35);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      color: #a6accd;
+      color: #c6c8d1;
       font-size: 14px;
       border-radius: 6px;
       white-space: nowrap;
       opacity: 0;
       visibility: hidden;
       transition: all 0.2s ease;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(132, 160, 198, 0.1);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
@@ -195,7 +196,7 @@
     }
 
     p {
-      color: #a6accd;
+      color: #c6c8d1;
       letter-spacing: 0.01em;
     }
 
@@ -205,13 +206,13 @@
     }
 
     li {
-      color: #a6accd;
+      color: #c6c8d1;
       margin-bottom: 10px;
     }
 
     ul li::before {
       content: "✦ ";
-      color: #7DA0B3;
+      color: #91acd1;
     }
 
 
@@ -227,11 +228,11 @@
 
     ul ul li::before {
       content: "※ ";
-      color: #7DA0B3;
+      color: #91acd1;
     }
 
     p em {
-      color: #6E9FAD;
+      color: #84a0c6;
       font-style: italic;
     }
 
@@ -246,17 +247,17 @@
       left: 0;
       transform: translateY(-10px);
       padding: 8px 12px;
-      background: rgba(42, 46, 63, 0.35);
+      background: rgba(34, 39, 54, 0.35);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      color: #a6accd;
+      color: #c6c8d1;
       font-size: 14px;
       border-radius: 6px;
       white-space: nowrap;
       opacity: 0;
       visibility: hidden;
       transition: all 0.2s ease;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(132, 160, 198, 0.1);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
@@ -267,8 +268,8 @@
     }
 
     ::selection {
-      background: rgba(42, 46, 63, 0.6);
-      color: #f8f8f2;
+      background: rgba(34, 39, 54, 0.6);
+      color: #c6c8d1;
     }
 
     @keyframes pulse {
@@ -288,9 +289,9 @@
     .cursor-follower {
       width: 12px;
       height: 12px;
-      background: rgba(218, 112, 214, 0.2);
-      border: 2px solid rgba(218, 112, 214, 0.4);
-      box-shadow: 0 0 20px rgba(218, 112, 214, 0.2);
+      background: rgba(160, 147, 199, 0.2);
+      border: 2px solid rgba(160, 147, 199, 0.4);
+      box-shadow: 0 0 20px rgba(160, 147, 199, 0.2);
       animation: pulse 2s infinite ease-in-out;
       border-radius: 50%;
       position: fixed;
