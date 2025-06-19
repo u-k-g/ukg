@@ -10,7 +10,7 @@
 <img src="https://github.com/user-attachments/assets/7b77c4fc-67cc-4352-8808-fd15c3511be7" width="500" alt="Snipaste_2025-05-06_11-49-56">
 
 #### v2
-<img src="https://github.com/user-attachments/assets/acbaae01-e4b6-4380-8807-3966aab1c648" width="500" alt="SCR-20250618-bucx">
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/43aa8be6-5c2d-4fa1-bbb7-40f255279ebc" />
 
 
 </details>
