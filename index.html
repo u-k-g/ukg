@@ -308,13 +308,6 @@
 
 
 
-    @media (hover: none) and (pointer: coarse),
-    (max-width: 768px) {
-      .cursor-follower {
-        display: none;
-      }
-    }
-
     .button-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -322,6 +315,32 @@
       column-gap: 8px;
       margin-top: 20px;
       max-width: 340px;
+    }
+
+    @media (max-width: 500px) {
+      .cursor-follower {
+        display: none;
+      }
+      
+      body {
+        padding: 0 16px;
+        margin: 20px auto;
+      }
+      
+      #maincontent {
+        margin: 8px;
+        padding: 24px;
+      }
+      
+      .button-container {
+        grid-template-columns: 1fr;
+        max-width: none;
+      }
+      
+      .action-button {
+        width: 100%;
+        max-width: none;
+      }
     }
 
     .action-button {
