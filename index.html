@@ -452,6 +452,13 @@
       font-size: 12px;
       font-weight: 600;
     }
+
+    .action-button.copied {
+      background: rgba(160, 147, 199, 0.2);
+      border-color: rgba(160, 147, 199, 0.5);
+      box-shadow: 0 0 15px rgba(160, 147, 199, 0.3);
+      transition: all 0.2s ease;
+    }
   </style>
 
   <title>ukg.</title>
@@ -556,6 +563,7 @@
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
     let currentAngle = 0;
+    let copyTimeouts = {};
 
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
@@ -566,20 +574,102 @@
     document.addEventListener('keydown', (e) => {
       const key = e.key.toUpperCase();
       
-      switch(key) {
-        case 'T':
-        case 'X':
-          window.open('https://x.com/uzairkghori', '_blank');
-          break;
-        case 'G':
-          window.open('https://github.com/u-k-g', '_blank');
-          break;
-        case 'M':
-          window.location.href = 'mailto:uzair.k.ghori@outlook.com';
-          break;
-        case 'S':
-          window.open('https://github.com/u-k-g/ukg', '_blank');
-          break;
+      if (e.shiftKey) {
+        // Shift + key = copy to clipboard
+        let urlToCopy = '';
+        switch(key) {
+          case 'T':
+          case 'X':
+            urlToCopy = 'https://x.com/uzairkghori';
+            break;
+          case 'G':
+            urlToCopy = 'https://github.com/u-k-g';
+            break;
+          case 'M':
+            urlToCopy = 'mailto:uzair.k.ghori@outlook.com';
+            break;
+          case 'S':
+            urlToCopy = 'https://github.com/u-k-g/ukg';
+            break;
+        }
+        if (urlToCopy) {
+          navigator.clipboard.writeText(urlToCopy).then(() => {
+            console.log(`Copied to clipboard: ${urlToCopy}`);
+            
+            // Find the corresponding button and add visual feedback
+            let buttonSelector = '';
+            switch(key) {
+              case 'T':
+              case 'X':
+                buttonSelector = 'a[href="https://x.com/uzairkghori"]';
+                break;
+              case 'G':
+                buttonSelector = 'a[href="https://github.com/u-k-g"]';
+                break;
+              case 'M':
+                buttonSelector = 'a[href="mailto:uzair.k.ghori@outlook.com"]';
+                break;
+              case 'S':
+                buttonSelector = 'a[href="https://github.com/u-k-g/ukg"]';
+                break;
+            }
+            
+            const button = document.querySelector(`.button-container ${buttonSelector}`);
+            const icon = button.querySelector('.button-icon');
+            
+            // Store original icon if not already stored
+            if (!button.dataset.originalIcon) {
+              button.dataset.originalIcon = icon.innerHTML;
+            }
+            
+            // Clear any existing timeout for this button
+            if (copyTimeouts[key]) {
+              clearTimeout(copyTimeouts[key]);
+            }
+            
+            // Add highlight class and change icon
+            button.classList.add('copied');
+            
+            // Use appropriate checkmark style based on button type
+            let checkmarkSVG = '';
+            if (key === 'T' || key === 'X') {
+              // Twitter uses fill, so use filled checkmark
+              checkmarkSVG = '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/>';
+            } else {
+              // Other buttons use stroke, so use stroked checkmark
+              checkmarkSVG = '<path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+            }
+            
+            icon.innerHTML = checkmarkSVG;
+            
+            // Remove after 1 second
+            copyTimeouts[key] = setTimeout(() => {
+              button.classList.remove('copied');
+              icon.innerHTML = button.dataset.originalIcon;
+              delete copyTimeouts[key];
+            }, 1000);
+            
+          }).catch(err => {
+            console.error('Failed to copy: ', err);
+          });
+        }
+      } else {
+        // Regular key = navigate
+        switch(key) {
+          case 'T':
+          case 'X':
+            window.open('https://x.com/uzairkghori', '_blank');
+            break;
+          case 'G':
+            window.open('https://github.com/u-k-g', '_blank');
+            break;
+          case 'M':
+            window.location.href = 'mailto:uzair.k.ghori@outlook.com';
+            break;
+          case 'S':
+            window.open('https://github.com/u-k-g/ukg', '_blank');
+            break;
+        }
       }
     });
 
