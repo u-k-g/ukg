@@ -555,6 +555,7 @@
   <script>
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
+    let currentAngle = 0;
 
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
@@ -591,8 +592,22 @@
 
       const deltaX = mouseX - cursorX;
       const deltaY = mouseY - cursorY;
-      const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
-      cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+      const targetAngle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+      
+      // Calculate shortest angular distance
+      function shortestAngle(from, to) {
+        let diff = to - from;
+        while (diff > 180) diff -= 360;
+        while (diff < -180) diff += 360;
+        return diff;
+      }
+      
+      const angleDiff = shortestAngle(currentAngle, targetAngle);
+      
+      // Smooth angle interpolation
+      currentAngle += angleDiff * 0.15;
+      
+      cursor.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
 
       cursor.style.left = cursorX + 'px';
       cursor.style.top = cursorY + 'px';
