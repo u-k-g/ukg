@@ -570,6 +570,35 @@
       mouseY = e.clientY;
     });
 
+    // Add click highlight effect to buttons
+    document.querySelectorAll('.button-container .action-button').forEach(button => {
+      button.addEventListener('click', () => {
+        // Find which key this button corresponds to
+        const href = button.getAttribute('href');
+        let key = '';
+        if (href.includes('x.com/uzairkghori')) key = 'T';
+        else if (href.includes('github.com/u-k-g') && !href.includes('/ukg')) key = 'G';
+        else if (href.includes('mailto:')) key = 'M';
+        else if (href.includes('github.com/u-k-g/ukg')) key = 'S';
+        
+        if (key) {
+          // Clear any existing timeout for this button
+          if (copyTimeouts[key]) {
+            clearTimeout(copyTimeouts[key]);
+          }
+          
+          // Add highlight class
+          button.classList.add('copied');
+          
+          // Remove after 300ms
+          copyTimeouts[key] = setTimeout(() => {
+            button.classList.remove('copied');
+            delete copyTimeouts[key];
+          }, 300);
+        }
+      });
+    });
+
     // Keyboard shortcuts for buttons
     document.addEventListener('keydown', (e) => {
       const key = e.key.toUpperCase();
@@ -654,21 +683,45 @@
           });
         }
       } else {
-        // Regular key = navigate
+        // Regular key = navigate + highlight
+        let buttonSelector = '';
         switch(key) {
           case 'T':
           case 'X':
             window.open('https://x.com/uzairkghori', '_blank');
+            buttonSelector = 'a[href="https://x.com/uzairkghori"]';
             break;
           case 'G':
             window.open('https://github.com/u-k-g', '_blank');
+            buttonSelector = 'a[href="https://github.com/u-k-g"]';
             break;
           case 'M':
             window.location.href = 'mailto:uzair.k.ghori@outlook.com';
+            buttonSelector = 'a[href="mailto:uzair.k.ghori@outlook.com"]';
             break;
           case 'S':
             window.open('https://github.com/u-k-g/ukg', '_blank');
+            buttonSelector = 'a[href="https://github.com/u-k-g/ukg"]';
             break;
+        }
+        
+        // Add highlight effect for regular navigation
+        if (buttonSelector) {
+          const button = document.querySelector(`.button-container ${buttonSelector}`);
+          
+          // Clear any existing timeout for this button
+          if (copyTimeouts[key]) {
+            clearTimeout(copyTimeouts[key]);
+          }
+          
+          // Add highlight class (no icon change)
+          button.classList.add('copied');
+          
+          // Remove after 300ms (shorter for navigation)
+          copyTimeouts[key] = setTimeout(() => {
+            button.classList.remove('copied');
+            delete copyTimeouts[key];
+          }, 300);
         }
       }
     });
