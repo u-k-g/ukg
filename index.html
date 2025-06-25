@@ -467,12 +467,12 @@
 <body>
   <div class="cursor-follower"></div>
   <div id="maincontent" style="margin-top: 70px">
-    <h2><a href="https://x.com/uzairkghori" class="link-preview" data-preview="@uzairkghori on twitter"
+    <h2><a href="https://x.com/uzairkghori"
         style="color: inherit; text-decoration: none;" target="_blank">uzair khan ghori.</a></h2>
 
     <p><em>passion for engineering and robotics</em></p>
 
-    <h4 class="with-tooltip" data-preview="projects">stuff i've done</h4>
+    <h4>stuff i've done</h4>
     <ul>
       <li>built 3d printers
         <ul>
@@ -512,7 +512,7 @@
       </li>
     </ul>
 
-    <h4 class="with-tooltip" data-preview="where to find me">links</h4>
+    <h4>links</h4>
     <div class="button-container">
       <a href="https://x.com/uzairkghori" class="action-button" target="_blank">
         <div class="button-content">
@@ -701,7 +701,7 @@
       const angleDiff = shortestAngle(currentAngle, targetAngle);
       
       // Smooth angle interpolation
-      currentAngle += angleDiff * 0.08;
+      currentAngle += angleDiff * 0.15;
       
       cursor.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
 
