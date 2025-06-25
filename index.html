@@ -289,16 +289,52 @@
       height: 12px;
       background: rgba(160, 147, 199, 0.2);
       border: 2px solid rgba(160, 147, 199, 0.4);
-      box-shadow: 0 0 20px rgba(160, 147, 199, 0.2);
+      box-shadow: 0 0 10px rgba(160, 147, 199, 0.5);
       animation: pulse 2s infinite ease-in-out;
       border-radius: 50%;
       position: fixed;
       pointer-events: none;
       z-index: 99999;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(1px);
+      -webkit-backdrop-filter: blur(1px);
       transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
       transform: translate(-50%, -50%);
+    }
+
+    .cursor-follower::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-left: 200px solid transparent;
+      border-right: 0px solid transparent;
+      border-top: 60px solid transparent;
+      border-bottom: 60px solid transparent;
+      background: linear-gradient(
+        to right,
+        rgba(160, 147, 199, 0.25) 0%,
+        rgba(160, 147, 199, 0.15) 30%,
+        rgba(160, 147, 199, 0.08) 60%,
+        rgba(160, 147, 199, 0.03) 80%,
+        transparent 100%
+      );
+      clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+      transform: translate(0%, -50%);
+      filter: blur(3px);
+      z-index: -1;
+      background: radial-gradient(
+        ellipse 200px 120px at 0% 50%,
+        rgba(160, 147, 199, 0.2) 0%,
+        rgba(160, 147, 199, 0.12) 25%,
+        rgba(160, 147, 199, 0.06) 50%,
+        rgba(160, 147, 199, 0.02) 75%,
+        transparent 100%
+      );
+      width: 200px;
+      height: 120px;
+      border: none;
     }
 
 
@@ -549,6 +585,11 @@
       // Smooth interpolation
       cursorX += (mouseX - cursorX) * 0.36;
       cursorY += (mouseY - cursorY) * 0.36;
+
+      const deltaX = mouseX - cursorX;
+      const deltaY = mouseY - cursorY;
+      const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+      cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
 
       cursor.style.left = cursorX + 'px';
       cursor.style.top = cursorY + 'px';
