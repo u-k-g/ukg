@@ -327,7 +327,7 @@
       mask: radial-gradient(circle at 0% 50%, transparent 8px, black 9px);
       -webkit-mask: radial-gradient(circle at 0% 50%, transparent 8px, black 9px);
       background: radial-gradient(
-        ellipse 160px 80px at 20% 50%,
+        ellipse 160px 110px at 20% 50%,
         rgba(160, 147, 199, 0.3) 0%,
         rgba(160, 147, 199, 0.2) 25%,
         rgba(160, 147, 199, 0.12) 45%,
@@ -336,7 +336,7 @@
         transparent 100%
       );
       width: 200px;
-      height: 120px;
+      height: 180px;
       border: none;
     }
 
@@ -590,8 +590,14 @@
       cursorX += (mouseX - cursorX) * 0.36;
       cursorY += (mouseY - cursorY) * 0.36;
 
-      const deltaX = mouseX - cursorX;
-      const deltaY = mouseY - cursorY;
+      // Get Twitter button position
+      const twitterButton = document.querySelector('.button-container a[href="https://x.com/uzairkghori"]');
+      const twitterRect = twitterButton.getBoundingClientRect();
+      const twitterX = twitterRect.left + twitterRect.width / 2;
+      const twitterY = twitterRect.top + twitterRect.height / 2;
+      
+      const deltaX = twitterX - cursorX;
+      const deltaY = twitterY - cursorY;
       const targetAngle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
       
       // Calculate shortest angular distance
@@ -605,7 +611,7 @@
       const angleDiff = shortestAngle(currentAngle, targetAngle);
       
       // Smooth angle interpolation
-      currentAngle += angleDiff * 0.15;
+      currentAngle += angleDiff * 0.08;
       
       cursor.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
 
