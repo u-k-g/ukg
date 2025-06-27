@@ -1,7 +1,7 @@
 # links
 - [twitter](https://x.com/uzairkghori)
 - [website](https://ukg.one/)
-- [mail](mailto:u@ukg.one)
+- [mail](mailto:uzair.k.ghori@outlook.com)
 
 <details>
 <summary><strong>iterations of this site</strong></summary>
