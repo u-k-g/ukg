@@ -1,781 +1,952 @@
 <html>
+    <head>
+        <meta name="description" content="about Uzair Khan Ghori." />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@uzairkghori" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><style>@media (prefers-color-scheme:dark){text{fill:white}}@media (prefers-color-scheme:light){text{fill:black}} text{font-weight:900}</style><text x='50%' y='50%' text-anchor='middle' dominant-baseline='middle' font-size='100'>⁘</text></svg>"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Space+Grotesk:wght@400;500;700&family=Qwigley&display=swap"
+            rel="stylesheet"
+        />
 
-<head>
-  <meta name="description" content="about Uzair Khan Ghori." />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@uzairkghori" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><style>@media (prefers-color-scheme:dark){text{fill:white}}@media (prefers-color-scheme:light){text{fill:black}} text{font-weight:900}</style><text x='50%' y='50%' text-anchor='middle' dominant-baseline='middle' font-size='100'>⁘</text></svg>" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Space+Grotesk:wght@400;500;700&family=Qwigley&display=swap"
-    rel="stylesheet" />
-
-  <script>
-    !(function (t, e) {
-      var o, n, p, r;
-      e.__SV ||
-        ((window.posthog = e),
-          (e._i = []),
-          (e.init = function (i, s, a) {
-            function g(t, e) {
-              var o = e.split(".");
-              2 == o.length && ((t = t[o[0]]), (e = o[1])),
-                (t[e] = function () {
-                  t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
-                });
+        <script>
+            !(function (t, e) {
+                var o, n, p, r;
+                e.__SV ||
+                    ((window.posthog = e),
+                    (e._i = []),
+                    (e.init = function (i, s, a) {
+                        function g(t, e) {
+                            var o = e.split(".");
+                            (2 == o.length && ((t = t[o[0]]), (e = o[1])),
+                                (t[e] = function () {
+                                    t.push(
+                                        [e].concat(
+                                            Array.prototype.slice.call(
+                                                arguments,
+                                                0,
+                                            ),
+                                        ),
+                                    );
+                                }));
+                        }
+                        (((p = t.createElement("script")).type =
+                            "text/javascript"),
+                            (p.async = !0),
+                            (p.src =
+                                s.api_host.replace(
+                                    ".i.posthog.com",
+                                    "-assets.i.posthog.com",
+                                ) + "/static/array.js"),
+                            (r =
+                                t.getElementsByTagName(
+                                    "script",
+                                )[0]).parentNode.insertBefore(p, r));
+                        var u = e;
+                        for (
+                            void 0 !== a ? (u = e[a] = []) : (a = "posthog"),
+                                u.people = u.people || [],
+                                u.toString = function (t) {
+                                    var e = "posthog";
+                                    return (
+                                        "posthog" !== a && (e += "." + a),
+                                        t || (e += " (stub)"),
+                                        e
+                                    );
+                                },
+                                u.people.toString = function () {
+                                    return u.toString(1) + ".people (stub)";
+                                },
+                                o =
+                                    "capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(
+                                        " ",
+                                    ),
+                                n = 0;
+                            n < o.length;
+                            n++
+                        )
+                            g(u, o[n]);
+                        e._i.push([i, s, a]);
+                    }),
+                    (e.__SV = 1));
+            })(document, window.posthog || []);
+            posthog.init("phc_zVB02YVDbc38nloJ2brJrWd1qoTbizZLbbj8Gqs13wI", {
+                api_host: "https://us.i.posthog.com",
+                person_profiles: "identified_only", // or 'always' to create profiles for anonymous users as well
+            });
+        </script>
+        <link rel="canonical" href="http://ukg.one" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                background-color: #000000;
+                color: #c6c8d1;
+                font-family: "Space Grotesk", system-ui, sans-serif;
+                line-height: 1.6;
+                font-size: 16px;
+                padding: 0 24px;
+                margin: 50px auto;
+                max-width: 650px;
+                position: relative;
+                min-height: 100vh;
+                overflow: auto;
             }
-            ((p = t.createElement("script")).type = "text/javascript"),
-              (p.async = !0),
-              (p.src =
-                s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") +
-                "/static/array.js"),
-              (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(
-                p,
-                r
-              );
-            var u = e;
-            for (
-              void 0 !== a ? (u = e[a] = []) : (a = "posthog"),
-              u.people = u.people || [],
-              u.toString = function (t) {
-                var e = "posthog";
-                return (
-                  "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e
+
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image:
+                    linear-gradient(
+                        rgba(70, 90, 255, 0.08) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgba(70, 90, 255, 0.08) 1px,
+                        transparent 1px
+                    ),
+                    url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0.15 0 0 0 0 0.17 0 0 0 0 0.19 0 0 0 0.25 0"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+                background-size:
+                    20px 20px,
+                    20px 20px,
+                    80px 80px;
+                background-position: 0 0;
+                mask: linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 1) 0%,
+                    rgba(0, 0, 0, 0.66) 50%,
+                    rgba(0, 0, 0, 0) 100%
                 );
-              },
-              u.people.toString = function () {
-                return u.toString(1) + ".people (stub)";
-              },
-              o =
-              "capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(
-                " "
-              ),
-              n = 0;
-              n < o.length;
-              n++
-            )
-              g(u, o[n]);
-            e._i.push([i, s, a]);
-          }),
-          (e.__SV = 1));
-    })(document, window.posthog || []);
-    posthog.init("phc_zVB02YVDbc38nloJ2brJrWd1qoTbizZLbbj8Gqs13wI", {
-      api_host: "https://us.i.posthog.com",
-      person_profiles: "identified_only", // or 'always' to create profiles for anonymous users as well
-    });
-  </script>
-  <link rel="canonical" href="http://ukg.one" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
-    rel="stylesheet" />
-  <style>
-    body {
-      background-color: #000000;
-      color: #c6c8d1;
-      font-family: 'Space Grotesk', system-ui, sans-serif;
-      line-height: 1.6;
-      font-size: 16px;
-      padding: 0 24px;
-      margin: 50px auto;
-      max-width: 650px;
-      position: relative;
-      min-height: 100vh;
-      overflow: auto;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image:
-        linear-gradient(rgba(70, 90, 255, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(70, 90, 255, 0.08) 1px, transparent 1px),
-        url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0.15 0 0 0 0 0.17 0 0 0 0 0.19 0 0 0 0.25 0"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
-      background-size: 20px 20px, 20px 20px, 80px 80px;
-      background-position: 0 0;
-      mask: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.66) 50%, rgba(0, 0, 0, 0) 100%);
-      -webkit-mask: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.66) 50%, rgba(0, 0, 0, 0) 100%);
-      opacity: 1;
-      z-index: -1;
-    }
-
-    #maincontent {
-      max-width: 42em;
-      margin: 16px;
-      padding: 40px;
-      border: 2px solid rgba(70, 90, 255, 0.2);
-      border-radius: 36px;
-    }
-
-    a {
-      color: #91acd1;
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    a:hover {
-      color: #84a0c6;
-    }
-
-    h4 {
-      font-family: 'Inter', system-ui, sans-serif;
-      font-weight: 800;
-    }
-
-    h2 {
-      font-family: 'Qwigley', cursive;
-      font-weight: 400;
-      font-size: 3.2em;
-      color: #84a0c6;
-      letter-spacing: -0.02em;
-      margin-top: 0;
-      margin-bottom: -12px;
-    }
-
-    h2 a {
-      background: linear-gradient(90deg,
-          rgba(132, 160, 198, 1) 0%,
-          rgba(132, 160, 198, 1) 50%,
-          rgba(132, 160, 198, 1) 100%);
-      background-size: 200% auto;
-      animation: gradientFlow 3s ease infinite;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    h2 a::before {
-      background-clip: padding-box;
-      -webkit-background-clip: padding-box;
-      -webkit-text-fill-color: #c6c8d1;
-    }
-
-    h4 {
-      color: #a093c7;
-      margin-top: 25px;
-      margin-bottom: 15px;
-      letter-spacing: -0.01em;
-    }
-
-    h4.with-tooltip {
-      position: relative;
-      display: block;
-    }
-
-    h4.with-tooltip::before {
-      content: attr(data-preview);
-      position: absolute;
-      bottom: 100%;
-      left: 0;
-      transform: translateY(-10px);
-      padding: 8px 12px;
-      background: rgba(34, 39, 54, 0.35);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      color: #c6c8d1;
-      font-size: 14px;
-      border-radius: 6px;
-      white-space: nowrap;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.2s ease;
-      border: 1px solid rgba(132, 160, 198, 0.1);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    h4.with-tooltip:hover::before {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    p {
-      color: #c6c8d1;
-      letter-spacing: 0.01em;
-    }
-
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-
-    li {
-      color: #c6c8d1;
-      margin-bottom: 10px;
-    }
-
-    ul li::before {
-      content: "✦ ";
-      color: #91acd1;
-    }
-
-
-
-    ul ul {
-      padding-left: 20px;
-      margin-top: 5px;
-    }
-
-    ul ul li {
-      margin-bottom: 5px;
-    }
-
-    ul ul li::before {
-      content: "※ ";
-      color: #91acd1;
-    }
-
-    p em {
-      color: #84a0c6;
-      font-style: italic;
-    }
-
-    .link-preview {
-      position: relative;
-    }
-
-    .link-preview::before {
-      content: attr(data-preview);
-      position: absolute;
-      bottom: 100%;
-      left: 0;
-      transform: translateY(-10px);
-      padding: 8px 12px;
-      background: rgba(34, 39, 54, 0.35);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      color: #c6c8d1;
-      font-size: 14px;
-      border-radius: 6px;
-      white-space: nowrap;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.2s ease;
-      border: 1px solid rgba(132, 160, 198, 0.1);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .link-preview:hover::before {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    ::selection {
-      background: rgba(34, 39, 54, 0.6);
-      color: #c6c8d1;
-    }
-
-    @keyframes pulse {
-      0% {
-        transform: translate(-50%, -50%) scale(1);
-      }
-
-      50% {
-        transform: translate(-50%, -50%) scale(1.1);
-      }
-
-      100% {
-        transform: translate(-50%, -50%) scale(1);
-      }
-    }
-
-    .cursor-follower {
-      width: 12px;
-      height: 12px;
-      background: rgba(160, 147, 199, 0.2);
-      border: 2px solid rgba(160, 147, 199, 0.4);
-      box-shadow: 0 0 10px rgba(160, 147, 199, 0.5);
-
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 99999;
-      backdrop-filter: blur(1px);
-      -webkit-backdrop-filter: blur(1px);
-      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-      transform: translate(-50%, -50%);
-    }
-
-    .cursor-follower::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-left: 200px solid transparent;
-      border-right: 0px solid transparent;
-      border-top: 60px solid transparent;
-      border-bottom: 60px solid transparent;
-      background: linear-gradient(
-        to right,
-        rgba(160, 147, 199, 0.25) 0%,
-        rgba(160, 147, 199, 0.15) 30%,
-        rgba(160, 147, 199, 0.08) 60%,
-        rgba(160, 147, 199, 0.03) 80%,
-        transparent 100%
-      );
-      clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
-      transform: translate(0%, -50%);
-      filter: blur(3px);
-      z-index: -1;
-      mask: radial-gradient(circle at 0% 50%, transparent 8px, black 9px);
-      -webkit-mask: radial-gradient(circle at 0% 50%, transparent 8px, black 9px);
-      background: radial-gradient(
-        ellipse 160px 110px at 20% 50%,
-        rgba(160, 147, 199, 0.3) 0%,
-        rgba(160, 147, 199, 0.2) 25%,
-        rgba(160, 147, 199, 0.12) 45%,
-        rgba(160, 147, 199, 0.06) 65%,
-        rgba(160, 147, 199, 0.02) 80%,
-        transparent 100%
-      );
-      width: 200px;
-      height: 180px;
-      border: none;
-    }
-
-
-
-
-
-
-
-
-
-
-    .button-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      row-gap: 12px;
-      column-gap: 8px;
-      margin-top: 20px;
-      max-width: 340px;
-    }
-
-    @media (max-width: 500px) {
-      .cursor-follower {
-        display: none;
-      }
-      
-      body {
-        padding: 0 16px;
-        margin: 20px auto;
-      }
-      
-      #maincontent {
-        margin: 8px;
-        padding: 32px;
-      }
-      
-      .button-container {
-        grid-template-columns: 1fr;
-        max-width: none;
-      }
-      
-      .action-button {
-        width: 100%;
-        max-width: none;
-      }
-    }
-
-    .action-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 160px;
-      height: 35px;
-      padding: 0 12px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-family: 'Space Grotesk', system-ui, sans-serif;
-      font-weight: 500;
-      font-size: 14px;
-      transition: all 0.2s ease;
-      border: 2px solid;
-      position: relative;
-      overflow: hidden;
-      box-sizing: border-box;
-      background: transparent;
-      color: #c6c8d1;
-      border-color: rgba(255, 255, 255, 0.15);
-      box-shadow: inset 0 -2px 0 0 rgba(255, 255, 255, 0.066);
-    }
-
-    .action-button::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: inherit;
-      opacity: .5;
-      transition: opacity 0.2s ease;
-    }
-
-    .action-button:hover::before {
-      opacity: 1;
-    }
-
-    .action-button:hover {
-      box-shadow: none;
-    }
-
-    .button-content {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .button-icon {
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-    }
-
-    .button-key {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 4px;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .action-button.copied {
-      background: rgba(160, 147, 199, 0.2);
-      border-color: rgba(160, 147, 199, 0.5);
-      box-shadow: 0 0 15px rgba(160, 147, 199, 0.3);
-      transition: all 0.2s ease;
-    }
-  </style>
-
-  <title>ukg.</title>
-</head>
-
-<body>
-  <div class="cursor-follower"></div>
-  <div id="maincontent" style="margin-top: 70px">
-    <h2><a href="https://x.com/uzairkghori"
-        style="color: inherit; text-decoration: none;" target="_blank">uzair khan ghori.</a></h2>
-
-    <p><em>passion for engineering and robotics</em></p>
-
-    <h4>stuff i've done</h4>
-    <ul>
-      <li>built 3d printers
-        <ul>
-          <li><a href="https://x.com/uzairkghori/status/1851831278523293983" class="link-preview"
-              data-preview="voron stealthburner i built" target="_blank">hardware</a></li>
-          <li>software <a href="https://github.com/u-k-g/e3pro" class="link-preview"
-              data-preview="tuned klipper config files for my 3d printer"
-              target="_blank">(klipper + motion control)</a>
-          </li>
-        </ul>
-      </li>
-      <li><a href="https://x.com/uzairkghori/status/1909378820156555665" class="link-preview"
-          data-preview="watch my vex robot in action" target="_blank">vex robotics competition (game playing robots)</a>
-        <ul>
-          <li>cad (prototyping in autodesk fusion)</li>
-          <li>hardware (building the actual robot)</li>
-          <li>software <a href="https://github.com/u-k-g/monte-carlo-localization" class="link-preview"
-              data-preview="robot motion control system using odometry and monte carlo localization"
-              target="_blank">(motion control +
-              monte carlo localization)</a></li>
-          <li>documentation of the building process</li>
-        </ul>
-      </li>
-      <li><a href="https://github.com/u-k-g/vacNAV" class="link-preview"
-          data-preview="llms control my computer" target="_blank">voice controlled computer use</a>
-        <ul>
-          <li>leveraging LLM's agentic abilities to control my computer with just my voice</li>
-        </ul>
-      </li>
-      <li>various react native applications</li>
-      <li><a href="https://github.com/u-k-g/drone-pathgen" class="link-preview"
-          data-preview="GCOPTER wrapper packaged into an easy to use python library" target="_blank">drone path
-          generation python library</a>
-        <ul>
-          <li>collision-free flight path generation in 3d environments</li>
-        </ul>
-      </li>
-    </ul>
-
-    <h4>links</h4>
-    <div class="button-container">
-      <a href="https://x.com/uzairkghori" class="action-button" target="_blank">
-        <div class="button-content">
-          <svg class="button-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-          </svg>
-          twitter
-        </div>
-        <span class="button-key">T</span>
-      </a>
-      <a href="https://github.com/u-k-g" class="action-button" target="_blank">
-        <div class="button-content">
-          <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path
-              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-          </svg>
-          github
-        </div>
-        <span class="button-key">G</span>
-      </a>
-      <a href="mailto:uzair.k.ghori@outlook.com" class="action-button">
-        <div class="button-content">
-          <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-          mail
-        </div>
-        <span class="button-key">M</span>
-      </a>
-      <a href="https://github.com/u-k-g/ukg" class="action-button" target="_blank">
-        <div class="button-content">
-          <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="16,18 22,12 16,6" />
-            <polyline points="8,6 2,12 8,18" />
-          </svg>
-          source
-        </div>
-        <span class="button-key">S</span>
-      </a>
-    </div>
-  </div>
-
-
-
-  <script>
-    let mouseX = 0, mouseY = 0;
-    let cursorX = 0, cursorY = 0;
-    let currentAngle = 0;
-    let copyTimeouts = {};
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-
-    // Add click highlight effect to buttons
-    document.querySelectorAll('.button-container .action-button').forEach(button => {
-      button.addEventListener('click', () => {
-        // Find which key this button corresponds to
-        const href = button.getAttribute('href');
-        let key = '';
-        if (href.includes('x.com/uzairkghori')) key = 'T';
-        else if (href.includes('github.com/u-k-g') && !href.includes('/ukg')) key = 'G';
-        else if (href.includes('mailto:')) key = 'M';
-        else if (href.includes('github.com/u-k-g/ukg')) key = 'S';
-        
-        if (key) {
-          // Clear any existing timeout for this button
-          if (copyTimeouts[key]) {
-            clearTimeout(copyTimeouts[key]);
-          }
-          
-          // Add highlight class
-          button.classList.add('copied');
-          
-          // Remove after 300ms
-          copyTimeouts[key] = setTimeout(() => {
-            button.classList.remove('copied');
-            delete copyTimeouts[key];
-          }, 300);
-        }
-      });
-    });
-
-    // Keyboard shortcuts for buttons
-    document.addEventListener('keydown', (e) => {
-      const key = e.key.toUpperCase();
-      
-      if (e.shiftKey) {
-        // Shift + key = copy to clipboard
-        let urlToCopy = '';
-        switch(key) {
-          case 'T':
-          case 'X':
-            urlToCopy = 'https://x.com/uzairkghori';
-            break;
-          case 'G':
-            urlToCopy = 'https://github.com/u-k-g';
-            break;
-          case 'M':
-            urlToCopy = 'mailto:uzair.k.ghori@outlook.com';
-            break;
-          case 'S':
-            urlToCopy = 'https://github.com/u-k-g/ukg';
-            break;
-        }
-        if (urlToCopy) {
-          navigator.clipboard.writeText(urlToCopy).then(() => {
-            console.log(`Copied to clipboard: ${urlToCopy}`);
-            
-            // Find the corresponding button and add visual feedback
-            let buttonSelector = '';
-            switch(key) {
-              case 'T':
-              case 'X':
-                buttonSelector = 'a[href="https://x.com/uzairkghori"]';
-                break;
-              case 'G':
-                buttonSelector = 'a[href="https://github.com/u-k-g"]';
-                break;
-              case 'M':
-                buttonSelector = 'a[href="mailto:uzair.k.ghori@outlook.com"]';
-                break;
-              case 'S':
-                buttonSelector = 'a[href="https://github.com/u-k-g/ukg"]';
-                break;
+                -webkit-mask: linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 1) 0%,
+                    rgba(0, 0, 0, 0.66) 50%,
+                    rgba(0, 0, 0, 0) 100%
+                );
+                opacity: 1;
+                z-index: -1;
             }
-            
-            const button = document.querySelector(`.button-container ${buttonSelector}`);
-            const icon = button.querySelector('.button-icon');
-            
-            // Store original icon if not already stored
-            if (!button.dataset.originalIcon) {
-              button.dataset.originalIcon = icon.innerHTML;
+
+            #maincontent {
+                max-width: 42em;
+                margin: 16px;
+                padding: 40px;
+                border: 2px solid rgba(70, 90, 255, 0.2);
+                border-radius: 36px;
             }
-            
-            // Clear any existing timeout for this button
-            if (copyTimeouts[key]) {
-              clearTimeout(copyTimeouts[key]);
+
+            a {
+                color: #91acd1;
+                text-decoration: none;
+                transition: color 0.2s ease;
             }
-            
-            // Add highlight class and change icon
-            button.classList.add('copied');
-            
-            // Use appropriate checkmark style based on button type
-            let checkmarkSVG = '';
-            if (key === 'T' || key === 'X') {
-              // Twitter uses fill, so use filled checkmark
-              checkmarkSVG = '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/>';
-            } else {
-              // Other buttons use stroke, so use stroked checkmark
-              checkmarkSVG = '<path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+
+            a:hover {
+                color: #84a0c6;
             }
-            
-            icon.innerHTML = checkmarkSVG;
-            
-            // Remove after 1 second
-            copyTimeouts[key] = setTimeout(() => {
-              button.classList.remove('copied');
-              icon.innerHTML = button.dataset.originalIcon;
-              delete copyTimeouts[key];
-            }, 1000);
-            
-          }).catch(err => {
-            console.error('Failed to copy: ', err);
-          });
-        }
-      } else {
-        // Regular key = navigate + highlight
-        let buttonSelector = '';
-        switch(key) {
-          case 'T':
-          case 'X':
-            window.open('https://x.com/uzairkghori', '_blank');
-            buttonSelector = 'a[href="https://x.com/uzairkghori"]';
-            break;
-          case 'G':
-            window.open('https://github.com/u-k-g', '_blank');
-            buttonSelector = 'a[href="https://github.com/u-k-g"]';
-            break;
-          case 'M':
-            window.location.href = 'mailto:uzair.k.ghori@outlook.com';
-            buttonSelector = 'a[href="mailto:uzair.k.ghori@outlook.com"]';
-            break;
-          case 'S':
-            window.open('https://github.com/u-k-g/ukg', '_blank');
-            buttonSelector = 'a[href="https://github.com/u-k-g/ukg"]';
-            break;
-        }
-        
-        // Add highlight effect for regular navigation
-        if (buttonSelector) {
-          const button = document.querySelector(`.button-container ${buttonSelector}`);
-          
-          // Clear any existing timeout for this button
-          if (copyTimeouts[key]) {
-            clearTimeout(copyTimeouts[key]);
-          }
-          
-          // Add highlight class (no icon change)
-          button.classList.add('copied');
-          
-          // Remove after 300ms (shorter for navigation)
-          copyTimeouts[key] = setTimeout(() => {
-            button.classList.remove('copied');
-            delete copyTimeouts[key];
-          }, 300);
-        }
-      }
-    });
 
-    function animate() {
-      const cursor = document.querySelector('.cursor-follower');
+            h4 {
+                font-family: "Inter", system-ui, sans-serif;
+                font-weight: 800;
+            }
 
-      // Smooth interpolation
-      cursorX += (mouseX - cursorX) * 0.36;
-      cursorY += (mouseY - cursorY) * 0.36;
+            h2 {
+                font-family: "Qwigley", cursive;
+                font-weight: 400;
+                font-size: 3.2em;
+                color: #84a0c6;
+                letter-spacing: -0.02em;
+                margin-top: 0;
+                margin-bottom: -12px;
+            }
 
-      // Get Twitter button position
-      const twitterButton = document.querySelector('.button-container a[href="https://x.com/uzairkghori"]');
-      const twitterRect = twitterButton.getBoundingClientRect();
-      const twitterX = twitterRect.left + twitterRect.width / 2;
-      const twitterY = twitterRect.top + twitterRect.height / 2;
-      
-      const deltaX = twitterX - cursorX;
-      const deltaY = twitterY - cursorY;
-      const targetAngle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
-      
-      // Calculate shortest angular distance
-      function shortestAngle(from, to) {
-        let diff = to - from;
-        while (diff > 180) diff -= 360;
-        while (diff < -180) diff += 360;
-        return diff;
-      }
-      
-      const angleDiff = shortestAngle(currentAngle, targetAngle);
-      
-      // Smooth angle interpolation
-      currentAngle += angleDiff * 0.22;
-      
-      cursor.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
+            h2 a {
+                background: linear-gradient(
+                    90deg,
+                    rgba(132, 160, 198, 1) 0%,
+                    rgba(132, 160, 198, 1) 50%,
+                    rgba(132, 160, 198, 1) 100%
+                );
+                background-size: 200% auto;
+                animation: gradientFlow 3s ease infinite;
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
 
-      cursor.style.left = cursorX + 'px';
-      cursor.style.top = cursorY + 'px';
+            h2 a::before {
+                background-clip: padding-box;
+                -webkit-background-clip: padding-box;
+                -webkit-text-fill-color: #c6c8d1;
+            }
 
-      requestAnimationFrame(animate);
-    }
+            h4 {
+                color: #a093c7;
+                margin-top: 25px;
+                margin-bottom: 15px;
+                letter-spacing: -0.01em;
+            }
 
-    animate();
+            h4.with-tooltip {
+                position: relative;
+                display: block;
+            }
 
-    document.addEventListener('mouseenter', () => {
-      const cursor = document.querySelector('.cursor-follower');
-      cursor.style.opacity = '1';
-    });
+            h4.with-tooltip::before {
+                content: attr(data-preview);
+                position: absolute;
+                bottom: 100%;
+                left: 0;
+                transform: translateY(-10px);
+                padding: 8px 12px;
+                background: rgba(34, 39, 54, 0.35);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                color: #c6c8d1;
+                font-size: 14px;
+                border-radius: 6px;
+                white-space: nowrap;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.2s ease;
+                border: 1px solid rgba(132, 160, 198, 0.1);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
 
-    document.addEventListener('mouseleave', () => {
-      const cursor = document.querySelector('.cursor-follower');
-      cursor.style.opacity = '0';
-    });
-  </script>
-</body>
+            h4.with-tooltip:hover::before {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
 
+            p {
+                color: #c6c8d1;
+                letter-spacing: 0.01em;
+            }
+
+            ul {
+                list-style-type: none;
+                padding-left: 0;
+            }
+
+            li {
+                color: #c6c8d1;
+                margin-bottom: 10px;
+            }
+
+            ul li::before {
+                content: "✦ ";
+                color: #91acd1;
+            }
+
+            ul ul {
+                padding-left: 20px;
+                margin-top: 5px;
+            }
+
+            ul ul li {
+                margin-bottom: 5px;
+            }
+
+            ul ul li::before {
+                content: "※ ";
+                color: #91acd1;
+            }
+
+            p em {
+                color: #84a0c6;
+                font-style: italic;
+            }
+
+            .link-preview {
+                position: relative;
+            }
+
+            .link-preview::before {
+                content: attr(data-preview);
+                position: absolute;
+                bottom: 100%;
+                left: 0;
+                transform: translateY(-10px);
+                padding: 8px 12px;
+                background: rgba(34, 39, 54, 0.35);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                color: #c6c8d1;
+                font-size: 14px;
+                border-radius: 6px;
+                white-space: nowrap;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.2s ease;
+                border: 1px solid rgba(132, 160, 198, 0.1);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .link-preview:hover::before {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            ::selection {
+                background: rgba(34, 39, 54, 0.6);
+                color: #c6c8d1;
+            }
+
+            @keyframes pulse {
+                0% {
+                    transform: translate(-50%, -50%) scale(1);
+                }
+
+                50% {
+                    transform: translate(-50%, -50%) scale(1.1);
+                }
+
+                100% {
+                    transform: translate(-50%, -50%) scale(1);
+                }
+            }
+
+            .cursor-follower {
+                width: 12px;
+                height: 12px;
+                background: rgba(160, 147, 199, 0.2);
+                border: 2px solid rgba(160, 147, 199, 0.4);
+                box-shadow: 0 0 10px rgba(160, 147, 199, 0.5);
+
+                border-radius: 50%;
+                position: fixed;
+                pointer-events: none;
+                z-index: 99999;
+                backdrop-filter: blur(1px);
+                -webkit-backdrop-filter: blur(1px);
+                transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+                transform: translate(-50%, -50%);
+            }
+
+            .cursor-follower::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                border-left: 200px solid transparent;
+                border-right: 0px solid transparent;
+                border-top: 60px solid transparent;
+                border-bottom: 60px solid transparent;
+                background: linear-gradient(
+                    to right,
+                    rgba(160, 147, 199, 0.25) 0%,
+                    rgba(160, 147, 199, 0.15) 30%,
+                    rgba(160, 147, 199, 0.08) 60%,
+                    rgba(160, 147, 199, 0.03) 80%,
+                    transparent 100%
+                );
+                clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+                transform: translate(0%, -50%);
+                filter: blur(3px);
+                z-index: -1;
+                mask: radial-gradient(
+                    circle at 0% 50%,
+                    transparent 8px,
+                    black 9px
+                );
+                -webkit-mask: radial-gradient(
+                    circle at 0% 50%,
+                    transparent 8px,
+                    black 9px
+                );
+                background: radial-gradient(
+                    ellipse 160px 110px at 20% 50%,
+                    rgba(160, 147, 199, 0.3) 0%,
+                    rgba(160, 147, 199, 0.2) 25%,
+                    rgba(160, 147, 199, 0.12) 45%,
+                    rgba(160, 147, 199, 0.06) 65%,
+                    rgba(160, 147, 199, 0.02) 80%,
+                    transparent 100%
+                );
+                width: 200px;
+                height: 180px;
+                border: none;
+            }
+
+            .button-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                row-gap: 12px;
+                column-gap: 8px;
+                margin-top: 20px;
+                max-width: 340px;
+            }
+
+            @media (max-width: 500px) {
+                .cursor-follower {
+                    display: none;
+                }
+
+                body {
+                    padding: 0 16px;
+                    margin: 20px auto;
+                }
+
+                #maincontent {
+                    margin: 8px;
+                    padding: 32px;
+                }
+
+                .button-container {
+                    grid-template-columns: 1fr;
+                    max-width: none;
+                }
+
+                .action-button {
+                    width: 100%;
+                    max-width: none;
+                }
+            }
+
+            .action-button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 160px;
+                height: 35px;
+                padding: 0 12px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-family: "Space Grotesk", system-ui, sans-serif;
+                font-weight: 500;
+                font-size: 14px;
+                transition: all 0.2s ease;
+                border: 2px solid;
+                position: relative;
+                overflow: hidden;
+                box-sizing: border-box;
+                background: transparent;
+                color: #c6c8d1;
+                border-color: rgba(255, 255, 255, 0.15);
+                box-shadow: inset 0 -2px 0 0 rgba(255, 255, 255, 0.066);
+            }
+
+            .action-button::before {
+                content: "";
+                position: absolute;
+                top: -2px;
+                left: -2px;
+                right: -2px;
+                bottom: -2px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: inherit;
+                opacity: 0.5;
+                transition: opacity 0.2s ease;
+            }
+
+            .action-button:hover::before {
+                opacity: 1;
+            }
+
+            .action-button:hover {
+                box-shadow: none;
+            }
+
+            .button-content {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .button-icon {
+                width: 16px;
+                height: 16px;
+                flex-shrink: 0;
+            }
+
+            .button-key {
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 4px;
+                width: 20px;
+                height: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                font-weight: 600;
+            }
+
+            .action-button.copied {
+                background: rgba(160, 147, 199, 0.2);
+                border-color: rgba(160, 147, 199, 0.5);
+                box-shadow: 0 0 15px rgba(160, 147, 199, 0.3);
+                transition: all 0.2s ease;
+            }
+        </style>
+
+        <title>ukg.</title>
+    </head>
+
+    <body>
+        <div class="cursor-follower"></div>
+        <div id="maincontent" style="margin-top: 70px">
+            <h2>
+                <a
+                    href="https://x.com/uzairkghori"
+                    style="color: inherit; text-decoration: none"
+                    target="_blank"
+                    >uzair khan ghori.</a
+                >
+            </h2>
+
+            <p>
+                <em>
+                    <a
+                        href="https://www.bluevigil.com/"
+                        class="link-preview"
+                        data-preview="specialized tethered drones"
+                        target="_blank"
+                        >building drones at blue vigil</a
+                    ></em
+                >
+            </p>
+
+            <p><em>passion for engineering and robotics</em></p>
+
+            <h4>stuff i've done</h4>
+            <ul>
+                <li>
+                    built 3d printers
+                    <ul>
+                        <li>
+                            <a
+                                href="https://x.com/uzairkghori/status/1851831278523293983"
+                                class="link-preview"
+                                data-preview="voron stealthburner i built"
+                                target="_blank"
+                                >hardware</a
+                            >
+                        </li>
+                        <li>
+                            software
+                            <a
+                                href="https://github.com/u-k-g/e3pro"
+                                class="link-preview"
+                                data-preview="tuned klipper config files for my 3d printer"
+                                target="_blank"
+                                >(klipper + motion control)</a
+                            >
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a
+                        href="https://x.com/uzairkghori/status/1909378820156555665"
+                        class="link-preview"
+                        data-preview="watch my vex robot in action"
+                        target="_blank"
+                        >vex robotics competition (game playing robots)</a
+                    >
+                    <ul>
+                        <li>cad (prototyping in autodesk fusion)</li>
+                        <li>hardware (building the actual robot)</li>
+                        <li>
+                            software
+                            <a
+                                href="https://github.com/u-k-g/monte-carlo-localization"
+                                class="link-preview"
+                                data-preview="robot motion control system using odometry and monte carlo localization"
+                                target="_blank"
+                                >(motion control + monte carlo localization)</a
+                            >
+                        </li>
+                        <li>documentation of the building process</li>
+                    </ul>
+                </li>
+                <li>
+                    <a
+                        href="https://github.com/u-k-g/vacNAV"
+                        class="link-preview"
+                        data-preview="llms control my computer"
+                        target="_blank"
+                        >voice controlled computer use</a
+                    >
+                    <ul>
+                        <li>
+                            leveraging LLM's agentic abilities to control my
+                            computer with just my voice
+                        </li>
+                    </ul>
+                </li>
+
+                <li>various react native applications</li>
+                <li>
+                    <a
+                        href="https://github.com/u-k-g/drone-pathgen"
+                        class="link-preview"
+                        data-preview="GCOPTER wrapper packaged into an easy to use python library"
+                        target="_blank"
+                        >drone path generation python library</a
+                    >
+                    <ul>
+                        <li>
+                            collision-free flight path generation in 3d
+                            environments
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>links</h4>
+            <div class="button-container">
+                <a
+                    href="https://x.com/uzairkghori"
+                    class="action-button"
+                    target="_blank"
+                >
+                    <div class="button-content">
+                        <svg
+                            class="button-icon"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                            />
+                        </svg>
+                        twitter
+                    </div>
+                    <span class="button-key">T</span>
+                </a>
+                <a
+                    href="https://github.com/u-k-g"
+                    class="action-button"
+                    target="_blank"
+                >
+                    <div class="button-content">
+                        <svg
+                            class="button-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                            />
+                        </svg>
+                        github
+                    </div>
+                    <span class="button-key">G</span>
+                </a>
+                <a
+                    href="mailto:uzair.k.ghori@outlook.com"
+                    class="action-button"
+                >
+                    <div class="button-content">
+                        <svg
+                            class="button-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                            />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                        mail
+                    </div>
+                    <span class="button-key">M</span>
+                </a>
+                <a
+                    href="https://github.com/u-k-g/ukg"
+                    class="action-button"
+                    target="_blank"
+                >
+                    <div class="button-content">
+                        <svg
+                            class="button-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <polyline points="16,18 22,12 16,6" />
+                            <polyline points="8,6 2,12 8,18" />
+                        </svg>
+                        source
+                    </div>
+                    <span class="button-key">S</span>
+                </a>
+            </div>
+        </div>
+
+        <script>
+            let mouseX = 0,
+                mouseY = 0;
+            let cursorX = 0,
+                cursorY = 0;
+            let currentAngle = 0;
+            let copyTimeouts = {};
+
+            document.addEventListener("mousemove", (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            // Add click highlight effect to buttons
+            document
+                .querySelectorAll(".button-container .action-button")
+                .forEach((button) => {
+                    button.addEventListener("click", () => {
+                        // Find which key this button corresponds to
+                        const href = button.getAttribute("href");
+                        let key = "";
+                        if (href.includes("x.com/uzairkghori")) key = "T";
+                        else if (
+                            href.includes("github.com/u-k-g") &&
+                            !href.includes("/ukg")
+                        )
+                            key = "G";
+                        else if (href.includes("mailto:")) key = "M";
+                        else if (href.includes("github.com/u-k-g/ukg"))
+                            key = "S";
+
+                        if (key) {
+                            // Clear any existing timeout for this button
+                            if (copyTimeouts[key]) {
+                                clearTimeout(copyTimeouts[key]);
+                            }
+
+                            // Add highlight class
+                            button.classList.add("copied");
+
+                            // Remove after 300ms
+                            copyTimeouts[key] = setTimeout(() => {
+                                button.classList.remove("copied");
+                                delete copyTimeouts[key];
+                            }, 300);
+                        }
+                    });
+                });
+
+            // Keyboard shortcuts for buttons
+            document.addEventListener("keydown", (e) => {
+                const key = e.key.toUpperCase();
+
+                if (e.shiftKey) {
+                    // Shift + key = copy to clipboard
+                    let urlToCopy = "";
+                    switch (key) {
+                        case "T":
+                        case "X":
+                            urlToCopy = "https://x.com/uzairkghori";
+                            break;
+                        case "G":
+                            urlToCopy = "https://github.com/u-k-g";
+                            break;
+                        case "M":
+                            urlToCopy = "mailto:uzair.k.ghori@outlook.com";
+                            break;
+                        case "S":
+                            urlToCopy = "https://github.com/u-k-g/ukg";
+                            break;
+                    }
+                    if (urlToCopy) {
+                        navigator.clipboard
+                            .writeText(urlToCopy)
+                            .then(() => {
+                                console.log(
+                                    `Copied to clipboard: ${urlToCopy}`,
+                                );
+
+                                // Find the corresponding button and add visual feedback
+                                let buttonSelector = "";
+                                switch (key) {
+                                    case "T":
+                                    case "X":
+                                        buttonSelector =
+                                            'a[href="https://x.com/uzairkghori"]';
+                                        break;
+                                    case "G":
+                                        buttonSelector =
+                                            'a[href="https://github.com/u-k-g"]';
+                                        break;
+                                    case "M":
+                                        buttonSelector =
+                                            'a[href="mailto:uzair.k.ghori@outlook.com"]';
+                                        break;
+                                    case "S":
+                                        buttonSelector =
+                                            'a[href="https://github.com/u-k-g/ukg"]';
+                                        break;
+                                }
+
+                                const button = document.querySelector(
+                                    `.button-container ${buttonSelector}`,
+                                );
+                                const icon =
+                                    button.querySelector(".button-icon");
+
+                                // Store original icon if not already stored
+                                if (!button.dataset.originalIcon) {
+                                    button.dataset.originalIcon =
+                                        icon.innerHTML;
+                                }
+
+                                // Clear any existing timeout for this button
+                                if (copyTimeouts[key]) {
+                                    clearTimeout(copyTimeouts[key]);
+                                }
+
+                                // Add highlight class and change icon
+                                button.classList.add("copied");
+
+                                // Use appropriate checkmark style based on button type
+                                let checkmarkSVG = "";
+                                if (key === "T" || key === "X") {
+                                    // Twitter uses fill, so use filled checkmark
+                                    checkmarkSVG =
+                                        '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/>';
+                                } else {
+                                    // Other buttons use stroke, so use stroked checkmark
+                                    checkmarkSVG =
+                                        '<path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+                                }
+
+                                icon.innerHTML = checkmarkSVG;
+
+                                // Remove after 1 second
+                                copyTimeouts[key] = setTimeout(() => {
+                                    button.classList.remove("copied");
+                                    icon.innerHTML =
+                                        button.dataset.originalIcon;
+                                    delete copyTimeouts[key];
+                                }, 1000);
+                            })
+                            .catch((err) => {
+                                console.error("Failed to copy: ", err);
+                            });
+                    }
+                } else {
+                    // Regular key = navigate + highlight
+                    let buttonSelector = "";
+                    switch (key) {
+                        case "T":
+                        case "X":
+                            window.open("https://x.com/uzairkghori", "_blank");
+                            buttonSelector =
+                                'a[href="https://x.com/uzairkghori"]';
+                            break;
+                        case "G":
+                            window.open("https://github.com/u-k-g", "_blank");
+                            buttonSelector =
+                                'a[href="https://github.com/u-k-g"]';
+                            break;
+                        case "M":
+                            window.location.href =
+                                "mailto:uzair.k.ghori@outlook.com";
+                            buttonSelector =
+                                'a[href="mailto:uzair.k.ghori@outlook.com"]';
+                            break;
+                        case "S":
+                            window.open(
+                                "https://github.com/u-k-g/ukg",
+                                "_blank",
+                            );
+                            buttonSelector =
+                                'a[href="https://github.com/u-k-g/ukg"]';
+                            break;
+                    }
+
+                    // Add highlight effect for regular navigation
+                    if (buttonSelector) {
+                        const button = document.querySelector(
+                            `.button-container ${buttonSelector}`,
+                        );
+
+                        // Clear any existing timeout for this button
+                        if (copyTimeouts[key]) {
+                            clearTimeout(copyTimeouts[key]);
+                        }
+
+                        // Add highlight class (no icon change)
+                        button.classList.add("copied");
+
+                        // Remove after 300ms (shorter for navigation)
+                        copyTimeouts[key] = setTimeout(() => {
+                            button.classList.remove("copied");
+                            delete copyTimeouts[key];
+                        }, 300);
+                    }
+                }
+            });
+
+            function animate() {
+                const cursor = document.querySelector(".cursor-follower");
+
+                // Smooth interpolation
+                cursorX += (mouseX - cursorX) * 0.36;
+                cursorY += (mouseY - cursorY) * 0.36;
+
+                // Get Twitter button position
+                const twitterButton = document.querySelector(
+                    '.button-container a[href="https://x.com/uzairkghori"]',
+                );
+                const twitterRect = twitterButton.getBoundingClientRect();
+                const twitterX = twitterRect.left + twitterRect.width / 2;
+                const twitterY = twitterRect.top + twitterRect.height / 2;
+
+                const deltaX = twitterX - cursorX;
+                const deltaY = twitterY - cursorY;
+                const targetAngle =
+                    (Math.atan2(deltaY, deltaX) * 180) / Math.PI;
+
+                // Calculate shortest angular distance
+                function shortestAngle(from, to) {
+                    let diff = to - from;
+                    while (diff > 180) diff -= 360;
+                    while (diff < -180) diff += 360;
+                    return diff;
+                }
+
+                const angleDiff = shortestAngle(currentAngle, targetAngle);
+
+                // Smooth angle interpolation
+                currentAngle += angleDiff * 0.22;
+
+                cursor.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
+
+                cursor.style.left = cursorX + "px";
+                cursor.style.top = cursorY + "px";
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            document.addEventListener("mouseenter", () => {
+                const cursor = document.querySelector(".cursor-follower");
+                cursor.style.opacity = "1";
+            });
+
+            document.addEventListener("mouseleave", () => {
+                const cursor = document.querySelector(".cursor-follower");
+                cursor.style.opacity = "0";
+            });
+        </script>
+    </body>
 </html>

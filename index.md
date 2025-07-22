@@ -1,11 +1,10 @@
 # uzair khan ghori.
 
-*@uzairkghori on twitter*
+*building drones at [blue vigil](https://www.bluevigil.com/)*
 
 *passion for engineering and robotics*  
 
 ## stuff i've done
-*projects*
 
 - built 3d printers
   - [hardware](https://x.com/uzairkghori/status/1851831278523293983) - *voron stealthburner i built*
@@ -24,6 +23,8 @@
 
 - [drone path generation python library](https://github.com/u-k-g/drone-pathgen) - *GCOPTER wrapper packaged into an easy to use python library*
   - collision-free flight path generation in 3d environments
+
+
 
 
 ## links
