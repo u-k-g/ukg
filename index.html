@@ -474,7 +474,6 @@
                     <a
                         href="https://x.com/uzairkghori"
                         style="color: inherit; text-decoration: none"
-                        target="_blank"
                         >uzair khan ghori.</a
                     >
                 </h2>
@@ -487,7 +486,6 @@
                             href="https://www.bluevigil.com/"
                             class="link-preview"
                             data-preview="specialized tethered drones"
-                            target="_blank"
                             >building drones at blue vigil</a
                         ></em
                     >
@@ -504,7 +502,6 @@
                                 href="https://x.com/uzairkghori/status/1851831278523293983"
                                 class="link-preview"
                                 data-preview="voron stealthburner i built"
-                                target="_blank"
                                 >hardware</a
                             >
                             · software
@@ -512,7 +509,6 @@
                                 href="https://github.com/u-k-g/e3pro"
                                 class="link-preview"
                                 data-preview="klipper config files for my ender 3"
-                                target="_blank"
                                 >(klipper)</a
                             >
                         </div>
@@ -523,7 +519,6 @@
                                 href="https://x.com/uzairkghori/status/1909378820156555665"
                                 class="link-preview"
                                 data-preview="watch my vex robot in action"
-                                target="_blank"
                                 >vex robotics competition (game playing robots)</a
                             >
                         </div>
@@ -533,7 +528,6 @@
                                 href="https://github.com/u-k-g/monte-carlo-localization"
                                 class="link-preview"
                                 data-preview="robot motion control system using odometry and monte carlo localization"
-                                target="_blank"
                                 >(motion control + monte carlo localization)</a
                             >
                         </div>
@@ -544,7 +538,6 @@
                                 href="https://github.com/u-k-g/vacNAV"
                                 class="link-preview"
                                 data-preview="llms control my computer"
-                                target="_blank"
                                 >voice controlled computer use</a
                             >
                         </div>
@@ -555,7 +548,6 @@
                                 href="https://github.com/u-k-g/drone-pathgen"
                                 class="link-preview"
                                 data-preview="GCOPTER wrapper packaged into an easy to use python library"
-                                target="_blank"
                                 >drone path generation python library</a
                             >
                         </div>
@@ -569,7 +561,6 @@
                     <a
                         href="https://x.com/uzairkghori"
                         class="action-button"
-                        target="_blank"
                     >
                         <div class="button-content">
                             twitter
@@ -579,7 +570,6 @@
                     <a
                         href="https://github.com/u-k-g"
                         class="action-button"
-                        target="_blank"
                     >
                         <div class="button-content">
                             github
@@ -587,7 +577,7 @@
                         <span class="button-key">G</span>
                     </a>
                     <a
-                        href="mailto:uzair.k.ghori@outlook.com"
+                        href="mailto:ukghori08@gmail.com"
                         class="action-button"
                     >
                         <div class="button-content">
@@ -598,7 +588,6 @@
                     <a
                         href="https://github.com/u-k-g/ukg"
                         class="action-button"
-                        target="_blank"
                     >
                         <div class="button-content">
                             source
@@ -632,8 +621,8 @@
                 const cursor = document.querySelector(".cursor-follower");
                 const title = document.querySelector(".hero h2");
                 const titleRect = title.getBoundingClientRect();
-                const initialX = titleRect.left + titleRect.width / 2 - 61;
-                const initialY = titleRect.top - 44;
+                const initialX = titleRect.left + titleRect.width / 2 - 59;
+                const initialY = titleRect.top - 45;
                 const twitterCenter = getTwitterButtonCenter();
 
                 mouseX = initialX;
@@ -697,6 +686,12 @@
             // Keyboard shortcuts for buttons
             document.addEventListener("keydown", (e) => {
                 const key = e.key.toUpperCase();
+                const hasDisallowedModifier =
+                    e.metaKey || e.ctrlKey || e.altKey;
+
+                if (hasDisallowedModifier) {
+                    return;
+                }
 
                 if (e.shiftKey) {
                     // Shift + key = copy to clipboard
@@ -710,7 +705,7 @@
                             urlToCopy = "https://github.com/u-k-g";
                             break;
                         case "M":
-                            urlToCopy = "mailto:uzair.k.ghori@outlook.com";
+                            urlToCopy = "mailto:ukghori08@gmail.com";
                             break;
                         case "S":
                             urlToCopy = "https://github.com/u-k-g/ukg";
@@ -738,7 +733,7 @@
                                         break;
                                     case "M":
                                         buttonSelector =
-                                            'a[href="mailto:uzair.k.ghori@outlook.com"]';
+                                            'a[href="mailto:ukghori08@gmail.com"]';
                                         break;
                                     case "S":
                                         buttonSelector =
@@ -749,42 +744,18 @@
                                 const button = document.querySelector(
                                     `.button-container ${buttonSelector}`,
                                 );
-                                const icon =
-                                    button.querySelector(".button-icon");
-
-                                // Store original icon if not already stored
-                                if (!button.dataset.originalIcon) {
-                                    button.dataset.originalIcon =
-                                        icon.innerHTML;
-                                }
 
                                 // Clear any existing timeout for this button
                                 if (copyTimeouts[key]) {
                                     clearTimeout(copyTimeouts[key]);
                                 }
 
-                                // Add highlight class and change icon
+                                // Add highlight class
                                 button.classList.add("copied");
-
-                                // Use appropriate checkmark style based on button type
-                                let checkmarkSVG = "";
-                                if (key === "T" || key === "X") {
-                                    // Twitter uses fill, so use filled checkmark
-                                    checkmarkSVG =
-                                        '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/>';
-                                } else {
-                                    // Other buttons use stroke, so use stroked checkmark
-                                    checkmarkSVG =
-                                        '<path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
-                                }
-
-                                icon.innerHTML = checkmarkSVG;
 
                                 // Remove after 1 second
                                 copyTimeouts[key] = setTimeout(() => {
                                     button.classList.remove("copied");
-                                    icon.innerHTML =
-                                        button.dataset.originalIcon;
                                     delete copyTimeouts[key];
                                 }, 1000);
                             })
@@ -798,26 +769,23 @@
                     switch (key) {
                         case "T":
                         case "X":
-                            window.open("https://x.com/uzairkghori", "_blank");
+                            window.location.href = "https://x.com/uzairkghori";
                             buttonSelector =
                                 'a[href="https://x.com/uzairkghori"]';
                             break;
                         case "G":
-                            window.open("https://github.com/u-k-g", "_blank");
+                            window.location.href = "https://github.com/u-k-g";
                             buttonSelector =
                                 'a[href="https://github.com/u-k-g"]';
                             break;
                         case "M":
-                            window.location.href =
-                                "mailto:uzair.k.ghori@outlook.com";
+                            window.location.href = "mailto:ukghori08@gmail.com";
                             buttonSelector =
-                                'a[href="mailto:uzair.k.ghori@outlook.com"]';
+                                'a[href="mailto:ukghori08@gmail.com"]';
                             break;
                         case "S":
-                            window.open(
-                                "https://github.com/u-k-g/ukg",
-                                "_blank",
-                            );
+                            window.location.href =
+                                "https://github.com/u-k-g/ukg";
                             buttonSelector =
                                 'a[href="https://github.com/u-k-g/ukg"]';
                             break;
