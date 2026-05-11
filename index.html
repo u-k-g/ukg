@@ -91,14 +91,15 @@
                 font-family: "Space Grotesk", system-ui, sans-serif;
                 line-height: 1.6;
                 font-size: 16px;
-                padding: 16px 24px 32px;
+                padding: 16px 24px;
                 margin: 0;
+                box-sizing: border-box;
                 position: relative;
                 min-height: 100svh;
                 overflow: auto;
                 display: flex;
-                align-items: flex-start;
-                justify-content: center;
+                flex-direction: column;
+                align-items: center;
             }
 
             body::before {
@@ -153,7 +154,7 @@
             h4 {
                 font-family: "Inter", system-ui, sans-serif;
                 font-weight: 800;
-                color: #a093c7;
+                color: #84a0c6;
                 margin-top: 8px;
                 margin-bottom: 15px;
                 letter-spacing: -0.01em;
@@ -163,30 +164,14 @@
                 font-family: "Qwigley", cursive;
                 font-weight: 400;
                 font-size: 3.2em;
-                color: #84a0c6;
+                color: #a093c7;
                 letter-spacing: -0.02em;
                 margin-top: 0;
                 margin-bottom: -12px;
             }
 
             h2 a {
-                background: linear-gradient(
-                    90deg,
-                    rgba(132, 160, 198, 1) 0%,
-                    rgba(132, 160, 198, 1) 50%,
-                    rgba(132, 160, 198, 1) 100%
-                );
-                background-size: 200% auto;
-                animation: gradientFlow 3s ease infinite;
-                -webkit-background-clip: text;
-                background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-
-            h2 a::before {
-                background-clip: padding-box;
-                -webkit-background-clip: padding-box;
-                -webkit-text-fill-color: #c6c8d1;
+                color: inherit;
             }
 
             p {
@@ -231,6 +216,7 @@
 
             .page {
                 width: min(760px, 100%);
+                margin-block: auto;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -396,8 +382,7 @@
                 }
 
                 body {
-                    padding: 12px 16px 24px;
-                    align-items: flex-start;
+                    padding: 12px 16px;
                 }
 
                 .button-container {
@@ -498,6 +483,8 @@
                     >
                 </h2>
 
+                <p><em>chief deliberation officer</em></p>
+
                 <p>
                     <em>
                         <a
@@ -509,8 +496,6 @@
                         ></em
                     >
                 </p>
-
-                <p><em>passion for engineering and robotics</em></p>
             </section>
 
             <section class="content">
@@ -549,8 +534,7 @@
                             >vex robotics competition (game playing robots)</a
                         >
                         <ul>
-                            <li>cad (prototyping in autodesk fusion)</li>
-                            <li>hardware (building the actual robot)</li>
+                            <li>cad (autodesk fusion)</li>
                             <li>
                                 software
                                 <a
@@ -561,7 +545,6 @@
                                     >(motion control + monte carlo localization)</a
                                 >
                             </li>
-                            <li>documentation of the building process</li>
                         </ul>
                     </li>
                     <li>
@@ -572,14 +555,7 @@
                             target="_blank"
                             >voice controlled computer use</a
                         >
-                        <ul>
-                            <li>
-                                leveraging LLM's agentic abilities to control my
-                                computer with just my voice
-                            </li>
-                        </ul>
                     </li>
-                    <li>various react native applications</li>
                     <li>
                         <a
                             href="https://github.com/u-k-g/drone-pathgen"
@@ -588,12 +564,6 @@
                             target="_blank"
                             >drone path generation python library</a
                         >
-                        <ul>
-                            <li>
-                                collision-free flight path generation in 3d
-                                environments
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </section>
@@ -607,15 +577,6 @@
                         target="_blank"
                     >
                         <div class="button-content">
-                            <svg
-                                class="button-icon"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
-                            >
-                                <path
-                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-                                />
-                            </svg>
                             twitter
                         </div>
                         <span class="button-key">T</span>
@@ -626,17 +587,6 @@
                         target="_blank"
                     >
                         <div class="button-content">
-                            <svg
-                                class="button-icon"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                                />
-                            </svg>
                             github
                         </div>
                         <span class="button-key">G</span>
@@ -646,18 +596,6 @@
                         class="action-button"
                     >
                         <div class="button-content">
-                            <svg
-                                class="button-icon"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                                />
-                                <polyline points="22,6 12,13 2,6" />
-                            </svg>
                             mail
                         </div>
                         <span class="button-key">M</span>
@@ -668,16 +606,6 @@
                         target="_blank"
                     >
                         <div class="button-content">
-                            <svg
-                                class="button-icon"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <polyline points="16,18 22,12 16,6" />
-                                <polyline points="8,6 2,12 8,18" />
-                            </svg>
                             source
                         </div>
                         <span class="button-key">S</span>
