@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link
             rel="icon"
-            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><style>@media (prefers-color-scheme:dark){text{fill:white}}@media (prefers-color-scheme:light){text{fill:black}} text{font-weight:900}</style><text x='50%' y='50%' text-anchor='middle' dominant-baseline='middle' font-size='100'>⁘</text></svg>"
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><style>@media (prefers-color-scheme:dark){text{fill:white}}@media (prefers-color-scheme:light){text{fill:black}} text{font-weight:900}</style><text x='50%' y='50%' text-anchor='middle' dominant-baseline='middle' font-size='100'>›</text></svg>"
         />
         <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Space+Grotesk:wght@400;500;700&family=Qwigley&display=swap"
@@ -91,12 +91,14 @@
                 font-family: "Space Grotesk", system-ui, sans-serif;
                 line-height: 1.6;
                 font-size: 16px;
-                padding: 0 24px;
-                margin: 50px auto;
-                max-width: 650px;
+                padding: 16px 24px 32px;
+                margin: 0;
                 position: relative;
-                min-height: 100vh;
+                min-height: 100svh;
                 overflow: auto;
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
             }
 
             body::before {
@@ -138,14 +140,6 @@
                 z-index: -1;
             }
 
-            #maincontent {
-                max-width: 42em;
-                margin: 16px;
-                padding: 40px;
-                border: 2px solid rgba(70, 90, 255, 0.2);
-                border-radius: 36px;
-            }
-
             a {
                 color: #91acd1;
                 text-decoration: none;
@@ -159,6 +153,10 @@
             h4 {
                 font-family: "Inter", system-ui, sans-serif;
                 font-weight: 800;
+                color: #a093c7;
+                margin-top: 8px;
+                margin-bottom: 15px;
+                letter-spacing: -0.01em;
             }
 
             h2 {
@@ -191,45 +189,6 @@
                 -webkit-text-fill-color: #c6c8d1;
             }
 
-            h4 {
-                color: #a093c7;
-                margin-top: 25px;
-                margin-bottom: 15px;
-                letter-spacing: -0.01em;
-            }
-
-            h4.with-tooltip {
-                position: relative;
-                display: block;
-            }
-
-            h4.with-tooltip::before {
-                content: attr(data-preview);
-                position: absolute;
-                bottom: 100%;
-                left: 0;
-                transform: translateY(-10px);
-                padding: 8px 12px;
-                background: rgba(34, 39, 54, 0.35);
-                backdrop-filter: blur(8px);
-                -webkit-backdrop-filter: blur(8px);
-                color: #c6c8d1;
-                font-size: 14px;
-                border-radius: 6px;
-                white-space: nowrap;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.2s ease;
-                border: 1px solid rgba(132, 160, 198, 0.1);
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            }
-
-            h4.with-tooltip:hover::before {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0);
-            }
-
             p {
                 color: #c6c8d1;
                 letter-spacing: 0.01em;
@@ -238,6 +197,7 @@
             ul {
                 list-style-type: none;
                 padding-left: 0;
+                margin: 0;
             }
 
             li {
@@ -260,13 +220,51 @@
             }
 
             ul ul li::before {
-                content: "※ ";
+                content: "✱ ";
                 color: #91acd1;
             }
 
             p em {
                 color: #84a0c6;
                 font-style: italic;
+            }
+
+            .page {
+                width: min(760px, 100%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .hero {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .hero p {
+                margin: 0;
+            }
+
+            .content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .content > ul {
+                display: inline-block;
+                text-align: left;
+            }
+
+            .button-wrap {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
 
             .link-preview {
@@ -388,8 +386,8 @@
                 grid-template-columns: 1fr 1fr;
                 row-gap: 12px;
                 column-gap: 8px;
-                margin-top: 20px;
-                max-width: 340px;
+                width: fit-content;
+                justify-content: center;
             }
 
             @media (max-width: 500px) {
@@ -398,23 +396,12 @@
                 }
 
                 body {
-                    padding: 0 16px;
-                    margin: 20px auto;
-                }
-
-                #maincontent {
-                    margin: 8px;
-                    padding: 32px;
+                    padding: 12px 16px 24px;
+                    align-items: flex-start;
                 }
 
                 .button-container {
                     grid-template-columns: 1fr;
-                    max-width: none;
-                }
-
-                .action-button {
-                    width: 100%;
-                    max-width: none;
                 }
             }
 
@@ -500,200 +487,204 @@
 
     <body>
         <div class="cursor-follower"></div>
-        <div id="maincontent" style="margin-top: 70px">
-            <h2>
-                <a
-                    href="https://x.com/uzairkghori"
-                    style="color: inherit; text-decoration: none"
-                    target="_blank"
-                    >uzair khan ghori.</a
-                >
-            </h2>
-
-            <p>
-                <em>
+        <main class="page">
+            <section class="hero">
+                <h2>
                     <a
-                        href="https://www.bluevigil.com/"
-                        class="link-preview"
-                        data-preview="specialized tethered drones"
+                        href="https://x.com/uzairkghori"
+                        style="color: inherit; text-decoration: none"
                         target="_blank"
-                        >building drones at blue vigil</a
-                    ></em
-                >
-            </p>
-
-            <p><em>passion for engineering and robotics</em></p>
-
-            <h4>stuff i've done</h4>
-            <ul>
-                <li>
-                    built 3d printers
-                    <ul>
-                        <li>
-                            <a
-                                href="https://x.com/uzairkghori/status/1851831278523293983"
-                                class="link-preview"
-                                data-preview="voron stealthburner i built"
-                                target="_blank"
-                                >hardware</a
-                            >
-                        </li>
-                        <li>
-                            software
-                            <a
-                                href="https://github.com/u-k-g/e3pro"
-                                class="link-preview"
-                                data-preview="tuned klipper config files for my 3d printer"
-                                target="_blank"
-                                >(klipper + motion control)</a
-                            >
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a
-                        href="https://x.com/uzairkghori/status/1909378820156555665"
-                        class="link-preview"
-                        data-preview="watch my vex robot in action"
-                        target="_blank"
-                        >vex robotics competition (game playing robots)</a
+                        >uzair khan ghori.</a
                     >
-                    <ul>
-                        <li>cad (prototyping in autodesk fusion)</li>
-                        <li>hardware (building the actual robot)</li>
-                        <li>
-                            software
-                            <a
-                                href="https://github.com/u-k-g/monte-carlo-localization"
-                                class="link-preview"
-                                data-preview="robot motion control system using odometry and monte carlo localization"
-                                target="_blank"
-                                >(motion control + monte carlo localization)</a
+                </h2>
+
+                <p>
+                    <em>
+                        <a
+                            href="https://www.bluevigil.com/"
+                            class="link-preview"
+                            data-preview="specialized tethered drones"
+                            target="_blank"
+                            >building drones at blue vigil</a
+                        ></em
+                    >
+                </p>
+
+                <p><em>passion for engineering and robotics</em></p>
+            </section>
+
+            <section class="content">
+                <h4>stuff i've done</h4>
+                <ul>
+                    <li>
+                        built 3d printers
+                        <ul>
+                            <li>
+                                <a
+                                    href="https://x.com/uzairkghori/status/1851831278523293983"
+                                    class="link-preview"
+                                    data-preview="voron stealthburner i built"
+                                    target="_blank"
+                                    >hardware</a
+                                >
+                            </li>
+                            <li>
+                                software
+                                <a
+                                    href="https://github.com/u-k-g/e3pro"
+                                    class="link-preview"
+                                    data-preview="tuned klipper config files for my 3d printer"
+                                    target="_blank"
+                                    >(klipper + motion control)</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a
+                            href="https://x.com/uzairkghori/status/1909378820156555665"
+                            class="link-preview"
+                            data-preview="watch my vex robot in action"
+                            target="_blank"
+                            >vex robotics competition (game playing robots)</a
+                        >
+                        <ul>
+                            <li>cad (prototyping in autodesk fusion)</li>
+                            <li>hardware (building the actual robot)</li>
+                            <li>
+                                software
+                                <a
+                                    href="https://github.com/u-k-g/monte-carlo-localization"
+                                    class="link-preview"
+                                    data-preview="robot motion control system using odometry and monte carlo localization"
+                                    target="_blank"
+                                    >(motion control + monte carlo localization)</a
+                                >
+                            </li>
+                            <li>documentation of the building process</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a
+                            href="https://github.com/u-k-g/vacNAV"
+                            class="link-preview"
+                            data-preview="llms control my computer"
+                            target="_blank"
+                            >voice controlled computer use</a
+                        >
+                        <ul>
+                            <li>
+                                leveraging LLM's agentic abilities to control my
+                                computer with just my voice
+                            </li>
+                        </ul>
+                    </li>
+                    <li>various react native applications</li>
+                    <li>
+                        <a
+                            href="https://github.com/u-k-g/drone-pathgen"
+                            class="link-preview"
+                            data-preview="GCOPTER wrapper packaged into an easy to use python library"
+                            target="_blank"
+                            >drone path generation python library</a
+                        >
+                        <ul>
+                            <li>
+                                collision-free flight path generation in 3d
+                                environments
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="button-wrap">
+                <h4>links</h4>
+                <div class="button-container">
+                    <a
+                        href="https://x.com/uzairkghori"
+                        class="action-button"
+                        target="_blank"
+                    >
+                        <div class="button-content">
+                            <svg
+                                class="button-icon"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
                             >
-                        </li>
-                        <li>documentation of the building process</li>
-                    </ul>
-                </li>
-                <li>
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                                />
+                            </svg>
+                            twitter
+                        </div>
+                        <span class="button-key">T</span>
+                    </a>
                     <a
-                        href="https://github.com/u-k-g/vacNAV"
-                        class="link-preview"
-                        data-preview="llms control my computer"
+                        href="https://github.com/u-k-g"
+                        class="action-button"
                         target="_blank"
-                        >voice controlled computer use</a
                     >
-                    <ul>
-                        <li>
-                            leveraging LLM's agentic abilities to control my
-                            computer with just my voice
-                        </li>
-                    </ul>
-                </li>
-
-                <li>various react native applications</li>
-                <li>
+                        <div class="button-content">
+                            <svg
+                                class="button-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                                />
+                            </svg>
+                            github
+                        </div>
+                        <span class="button-key">G</span>
+                    </a>
                     <a
-                        href="https://github.com/u-k-g/drone-pathgen"
-                        class="link-preview"
-                        data-preview="GCOPTER wrapper packaged into an easy to use python library"
-                        target="_blank"
-                        >drone path generation python library</a
+                        href="mailto:uzair.k.ghori@outlook.com"
+                        class="action-button"
                     >
-                    <ul>
-                        <li>
-                            collision-free flight path generation in 3d
-                            environments
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-            <h4>links</h4>
-            <div class="button-container">
-                <a
-                    href="https://x.com/uzairkghori"
-                    class="action-button"
-                    target="_blank"
-                >
-                    <div class="button-content">
-                        <svg
-                            class="button-icon"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                        >
-                            <path
-                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-                            />
-                        </svg>
-                        twitter
-                    </div>
-                    <span class="button-key">T</span>
-                </a>
-                <a
-                    href="https://github.com/u-k-g"
-                    class="action-button"
-                    target="_blank"
-                >
-                    <div class="button-content">
-                        <svg
-                            class="button-icon"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-                            <path
-                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                            />
-                        </svg>
-                        github
-                    </div>
-                    <span class="button-key">G</span>
-                </a>
-                <a
-                    href="mailto:uzair.k.ghori@outlook.com"
-                    class="action-button"
-                >
-                    <div class="button-content">
-                        <svg
-                            class="button-icon"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-                            <path
-                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                            />
-                            <polyline points="22,6 12,13 2,6" />
-                        </svg>
-                        mail
-                    </div>
-                    <span class="button-key">M</span>
-                </a>
-                <a
-                    href="https://github.com/u-k-g/ukg"
-                    class="action-button"
-                    target="_blank"
-                >
-                    <div class="button-content">
-                        <svg
-                            class="button-icon"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-                            <polyline points="16,18 22,12 16,6" />
-                            <polyline points="8,6 2,12 8,18" />
-                        </svg>
-                        source
-                    </div>
-                    <span class="button-key">S</span>
-                </a>
-            </div>
-        </div>
-
+                        <div class="button-content">
+                            <svg
+                                class="button-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                                />
+                                <polyline points="22,6 12,13 2,6" />
+                            </svg>
+                            mail
+                        </div>
+                        <span class="button-key">M</span>
+                    </a>
+                    <a
+                        href="https://github.com/u-k-g/ukg"
+                        class="action-button"
+                        target="_blank"
+                    >
+                        <div class="button-content">
+                            <svg
+                                class="button-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <polyline points="16,18 22,12 16,6" />
+                                <polyline points="8,6 2,12 8,18" />
+                            </svg>
+                            source
+                        </div>
+                        <span class="button-key">S</span>
+                    </a>
+                </div>
+            </section>
+        </main>
         <script>
             let mouseX = 0,
                 mouseY = 0;
