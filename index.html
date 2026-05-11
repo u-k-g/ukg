@@ -616,6 +616,43 @@
             let currentAngle = 0;
             let copyTimeouts = {};
 
+            function getTwitterButtonCenter() {
+                const twitterButton = document.querySelector(
+                    '.button-container a[href="https://x.com/uzairkghori"]',
+                );
+                const twitterRect = twitterButton.getBoundingClientRect();
+
+                return {
+                    x: twitterRect.left + twitterRect.width / 2,
+                    y: twitterRect.top + twitterRect.height / 2,
+                };
+            }
+
+            function initializeCursorFollower() {
+                const cursor = document.querySelector(".cursor-follower");
+                const title = document.querySelector(".hero h2");
+                const titleRect = title.getBoundingClientRect();
+                const initialX = titleRect.left + titleRect.width / 2 - 61;
+                const initialY = titleRect.top - 44;
+                const twitterCenter = getTwitterButtonCenter();
+
+                mouseX = initialX;
+                mouseY = initialY;
+                cursorX = initialX;
+                cursorY = initialY;
+                currentAngle =
+                    (Math.atan2(
+                        twitterCenter.y - initialY,
+                        twitterCenter.x - initialX,
+                    ) *
+                        180) /
+                    Math.PI;
+
+                cursor.style.left = cursorX + "px";
+                cursor.style.top = cursorY + "px";
+                cursor.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
+            }
+
             document.addEventListener("mousemove", (e) => {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
@@ -816,13 +853,9 @@
                 cursorX += (mouseX - cursorX) * 0.36;
                 cursorY += (mouseY - cursorY) * 0.36;
 
-                // Get Twitter button position
-                const twitterButton = document.querySelector(
-                    '.button-container a[href="https://x.com/uzairkghori"]',
-                );
-                const twitterRect = twitterButton.getBoundingClientRect();
-                const twitterX = twitterRect.left + twitterRect.width / 2;
-                const twitterY = twitterRect.top + twitterRect.height / 2;
+                const twitterCenter = getTwitterButtonCenter();
+                const twitterX = twitterCenter.x;
+                const twitterY = twitterCenter.y;
 
                 const deltaX = twitterX - cursorX;
                 const deltaY = twitterY - cursorY;
@@ -850,6 +883,7 @@
                 requestAnimationFrame(animate);
             }
 
+            initializeCursorFollower();
             animate();
 
             document.addEventListener("mouseenter", () => {
