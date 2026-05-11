@@ -154,7 +154,7 @@
             h4 {
                 font-family: "Inter", system-ui, sans-serif;
                 font-weight: 800;
-                color: #84a0c6;
+                color: #c6c8d1;
                 margin-top: 8px;
                 margin-bottom: 15px;
                 letter-spacing: -0.01em;
@@ -179,39 +179,13 @@
                 letter-spacing: 0.01em;
             }
 
-            ul {
-                list-style-type: none;
-                padding-left: 0;
-                margin: 0;
-            }
-
-            li {
-                color: #c6c8d1;
-                margin-bottom: 10px;
-            }
-
-            ul li::before {
-                content: "✦ ";
-                color: #91acd1;
-            }
-
-            ul ul {
-                padding-left: 20px;
-                margin-top: 5px;
-            }
-
-            ul ul li {
-                margin-bottom: 5px;
-            }
-
-            ul ul li::before {
-                content: "✱ ";
-                color: #91acd1;
-            }
-
             p em {
-                color: #84a0c6;
+                color: rgba(132, 160, 198, 0.72);
                 font-style: italic;
+            }
+
+            p em a {
+                color: inherit;
             }
 
             .page {
@@ -240,11 +214,33 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                gap: 14px;
             }
 
-            .content > ul {
-                display: inline-block;
-                text-align: left;
+            .project-list {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .project-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2px;
+            }
+
+            .project-title,
+            .project-title a {
+                color: #84a0c6;
+            }
+
+            .project-meta,
+            .project-meta a {
+                color: rgba(132, 160, 198, 0.72);
+                font-size: 0.95rem;
             }
 
             .button-wrap {
@@ -438,6 +434,7 @@
                 display: flex;
                 align-items: center;
                 gap: 8px;
+                color: #c6c8d1;
             }
 
             .button-icon {
@@ -457,6 +454,7 @@
                 justify-content: center;
                 font-size: 12px;
                 font-weight: 600;
+                color: rgba(132, 160, 198, 0.72);
             }
 
             .action-button.copied {
@@ -500,72 +498,71 @@
 
             <section class="content">
                 <h4>stuff i've done</h4>
-                <ul>
-                    <li>
-                        built 3d printers
-                        <ul>
-                            <li>
-                                <a
-                                    href="https://x.com/uzairkghori/status/1851831278523293983"
-                                    class="link-preview"
-                                    data-preview="voron stealthburner i built"
-                                    target="_blank"
-                                    >hardware</a
-                                >
-                            </li>
-                            <li>
-                                software
-                                <a
-                                    href="https://github.com/u-k-g/e3pro"
-                                    class="link-preview"
-                                    data-preview="tuned klipper config files for my 3d printer"
-                                    target="_blank"
-                                    >(klipper + motion control)</a
-                                >
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a
-                            href="https://x.com/uzairkghori/status/1909378820156555665"
-                            class="link-preview"
-                            data-preview="watch my vex robot in action"
-                            target="_blank"
-                            >vex robotics competition (game playing robots)</a
-                        >
-                        <ul>
-                            <li>cad (autodesk fusion)</li>
-                            <li>
-                                software
-                                <a
-                                    href="https://github.com/u-k-g/monte-carlo-localization"
-                                    class="link-preview"
-                                    data-preview="robot motion control system using odometry and monte carlo localization"
-                                    target="_blank"
-                                    >(motion control + monte carlo localization)</a
-                                >
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a
-                            href="https://github.com/u-k-g/vacNAV"
-                            class="link-preview"
-                            data-preview="llms control my computer"
-                            target="_blank"
-                            >voice controlled computer use</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="https://github.com/u-k-g/drone-pathgen"
-                            class="link-preview"
-                            data-preview="GCOPTER wrapper packaged into an easy to use python library"
-                            target="_blank"
-                            >drone path generation python library</a
-                        >
-                    </li>
-                </ul>
+                <div class="project-list">
+                    <div class="project-item">
+                        <div class="project-title">built 3d printers</div>
+                        <div class="project-meta">
+                            <a
+                                href="https://x.com/uzairkghori/status/1851831278523293983"
+                                class="link-preview"
+                                data-preview="voron stealthburner i built"
+                                target="_blank"
+                                >hardware</a
+                            >
+                            · software
+                            <a
+                                href="https://github.com/u-k-g/e3pro"
+                                class="link-preview"
+                                data-preview="klipper config files for my ender 3"
+                                target="_blank"
+                                >(klipper)</a
+                            >
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-title">
+                            <a
+                                href="https://x.com/uzairkghori/status/1909378820156555665"
+                                class="link-preview"
+                                data-preview="watch my vex robot in action"
+                                target="_blank"
+                                >vex robotics competition (game playing robots)</a
+                            >
+                        </div>
+                        <div class="project-meta">
+                            cad (autodesk fusion) · software
+                            <a
+                                href="https://github.com/u-k-g/monte-carlo-localization"
+                                class="link-preview"
+                                data-preview="robot motion control system using odometry and monte carlo localization"
+                                target="_blank"
+                                >(motion control + monte carlo localization)</a
+                            >
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-title">
+                            <a
+                                href="https://github.com/u-k-g/vacNAV"
+                                class="link-preview"
+                                data-preview="llms control my computer"
+                                target="_blank"
+                                >voice controlled computer use</a
+                            >
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-title">
+                            <a
+                                href="https://github.com/u-k-g/drone-pathgen"
+                                class="link-preview"
+                                data-preview="GCOPTER wrapper packaged into an easy to use python library"
+                                target="_blank"
+                                >drone path generation python library</a
+                            >
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <section class="button-wrap">
