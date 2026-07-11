@@ -1,5 +1,15 @@
 *
 
 !.gitignore
-!.md
-!.html
+
+!.github/
+!.github/**/
+
+!CNAME
+!*.html
+!*.json
+!*.lock
+!*.md
+!*.nix
+!*.ts
+!*.yml

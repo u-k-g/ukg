@@ -1,0 +1,16 @@
+{
+  "allowScripts": ["npm:sharp", "npm:workerd"],
+  "nodeModulesDir": "auto",
+  "imports": {
+    "alchemy": "npm:alchemy@0.93.12",
+    "alchemy/cloudflare": "npm:alchemy@0.93.12/cloudflare",
+    "alchemy/state": "npm:alchemy@0.93.12/state"
+  },
+  "tasks": {
+    "alchemy": "deno run -A npm:alchemy@0.93.12",
+    "build": "nix build .#site --out-link dist",
+    "check": "deno check alchemy.run.ts",
+    "deploy": "deno run -A npm:alchemy@0.93.12 deploy --stage prod",
+    "destroy": "deno run -A npm:alchemy@0.93.12 destroy --stage prod"
+  }
+}
