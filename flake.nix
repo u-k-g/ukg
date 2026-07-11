@@ -9,10 +9,33 @@
   in {
     packages = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
+      iosevka = pkgs.fetchurl {
+        url = "https://cdnjs.cloudflare.com/ajax/libs/Iosevka/11.1.1/iosevka/woff2/iosevka-regular.woff2";
+        hash = "sha256-n0rea9DQb1sJss4H0gROoFcF7togjM/+qSiah95ZyA8=";
+      };
+      qwigley = pkgs.fetchurl {
+        url = "https://fonts.gstatic.com/s/qwigley/v20/1cXzaU3UGJb5tGoCiVtminuCicA.woff2";
+        hash = "sha256-vtSNrjIJbSrRheWPY+inKBbfVF6tD59yAUwjL1H1x4s=";
+      };
     in {
-      site = pkgs.runCommand "ukg-one-site" {} ''
-        mkdir -p "$out"
+      site = pkgs.runCommand "ukg-one-site" {
+        nativeBuildInputs = [
+          pkgs.esbuild
+          (pkgs.python3.withPackages (pythonPackages: [
+            pythonPackages.brotli
+            pythonPackages.fonttools
+          ]))
+        ];
+      } ''
+        mkdir -p "$out/fonts"
         cp ${./index.html} "$out/index.html"
+        esbuild ${./shortcuts.ts} --bundle --minify --platform=browser \
+          --outfile="$out/shortcuts.js"
+        pyftsubset ${iosevka} \
+          --output-file="$out/fonts/iosevka-11.1.1-latin.woff2" \
+          --flavor=woff2 \
+          --unicodes="U+0020-007E,U+00B7,U+203A"
+        cp ${qwigley} "$out/fonts/qwigley-v20-latin.woff2"
       '';
 
       deploy = pkgs.writeShellApplication {

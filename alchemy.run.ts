@@ -23,7 +23,11 @@ const site = await Website("site", {
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
 /index.html
-  Cache-Control: public, max-age=0, must-revalidate`,
+  Cache-Control: public, max-age=0, must-revalidate
+/shortcuts.js
+  Cache-Control: public, max-age=0, must-revalidate
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable`,
   },
   domains: attachProductionDomain
     ? [
