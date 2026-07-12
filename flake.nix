@@ -30,7 +30,9 @@
         mkdir -p "$out/fonts"
         cp ${./index.html} "$out/index.html"
         esbuild ${./shortcuts.ts} --bundle --minify --platform=browser \
-          --outfile="$out/shortcuts.js"
+          --outfile=shortcuts.js
+        substituteInPlace "$out/index.html" \
+          --replace-fail "/* __SHORTCUTS__ */" "$(cat shortcuts.js)"
         pyftsubset ${iosevka} \
           --output-file="$out/fonts/iosevka-11.1.1-latin.woff2" \
           --flavor=woff2 \
