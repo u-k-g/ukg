@@ -193,6 +193,7 @@
         flex-direction: column;
         align-items: center;
         gap: 2px;
+        width: 100%;
       }
 
       .project-title,
@@ -200,10 +201,19 @@
         color: #84a0c6;
       }
 
+      .project-title {
+        position: relative;
+        width: fit-content;
+        max-width: calc(100% - 9ch);
+      }
+
       .project-date {
         color: rgba(132, 160, 198, 0.56);
         font-size: 13px;
         font-style: italic;
+        position: absolute;
+        top: 0;
+        left: 100%;
         margin-left: 1ch;
         white-space: nowrap;
       }
@@ -377,8 +387,7 @@
             <div class="project-meta">
               <a href="https://x.com/uzairkghori/status/1851831278523293983"
               >hardware</a>
-              · software
-              <a href="https://github.com/u-k-g/e3pro">(klipper)</a>
+              · software (klipper)
             </div>
           </div>
           <div class="project-item">
