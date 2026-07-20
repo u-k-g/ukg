@@ -23,8 +23,8 @@ The governing qualities are:
   concrete need.
 - Ship no client-side JavaScript unless it enables a real interaction.
 - Prefer browser-native HTML and CSS over framework code.
-- Avoid hydration, large dependency graphs, animation libraries, and general
-  UI frameworks for pages that do not require them.
+- Avoid hydration, large dependency graphs, animation libraries, and general UI
+  frameworks for pages that do not require them.
 - Keep each page's critical path short. Avoid third-party network requests,
   trackers, tag managers, and externally hosted fonts when assets can be
   self-hosted.
@@ -49,8 +49,8 @@ The governing qualities are:
 
 - Choose the smallest architecture that completely solves the problem.
 - A static project should remain static.
-- Do not introduce a database, backend, container, server, or persistent
-  process until a feature actually requires one.
+- Do not introduce a database, backend, container, server, or persistent process
+  until a feature actually requires one.
 - Keep substantial projects independently deployable, generally with one
   repository, Cloudflare Worker, and `*.ukg.one` subdomain per project.
 - Prefer Cloudflare Workers Static Assets for static sites and browser-based
@@ -68,8 +68,8 @@ The governing qualities are:
 - Dashboard actions are acceptable only when a provider makes them unavoidable,
   such as account creation, registrar nameserver delegation, credential
   issuance, billing, or initial secret entry.
-- Document every unavoidable manual bootstrap step and automate it when a
-  stable API becomes available.
+- Document every unavoidable manual bootstrap step and automate it when a stable
+  API becomes available.
 
 ## Nix
 
@@ -77,8 +77,8 @@ The governing qualities are:
   dependencies, immutable outputs, and declarative configuration.
 - Use Nix whenever it improves reproducibility, portability, validation, or
   operational simplicity.
-- Keep Nix expressions small and readable. Do not add abstraction merely to
-  make something more Nix-like.
+- Keep Nix expressions small and readable. Do not add abstraction merely to make
+  something more Nix-like.
 - Expose useful workflows through the flake, including development shells,
   builds, checks, and deployment apps.
 - Build deployable static assets as Nix derivations when practical.

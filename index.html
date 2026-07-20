@@ -12,275 +12,310 @@
     />
     <link
       rel="preload"
-      href="/fonts/iosevka-11.1.1-latin.woff2"
+      href="fonts/iosevka-11.1.1-latin.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      href="/fonts/qwigley-v20-latin.woff2"
+      href="fonts/qwigley-v20-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="fonts/departure-mono-v1500-regular.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
     <link rel="canonical" href="https://ukg.one" />
     <style>
-      @font-face {
-        font-family: "Iosevka Web";
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url("/fonts/iosevka-11.1.1-latin.woff2") format("woff2");
-      }
+    @font-face {
+      font-family: "Iosevka Web";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("fonts/iosevka-11.1.1-latin.woff2") format("woff2");
+    }
 
-      @font-face {
-        font-family: "Qwigley";
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url("/fonts/qwigley-v20-latin.woff2") format("woff2");
-      }
+    @font-face {
+      font-family: "Qwigley";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("fonts/qwigley-v20-latin.woff2") format("woff2");
+    }
 
-      :root {
-        color-scheme: dark;
-        font-family:
-          "Iosevka Web", ui-monospace, "SFMono-Regular", "SF Mono", Menlo,
-          Consolas, monospace;
-      }
+    @font-face {
+      font-family: "Departure Mono";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("fonts/departure-mono-v1500-regular.woff2") format("woff2");
+    }
 
-      * {
-        box-sizing: border-box;
-      }
+    :root {
+      color-scheme: dark;
+      font-family:
+        "Iosevka Web", ui-monospace, "SFMono-Regular", "SF Mono", Menlo,
+        Consolas, monospace;
+    }
 
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;
+      color: #c6c8d1;
+      line-height: 1.6;
+      font-size: 19px;
+      padding: 16px 24px;
+      margin: 0;
+      position: relative;
+      min-height: 100svh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(
+        circle,
+        rgba(70, 90, 255, 0.22) 1.1px,
+        transparent 1.2px
+      ),
+        url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0.15 0 0 0 0 0.17 0 0 0 0 0.19 0 0 0 0.25 0"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+      background-size: 20px 20px, 80px 80px;
+      mask: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.66) 50%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      -webkit-mask: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.66) 50%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      opacity: 0.75;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    a {
+      color: #91acd1;
+      text-decoration: underline;
+      text-underline-offset: 0.14em;
+      text-decoration-thickness: 0.08em;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: #84a0c6;
+    }
+
+    a:focus-visible {
+      outline: 2px solid #a093c7;
+      outline-offset: 4px;
+      border-radius: 2px;
+    }
+
+    h4 {
+      font-weight: 800;
+      color: #c6c8d1;
+      margin-top: 8px;
+      margin-bottom: 15px;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-family: "Qwigley", cursive;
+      font-weight: 400;
+      font-size: 3.2em;
+      color: #a093c7;
+      letter-spacing: 0;
+      margin-top: 0;
+      margin-bottom: -12px;
+    }
+
+    h2 a {
+      color: inherit;
+    }
+
+    p {
+      color: #c6c8d1;
+      letter-spacing: 0;
+    }
+
+    p em {
+      color: rgba(132, 160, 198, 0.56);
+      font-style: italic;
+    }
+
+    p em a {
+      color: inherit;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(760px, 100%);
+      margin-block: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+
+    .hero p {
+      margin: 0;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .project-list {
+      --project-title-width: 24ch;
+      --project-date-gap: 1.5ch;
+      --project-date-width: 80px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .project-item {
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1fr) var(--project-date-width) var(--project-date-gap)
+        minmax(0, var(--project-title-width)) var(--project-date-gap)
+        var(--project-date-width) minmax(0, 1fr);
+      align-items: start;
+      row-gap: 2px;
+      width: 100%;
+    }
+
+    .project-title,
+    .project-title a {
+      color: #84a0c6;
+    }
+
+    .project-title a,
+    .project-meta a {
+      text-decoration: none;
+    }
+
+    .project-title {
+      display: contents;
+    }
+
+    .project-title-text {
+      grid-column: 4;
+      min-width: 0;
+      text-align: center;
+    }
+
+    .project-date {
+      grid-column: 6;
+      grid-row: 1;
+      justify-self: start;
+      font-family: "Departure Mono", monospace;
+      color: rgba(132, 160, 198, 0.56);
+      font-size: 12px;
+      opacity: 0.42;
+      white-space: nowrap;
+    }
+
+    .project-meta,
+    .project-meta a {
+      color: rgba(132, 160, 198, 0.56);
+      font-size: 12px;
+      font-style: italic;
+    }
+
+    .project-meta {
+      grid-column: 1 / -1;
+      text-align: center;
+    }
+
+    .button-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: min(100%, 33ch);
+      max-width: 100%;
+      padding-top: 12px;
+    }
+
+    .button-wrap::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 100%;
+      border-top: 1px solid rgba(198, 200, 209, 0.16);
+      transform: translateX(-50%);
+    }
+
+    .link-list {
+      font-family: "Departure Mono", monospace;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      font-size: 12px;
+      opacity: 0.42;
+    }
+
+    .hero-role {
+      font-family: "Departure Mono", monospace;
+    }
+
+    ::selection {
+      background: rgba(34, 39, 54, 0.6);
+      color: #c6c8d1;
+    }
+
+    @media (max-width: 500px) {
       body {
-        background-color: #000000;
-        color: #c6c8d1;
-        line-height: 1.6;
-        font-size: 19px;
-        padding: 16px 24px;
-        margin: 0;
-        position: relative;
-        min-height: 100svh;
-        overflow-x: hidden;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        padding: 12px 16px;
       }
+    }
 
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background-image:
-          radial-gradient(
-            circle,
-            rgba(70, 90, 255, 0.22) 1.1px,
-            transparent 1.2px
-          ),
-          url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0.15 0 0 0 0 0.17 0 0 0 0 0.19 0 0 0 0.25 0"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
-        background-size: 20px 20px, 80px 80px;
-        mask: linear-gradient(
-          to top,
-          rgba(0, 0, 0, 1) 0%,
-          rgba(0, 0, 0, 0.66) 50%,
-          rgba(0, 0, 0, 0) 100%
-        );
-        -webkit-mask: linear-gradient(
-          to top,
-          rgba(0, 0, 0, 1) 0%,
-          rgba(0, 0, 0, 0.66) 50%,
-          rgba(0, 0, 0, 0) 100%
-        );
-        opacity: 0.75;
-        pointer-events: none;
-        z-index: 0;
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
       }
-
-      a {
-        color: #91acd1;
-        text-decoration: underline;
-        text-underline-offset: 0.14em;
-        text-decoration-thickness: 0.08em;
-        transition: color 0.2s ease;
-      }
-
-      a:hover {
-        color: #84a0c6;
-      }
-
-      a:focus-visible {
-        outline: 2px solid #a093c7;
-        outline-offset: 4px;
-        border-radius: 2px;
-      }
-
-      h4 {
-        font-weight: 800;
-        color: #c6c8d1;
-        margin-top: 8px;
-        margin-bottom: 15px;
-        letter-spacing: 0;
-      }
-
-      h2 {
-        font-family: "Qwigley", cursive;
-        font-weight: 400;
-        font-size: 3.2em;
-        color: #a093c7;
-        letter-spacing: 0;
-        margin-top: 0;
-        margin-bottom: -12px;
-      }
-
-      h2 a {
-        color: inherit;
-      }
-
-      p {
-        color: #c6c8d1;
-        letter-spacing: 0;
-      }
-
-      p em {
-        color: rgba(132, 160, 198, 0.56);
-        font-style: italic;
-      }
-
-      p em a {
-        color: inherit;
-      }
-
-      .page {
-        position: relative;
-        z-index: 1;
-        width: min(760px, 100%);
-        margin-block: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        text-align: center;
-      }
-
-      .hero {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 10px;
-      }
-
-      .hero p {
-        margin: 0;
-      }
-
-      .content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 14px;
-      }
-
-      .project-list {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .project-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2px;
-        width: 100%;
-      }
-
-      .project-title,
-      .project-title a {
-        color: #84a0c6;
-      }
-
-      .project-title a,
-      .project-meta a {
-        text-decoration: none;
-      }
-
-      .project-title {
-        position: relative;
-        width: fit-content;
-        max-width: calc(100% - 5ch);
-      }
-
-      .project-date {
-        color: rgba(132, 160, 198, 0.56);
-        font-size: 12px;
-        opacity: 0.42;
-        position: absolute;
-        bottom: 0;
-        left: 100%;
-        margin-left: 1ch;
-        white-space: nowrap;
-      }
-
-      .project-meta,
-      .project-meta a {
-        color: rgba(132, 160, 198, 0.56);
-        font-size: 12px;
-        font-style: italic;
-      }
-
-      .button-wrap {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: min(100%, 33ch);
-        max-width: 100%;
-        padding-top: 12px;
-      }
-
-      .button-wrap::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 50%;
-        width: 100%;
-        border-top: 1px solid rgba(198, 200, 209, 0.16);
-        transform: translateX(-50%);
-      }
-
-      .link-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-        font-size: 12px;
-        opacity: 0.42;
-      }
-
-      ::selection {
-        background: rgba(34, 39, 54, 0.6);
-        color: #c6c8d1;
-      }
-
-      @media (max-width: 500px) {
-        body {
-          padding: 12px 16px;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          scroll-behavior: auto !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
+    }
     </style>
 
     <title>ukg.</title>
@@ -296,7 +331,7 @@
           >uzair khan ghori.</a>
         </h2>
 
-        <p class="project-meta">chief deliberation officer</p>
+        <p class="project-meta hero-role">chief deliberation officer</p>
       </section>
 
       <section class="content">
@@ -304,21 +339,27 @@
         <div class="project-list">
           <div class="project-item">
             <div class="project-title">
-              <a href="https://www.bluevigil.com/">sw + ee at blueVigil</a>
+              <span class="project-title-text">
+                <a href="https://www.bluevigil.com/">sw + ee at blueVigil</a>
+              </span>
               <span class="project-date">[2025-2026]</span>
             </div>
           </div>
           <div class="project-item">
             <div class="project-title">
-              <a href="https://github.com/u-k-g/drone-pathgen"
-              >aerial path gen py lib</a>
+              <span class="project-title-text">
+                <a href="https://github.com/u-k-g/drone-pathgen"
+                >aerial path gen py lib</a>
+              </span>
               <span class="project-date">[2025]</span>
             </div>
           </div>
           <div class="project-item">
             <div class="project-title">
-              <a href="https://x.com/uzairkghori/status/1909378820156555665"
-              >vex robotics<br />(game playing robots)</a>
+              <span class="project-title-text">
+                <a href="https://x.com/uzairkghori/status/1909378820156555665"
+                >vex robotics<br />(game playing robots)</a>
+              </span>
               <span class="project-date">[2024-2025]</span>
             </div>
             <div class="project-meta">
@@ -329,7 +370,8 @@
           </div>
           <div class="project-item">
             <div class="project-title">
-              built 3d printers <span class="project-date">[2024]</span>
+              <span class="project-title-text">built 3d printers</span>
+              <span class="project-date">[2024]</span>
             </div>
             <div class="project-meta">
               <a href="https://x.com/uzairkghori/status/1851831278523293983"
@@ -339,8 +381,10 @@
           </div>
           <div class="project-item">
             <div class="project-title">
-              <a href="https://github.com/u-k-g/vacNAV"
-              >voice controlled computer use</a>
+              <span class="project-title-text">
+                <a href="https://github.com/u-k-g/vacNAV"
+                >voice controlled computer use</a>
+              </span>
               <span class="project-date">[2024]</span>
             </div>
           </div>

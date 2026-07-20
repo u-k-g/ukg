@@ -17,10 +17,14 @@
         url = "https://fonts.gstatic.com/s/qwigley/v20/1cXzaU3UGJb5tGoCiVtminuCicA.woff2";
         hash = "sha256-vtSNrjIJbSrRheWPY+inKBbfVF6tD59yAUwjL1H1x4s=";
       };
+      departureMono = pkgs.fetchurl {
+        url = "https://github.com/rektdeckard/departure-mono/releases/download/v1.500/DepartureMono-1.500.zip";
+        hash = "sha256-vz5IBZru9GF+xYW96oHcw0kcV2s+ekcvUvr0DgnuXDo=";
+      };
     in {
       site = pkgs.runCommand "ukg-one-site" {
         nativeBuildInputs = [
-          pkgs.esbuild
+          pkgs.unzip
           (pkgs.python3.withPackages (pythonPackages: [
             pythonPackages.brotli
             pythonPackages.fonttools
@@ -29,15 +33,14 @@
       } ''
         mkdir -p "$out/fonts"
         cp ${./index.html} "$out/index.html"
-        esbuild ${./shortcuts.ts} --bundle --minify --platform=browser \
-          --outfile=shortcuts.js
-        substituteInPlace "$out/index.html" \
-          --replace-fail "/* __SHORTCUTS__ */" "$(cat shortcuts.js)"
         pyftsubset ${iosevka} \
           --output-file="$out/fonts/iosevka-11.1.1-latin.woff2" \
           --flavor=woff2 \
           --unicodes="U+0020-007E,U+00B7,U+203A"
         cp ${qwigley} "$out/fonts/qwigley-v20-latin.woff2"
+        unzip -p ${departureMono} \
+          DepartureMono-1.500/DepartureMono-Regular.woff2 \
+          > "$out/fonts/departure-mono-v1500-regular.woff2"
       '';
 
       deploy = pkgs.writeShellApplication {
