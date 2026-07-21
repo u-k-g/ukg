@@ -17,10 +17,9 @@
         url = "https://github.com/rektdeckard/departure-mono/releases/download/v1.500/DepartureMono-1.500.zip";
         hash = "sha256-vz5IBZru9GF+xYW96oHcw0kcV2s+ekcvUvr0DgnuXDo=";
       };
-      googleFontsRevision = "684b69db51d59a3137ec0152fa3a3afc6f1b3814";
-      instrumentSerif = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/google/fonts/${googleFontsRevision}/ofl/instrumentserif/InstrumentSerif-Regular.ttf";
-        hash = "sha256-SY79Rh9t38t6ERv5pWVwnSCF1IIB1QHq2WDZPoT/u4g=";
+      alagard = pkgs.fetchurl {
+        url = "https://dl.dafont.com/dl/?f=alagard";
+        hash = "sha256-hMPCZ/v7dhrqpqUXqOj2qz9bQN0BVkjyX5/ineKmW6Y=";
       };
     in {
       site = pkgs.runCommand "ukg-one-site" {
@@ -42,7 +41,8 @@
             --unicodes="U+0020-007E,U+00B7,U+203A"
         }
 
-        subset_font ${instrumentSerif} instrument-serif-latin.woff2
+        unzip -p ${alagard} alagard.ttf > alagard.ttf
+        subset_font alagard.ttf alagard-latin.woff2
         cp ${qwigley} "$out/fonts/qwigley-v20-latin.woff2"
         unzip -p ${departureMono} \
           DepartureMono-1.500/DepartureMono-Regular.woff2 \
