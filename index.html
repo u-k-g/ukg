@@ -12,7 +12,7 @@
     />
     <link
       rel="preload"
-      href="fonts/iosevka-11.1.1-latin.woff2"
+      href="fonts/instrument-serif-latin.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -34,14 +34,6 @@
     <link rel="canonical" href="https://ukg.one" />
     <style>
     @font-face {
-      font-family: "Iosevka Web";
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url("fonts/iosevka-11.1.1-latin.woff2") format("woff2");
-    }
-
-    @font-face {
       font-family: "Qwigley";
       font-style: normal;
       font-weight: 400;
@@ -57,11 +49,17 @@
       src: url("fonts/departure-mono-v1500-regular.woff2") format("woff2");
     }
 
+    @font-face {
+      font-family: "Instrument Serif";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("fonts/instrument-serif-latin.woff2") format("woff2");
+    }
+
     :root {
       color-scheme: dark;
-      font-family:
-        "Iosevka Web", ui-monospace, "SFMono-Regular", "SF Mono", Menlo,
-        Consolas, monospace;
+      font-family: "Instrument Serif", Georgia, serif;
     }
 
     * {
@@ -172,6 +170,8 @@
       z-index: 1;
       width: min(760px, 100%);
       margin-block: auto;
+      transform: scale(1.1);
+      transform-origin: center;
       display: flex;
       flex-direction: column;
       align-items: center;
