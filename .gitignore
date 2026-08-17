@@ -5,11 +5,19 @@
 !.github/
 !.github/**/
 
+!resume/
+!resume/**/
+
+!scripts/
+!scripts/**/
+
 !CNAME
 !*.html
 !*.json
 !*.lock
 !*.md
 !*.nix
+!*.nu
 !*.ts
+!*.tex
 !*.yml

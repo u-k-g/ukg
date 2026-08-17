@@ -9,6 +9,7 @@
   "tasks": {
     "alchemy": "deno run -A npm:alchemy@0.93.12",
     "build": "nix build .#site --out-link dist",
+    "build:resume": "nix build .#resume --out-link resume.pdf",
     "check": "deno check alchemy.run.ts",
     "dev": "deno task build && deno run --allow-net --allow-read jsr:@std/http@1.0.19/file-server dist --port 4173",
     "deploy": "deno run -A npm:alchemy@0.93.12 deploy --stage prod",

@@ -1,0 +1,100 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage[letterpaper,margin=0.55in]{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\definecolor{resumeBlue}{HTML}{003B71}
+\hypersetup{
+  colorlinks=true,
+  urlcolor=black,
+  pdfauthor={Uzair Khan Ghori},
+  pdftitle={Uzair Khan Ghori - Resume}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\tabcolsep}{0pt}
+\raggedbottom
+
+\newcommand{\sectionheading}[1]{%
+  \vspace{0.7em}%
+  {\color{resumeBlue}\fontsize{12.5}{14}\selectfont\MakeUppercase{#1}}%
+  \par\vspace{0.15em}%
+  {\color{resumeBlue}\hrule height 0.45pt}%
+  \vspace{0.32em}%
+}
+
+\newcommand{\entry}[3]{%
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+    \textbf{#1} $\mid$ #2 & \textbf{#3}
+  \end{tabular*}%
+}
+
+\newcommand{\project}[3]{%
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+    \textbf{\href{#2}{#1}} & \textbf{#3}
+  \end{tabular*}%
+}
+
+\newcommand{\detail}[1]{%
+  \hspace{0.35em}$\bullet$\hspace{0.55em}#1\par
+}
+
+\begin{document}
+
+\begin{center}
+  {\color{resumeBlue}\fontsize{25}{28}\selectfont Uzair Khan Ghori}\par
+  \vspace{0.15em}
+  \href{mailto:ukghori08@gmail.com}{ukghori08@gmail.com}
+  $\mid$ \href{https://ukg.one}{ukg.one}
+  $\mid$ \href{https://github.com/u-k-g}{github.com/u-k-g}
+  $\mid$ \href{https://x.com/uzairkghori}{x.com/uzairkghori}\par
+  \vspace{0.2em}
+  {\itshape chief deliberation officer}
+\end{center}
+
+\sectionheading{Education}
+
+\entry{Independence High School}{Advanced Diploma}{2022--2025}
+\detail{Graduated one year early with an Advanced Diploma.}
+
+\sectionheading{Experience}
+
+\entry{Blue Vigil}{Embedded Software Engineer}{Aug. 2025--Aug. 2026}
+\detail{Embedded software engineering at \href{https://www.bluevigil.com/}{Blue Vigil}.}
+\detail{Developed \href{https://github.com/BlueVigil/beacon}{Beacon}, a native desktop application for user-friendly Teensy microcontroller flashing and interaction.}
+
+\sectionheading{Projects}
+
+\project{Modular Wearables}{https://github.com/u-k-g/pulse}{2026}
+\detail{Building an nRF52840 modular wearable with embedded Rust firmware, vibration motors, charging circuitry, and tscircuit PCB designs.}
+
+\vspace{0.32em}
+\project{NRP - Nix Release Pinning}{https://github.com/u-k-g/nrp}{2026}
+\detail{Resolves the latest GitHub release during an explicit bump, then writes immutable asset URLs and Nix SRI hashes to a simple release lock file.}
+
+\vspace{0.32em}
+\project{DroneForge Aerial Path Generation}{https://github.com/u-k-g/drone-pathgen}{2025}
+\detail{Built a Python interface for DroneForge that generates smooth, collision-free flight paths in complex 3D environments.}
+
+\vspace{0.32em}
+\project{VEX Robotics}{https://x.com/uzairkghori/status/1909378820156555665}{2024--2025}
+\detail{Game-playing robots; CAD and \href{https://github.com/u-k-g/monte-carlo-localization}{motion control}.}
+
+\vspace{0.32em}
+\project{3D Printers}{https://x.com/uzairkghori/status/1851831278523293983}{2024}
+\detail{Built 3D printers.}
+
+\vspace{0.32em}
+\project{Voice-Controlled Computer Use}{https://github.com/u-k-g/vacNAV}{2024}
+\detail{A voice-controlled computer-use project.}
+
+\sectionheading{Technical Skills}
+
+\textbf{Languages:} Rust, C, C++, Python, TypeScript, Shell, Nushell\par
+\textbf{Embedded \& Hardware:} Teensy, nRF52840, VEX V5, embedded firmware, PCB design, tscircuit, CAD, 3D printing\par
+\textbf{Systems \& Tooling:} Nix, NixOS, Git, GitHub Actions, Just
+
+\end{document}

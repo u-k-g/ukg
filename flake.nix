@@ -9,6 +9,12 @@
   in {
     packages = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
+      tex = pkgs.texliveSmall;
+      resume = pkgs.runCommand "ukg-resume.pdf" {
+        nativeBuildInputs = [pkgs.nushell tex];
+      } ''
+        nu ${./scripts/build-resume.nu} ${./resume/resume.tex} "$out"
+      '';
       qwigley = pkgs.fetchurl {
         url = "https://fonts.gstatic.com/s/qwigley/v20/1cXzaU3UGJb5tGoCiVtminuCicA.woff2";
         hash = "sha256-vtSNrjIJbSrRheWPY+inKBbfVF6tD59yAUwjL1H1x4s=";
@@ -33,6 +39,7 @@
       } ''
         mkdir -p "$out/fonts"
         cp ${./index.html} "$out/index.html"
+        cp ${resume} "$out/resume.pdf"
 
         subset_font() {
           pyftsubset "$1" \
@@ -57,6 +64,8 @@
         '';
       };
 
+      inherit resume;
+
       default = self.packages.${system}.site;
     });
 
@@ -74,9 +83,10 @@
 
     devShells = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
+      tex = pkgs.texliveSmall;
     in {
       default = pkgs.mkShell {
-        packages = [pkgs.deno pkgs.openssl];
+        packages = [pkgs.deno pkgs.nushell pkgs.openssl tex];
       };
     });
   };

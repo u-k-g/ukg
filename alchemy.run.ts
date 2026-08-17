@@ -25,7 +25,9 @@ const site = await Website("site", {
 /index.html
   Cache-Control: public, max-age=0, must-revalidate, no-transform
 /fonts/*
-  Cache-Control: public, max-age=31536000, immutable`,
+  Cache-Control: public, max-age=31536000, immutable
+/resume.pdf
+  Cache-Control: public, max-age=0, must-revalidate, no-transform`,
   },
   domains: attachProductionDomain
     ? [
