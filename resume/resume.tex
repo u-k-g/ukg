@@ -43,7 +43,7 @@
 }
 
 \begin{document}
-\fontsize{9.2}{10.4}\selectfont
+\fontsize{9}{10}\selectfont
 
 \begin{center}
   {\color{resumeBlue}\fontsize{25}{28}\selectfont Uzair Khan Ghori}\par
@@ -63,8 +63,7 @@
 
 \entry{Blue Vigil}{Embedded Software Engineer}{Aug. 2025--Aug. 2026}
 \detail{Wrote embedded C++ for a tethered drone lighting system, integrating RS-485, I2C, OneWire, and UDP across Teensy, Raspberry Pi, 8-bit AVR, and Cube microcontrollers.}
-\detail{Refactored a multi-board firmware monorepo into a modular architecture with safety monitors, fault handlers, and CI/CD pipelines.}
-\detail{Led embedded Linux and firmware migrations to NixOS and embedded Rust, improving safety and system consistency.}
+\detail{Refactored a multi-board firmware monorepo and led migrations to embedded Rust and NixOS, improving safety and system consistency.}
 \detail{Developed \href{https://github.com/BlueVigil/beacon}{Beacon}, a native desktop application for user-friendly Teensy microcontroller flashing and interaction.}
 
 \vspace{0.14em}
@@ -95,6 +94,10 @@
 \detail{Built a Rust and Nix companion CLI that resolves GitHub release assets dynamically during explicit bumps while keeping builds fully static.}
 \detail{Implemented latest-marked and newest-release strategies, configurable asset patterns, and optional prerelease and draft selection.}
 \detail{Prefetches assets through the Nix store, records exact URLs and SRI hashes in a JSON lock file, and reuses hashes when upstream metadata is unchanged.}
+
+\vspace{0.14em}
+\project{Suda}{https://github.com/u-k-g/suda}{2026}
+\detail{Built an opinionated TypeScript Chromium extension from Vimium, combining Helix-style bindings, keyboard-driven browser navigation, and a Zen-style command bar.}
 
 \vspace{0.14em}
 \project{DroneForge Aerial Path Generation}{https://github.com/u-k-g/drone-pathgen}{2025}
