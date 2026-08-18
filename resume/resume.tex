@@ -1,6 +1,6 @@
 \documentclass[10pt,letterpaper]{article}
 
-\usepackage[letterpaper,margin=0.55in]{geometry}
+\usepackage[letterpaper,margin=0.48in]{geometry}
 \usepackage{xcolor}
 \usepackage{hyperref}
 
@@ -19,11 +19,11 @@
 \raggedbottom
 
 \newcommand{\sectionheading}[1]{%
-  \vspace{0.7em}%
-  {\color{resumeBlue}\fontsize{12.5}{14}\selectfont\MakeUppercase{#1}}%
-  \par\vspace{0.15em}%
+  \vspace{0.45em}%
+  {\color{resumeBlue}\fontsize{12}{13}\selectfont\MakeUppercase{#1}}%
+  \par\vspace{0.1em}%
   {\color{resumeBlue}\hrule height 0.45pt}%
-  \vspace{0.32em}%
+  \vspace{0.22em}%
 }
 
 \newcommand{\entry}[3]{%
@@ -43,16 +43,15 @@
 }
 
 \begin{document}
+\fontsize{9.2}{10.4}\selectfont
 
 \begin{center}
   {\color{resumeBlue}\fontsize{25}{28}\selectfont Uzair Khan Ghori}\par
-  \vspace{0.15em}
+  \vspace{0.1em}
   \href{mailto:ukghori08@gmail.com}{ukghori08@gmail.com}
   $\mid$ \href{https://ukg.one}{ukg.one}
   $\mid$ \href{https://github.com/u-k-g}{github.com/u-k-g}
   $\mid$ \href{https://x.com/uzairkghori}{x.com/uzairkghori}\par
-  \vspace{0.2em}
-  {\itshape chief deliberation officer}
 \end{center}
 
 \sectionheading{Education}
@@ -63,38 +62,52 @@
 \sectionheading{Experience}
 
 \entry{Blue Vigil}{Embedded Software Engineer}{Aug. 2025--Aug. 2026}
-\detail{Embedded software engineering at \href{https://www.bluevigil.com/}{Blue Vigil}.}
+\detail{Wrote embedded C++ for a tethered drone lighting system, integrating RS-485, I2C, OneWire, and UDP across Teensy, Raspberry Pi, 8-bit AVR, and Cube microcontrollers.}
+\detail{Refactored a multi-board firmware monorepo into a modular architecture with safety monitors, fault handlers, and CI/CD pipelines.}
+\detail{Led migrations from C++ to embedded Rust and from Raspbian to NixOS, improving safety and system consistency.}
 \detail{Developed \href{https://github.com/BlueVigil/beacon}{Beacon}, a native desktop application for user-friendly Teensy microcontroller flashing and interaction.}
+
+\vspace{0.14em}
+\entry{Independence High School Robotics}{VEX Competition Team Lead}{2024--2025}
+\detail{Coordinated and led a student engineering team through the design, construction, programming, testing, documentation, and competition strategy of multiple game-playing robots.}
+\detail{Prototyped mechanisms in Fusion 360, integrated sensors and actuators, and iterated on physical designs through field testing and debugging.}
+\detail{Developed autonomous motion planning and a 7,500-particle Monte Carlo localization filter combining wheel odometry with field-facing distance sensors to limit pose drift.}
+\detail{Integrated autonomous selection and competition-ready driver control for a six-motor drivetrain using C++20, PROS, LemLib, and LVGL.}
 
 \sectionheading{Projects}
 
 \project{Modular Wearables}{https://github.com/u-k-g/pulse}{2026}
-\detail{Building an nRF52840 modular wearable with embedded Rust firmware, vibration motors, charging circuitry, and tscircuit PCB designs.}
+\detail{Designed modular wearable and charging-dock hardware around an nRF52840, dual haptic motors, battery management, and custom PCB layouts.}
+\detail{Wrote Embassy-based embedded Rust firmware to schedule alarms, sequence both motor channels, control external power, and enter System OFF after each cycle.}
+\detail{Built a repeatable flash workflow that compiles alarm timing into the firmware, converts builds to UF2, detects the bootloader volume, and flashes the device.}
 
-\vspace{0.32em}
+\vspace{0.14em}
 \project{NRP - Nix Release Pinning}{https://github.com/u-k-g/nrp}{2026}
-\detail{Resolves the latest GitHub release during an explicit bump, then writes immutable asset URLs and Nix SRI hashes to a simple release lock file.}
+\detail{Built a Rust and Nix companion CLI that resolves GitHub release assets dynamically during explicit bumps while keeping builds fully static.}
+\detail{Implemented latest-marked and newest-release strategies, configurable asset patterns, and optional prerelease and draft selection.}
+\detail{Prefetches assets through the Nix store, records exact URLs and SRI hashes in a JSON lock file, and reuses hashes when upstream metadata is unchanged.}
 
-\vspace{0.32em}
+\vspace{0.14em}
 \project{DroneForge Aerial Path Generation}{https://github.com/u-k-g/drone-pathgen}{2025}
-\detail{Built a Python interface for DroneForge that generates smooth, collision-free flight paths in complex 3D environments.}
+\detail{Built a lightweight Python interface around GCopter for DroneForge, generating smooth, collision-free multicopter trajectories in complex 3D environments.}
+\detail{Added voxel-map support, safe-flight corridors, jerk-limited trajectories, and optimization for time, energy, feasibility, and vehicle dynamics.}
+\detail{Exposed a NumPy-friendly API with optional Open3D visualization and documented installation, core concepts, examples, and the complete API.}
 
-\vspace{0.32em}
-\project{VEX Robotics}{https://x.com/uzairkghori/status/1909378820156555665}{2024--2025}
-\detail{Game-playing robots; CAD and \href{https://github.com/u-k-g/monte-carlo-localization}{motion control}.}
-
-\vspace{0.32em}
+\vspace{0.14em}
 \project{3D Printers}{https://x.com/uzairkghori/status/1851831278523293983}{2024}
-\detail{Built 3D printers.}
+\detail{Heavily modified an Ender 3 to substantially increase printing speed and performance, including intricate mechanical, electrical, and hardware changes.}
+\detail{Modeled custom parts in Fusion 360 and implemented Klipper firmware for advanced motion control, calibration, and print-quality tuning.}
 
-\vspace{0.32em}
+\vspace{0.14em}
 \project{Voice-Controlled Computer Use}{https://github.com/u-k-g/vacNAV}{2024}
-\detail{A voice-controlled computer-use project.}
+\detail{Developed a hands-free computer navigation system for launching applications, searching the web, controlling media, and adjusting system volume.}
+\detail{Leveraged agentic large language models through Open Interpreter to understand natural-language requests and execute multi-step system actions.}
 
 \sectionheading{Technical Skills}
 
-\textbf{Languages:} Rust, C, C++, Python, TypeScript, Shell, Nushell\par
-\textbf{Embedded \& Hardware:} Teensy, nRF52840, VEX V5, embedded firmware, PCB design, tscircuit, CAD, 3D printing\par
-\textbf{Systems \& Tooling:} Nix, NixOS, Git, GitHub Actions, Just
+\textbf{Languages:} Rust, Embedded C/C++, Python, TypeScript/JavaScript\par
+\textbf{Embedded \& Electrical:} Microcontrollers, single-board computers, HV power systems and rectifiers, multi-board firmware architecture, protocol design\par
+\textbf{Design \& Fabrication:} PCB design, Fusion 360, 3D printing\par
+\textbf{Systems:} Nix, NixOS, CI/CD
 
 \end{document}
