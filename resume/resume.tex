@@ -1,6 +1,6 @@
 \documentclass[10pt,letterpaper]{article}
 
-\usepackage[letterpaper,margin=0.48in]{geometry}
+\usepackage[letterpaper,margin=0.25in]{geometry}
 \usepackage{xcolor}
 \usepackage{hyperref}
 
@@ -18,41 +18,48 @@
 \setlength{\tabcolsep}{0pt}
 \raggedbottom
 
+\newlength{\entryindent}
+\setlength{\entryindent}{0.1in}
+
 \newcommand{\sectionheading}[1]{%
-  \vspace{0.45em}%
-  {\color{resumeBlue}\fontsize{12}{13}\selectfont\MakeUppercase{#1}}%
-  \par\vspace{0.1em}%
+  \vspace{0.4em}%
+  {\color{resumeBlue}\fontsize{10.5}{11.2}\selectfont\bfseries\MakeUppercase{#1}}%
+  \par\vspace{-0.05em}%
   {\color{resumeBlue}\hrule height 0.45pt}%
-  \vspace{0.22em}%
+  \vspace{0.45em}%
 }
 
 \newcommand{\entry}[3]{%
-  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+  \hspace*{\entryindent}%
+  \begin{tabular*}{\dimexpr\textwidth-\entryindent\relax}{@{\extracolsep{\fill}}lr}
     \textbf{#1} $\mid$ #2 & \textbf{#3}
   \end{tabular*}%
 }
 
 \newcommand{\project}[3]{%
-  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+  \hspace*{\entryindent}%
+  \begin{tabular*}{\dimexpr\textwidth-\entryindent\relax}{@{\extracolsep{\fill}}lr}
     \textbf{\href{#2}{#1}} & \textbf{#3}
   \end{tabular*}%
 }
 
 \newcommand{\detail}[1]{%
-  \hspace{0.35em}$\bullet$\hspace{0.55em}#1\par
+  \hspace*{0.12in}$\bullet$\hspace{0.08in}#1\par
 }
 
 \begin{document}
-\fontsize{9}{10}\selectfont
+\fontsize{10}{10.5}\selectfont
 
-\begin{center}
-  {\color{resumeBlue}\fontsize{25}{28}\selectfont Uzair Khan Ghori}\par
-  \vspace{0.1em}
-  \href{mailto:ukghori08@gmail.com}{ukghori08@gmail.com}
-  $\mid$ \href{https://ukg.one}{ukg.one}
-  $\mid$ \href{https://github.com/u-k-g}{github.com/u-k-g}
-  $\mid$ \href{https://x.com/uzairkghori}{x.com/uzairkghori}\par
-\end{center}
+{\centering
+  {\color{resumeBlue}\fontsize{20}{22}\selectfont\bfseries Uzair Khan Ghori}\par
+  \vspace{0.05em}
+  {\fontsize{9.5}{10.5}\selectfont
+    \href{mailto:ukghori08@gmail.com}{ukghori08@gmail.com}
+    $\mid$ \href{https://ukg.one}{ukg.one}
+    $\mid$ \href{https://github.com/u-k-g}{github.com/u-k-g}
+    $\mid$ \href{https://x.com/uzairkghori}{x.com/uzairkghori}\par}
+}
+\vspace{0.05em}
 
 \sectionheading{Education}
 
@@ -66,21 +73,12 @@
 \detail{Refactored a multi-board firmware monorepo and led migrations to embedded Rust and NixOS, improving safety and system consistency.}
 \detail{Developed \href{https://github.com/BlueVigil/beacon}{Beacon}, a native desktop application for user-friendly Teensy microcontroller flashing and interaction.}
 
-\vspace{0.14em}
+\vspace{0.1em}
 \project{VEX V5 Robotics Competition}{https://github.com/u-k-g/monte-carlo-localization}{2024--2025}
+\detail{Developed autonomous motion control and competition-ready driver controls for a six-motor omni-wheel robot using C++20, PROS, LemLib, and LVGL.}
 \detail{Coordinated and led a student engineering team through the design, construction, programming, testing, documentation, and competition strategy of multiple game-playing robots.}
 \detail{Prototyped mechanisms in Fusion 360, integrated sensors and actuators, and iterated on physical designs through field testing and debugging.}
 \detail{Developed autonomous motion planning and a 7,500-particle Monte Carlo localization filter combining wheel odometry with field-facing distance sensors to limit pose drift.}
-\detail{Integrated autonomous selection and competition-ready driver control for a six-motor drivetrain using C++20, PROS, LemLib, and LVGL.}
-
-\sectionheading{Open Source Contributions}
-
-\project{PaperWM.spoon - PR \#162}{https://github.com/mogenson/PaperWM.spoon/pull/162}{2026}
-\detail{Added an opt-in configuration hook for tiling selected non-maximizable macOS windows while preserving default behavior, with user-facing configuration documentation.}
-
-\vspace{0.14em}
-\project{avr-device - PR \#259}{https://github.com/Rahix/avr-device/pull/259}{2026}
-\detail{Added AVR128DB32 peripheral-access support, including vendor ATDF metadata, a Cargo feature, generated device module, public re-exports, and crate documentation.}
 
 \sectionheading{Projects}
 
@@ -89,31 +87,40 @@
 \detail{Wrote Embassy-based embedded Rust firmware to schedule alarms, sequence both motor channels, control external power, and enter System OFF after each cycle.}
 \detail{Built a repeatable flash workflow that compiles alarm timing into the firmware, converts builds to UF2, detects the bootloader volume, and flashes the device.}
 
-\vspace{0.14em}
+\vspace{0.1em}
 \project{NRP - Nix Release Pinning [WIP]}{https://github.com/u-k-g/nrp}{2026}
 \detail{Built a Rust and Nix companion CLI that resolves GitHub release assets dynamically during explicit bumps while keeping builds fully static.}
 \detail{Implemented latest-marked and newest-release strategies, configurable asset patterns, and optional prerelease and draft selection.}
 \detail{Prefetches assets through the Nix store, records exact URLs and SRI hashes in a JSON lock file, and reuses hashes when upstream metadata is unchanged.}
 
-\vspace{0.14em}
+\vspace{0.1em}
 \project{Suda}{https://github.com/u-k-g/suda}{2026}
 \detail{Built an opinionated TypeScript Chromium extension from Vimium, combining Helix-style bindings, keyboard-driven browser navigation, and a Zen-style command bar.}
 
-\vspace{0.14em}
+\vspace{0.1em}
 \project{DroneForge Aerial Path Generation}{https://github.com/u-k-g/drone-pathgen}{2025}
 \detail{Built a lightweight Python interface around GCopter for DroneForge, generating smooth, collision-free multicopter trajectories in complex 3D environments.}
 \detail{Added voxel-map support, safe-flight corridors, jerk-limited trajectories, and optimization for time, energy, feasibility, and vehicle dynamics.}
 \detail{Exposed a NumPy-friendly API with optional Open3D visualization and documented installation, core concepts, examples, and the complete API.}
 
-\vspace{0.14em}
+\vspace{0.1em}
 \project{3D Printers}{https://x.com/uzairkghori/status/1851831278523293983}{2024}
 \detail{Heavily modified an Ender 3 to substantially increase printing speed and performance, including intricate mechanical, electrical, and hardware changes.}
 \detail{Modeled custom parts in Fusion 360 and implemented Klipper firmware for advanced motion control, calibration, and print-quality tuning.}
 
-\vspace{0.14em}
+\vspace{0.1em}
 \project{Voice-Controlled Computer Use}{https://github.com/u-k-g/vacNAV}{2024}
 \detail{Developed a hands-free computer navigation system for launching applications, searching the web, controlling media, and adjusting system volume.}
 \detail{Leveraged agentic large language models through Open Interpreter to understand natural-language requests and execute multi-step system actions.}
+
+\sectionheading{Open Source Contributions}
+
+\project{PaperWM.spoon - PR \#162}{https://github.com/mogenson/PaperWM.spoon/pull/162}{2026}
+\detail{Added an opt-in configuration hook for tiling selected non-maximizable macOS windows while preserving default behavior, with user-facing configuration documentation.}
+
+\vspace{0.1em}
+\project{avr-device - PR \#259}{https://github.com/Rahix/avr-device/pull/259}{2026}
+\detail{Added AVR128DB32 peripheral-access support, including vendor ATDF metadata, a Cargo feature, generated device module, public re-exports, and crate documentation.}
 
 \sectionheading{Technical Skills}
 
