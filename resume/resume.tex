@@ -2,12 +2,21 @@
 
 \usepackage[letterpaper,margin=0.25in]{geometry}
 \usepackage{xcolor}
+\usepackage{fontspec}
 \usepackage{hyperref}
 
-\definecolor{resumeBlue}{HTML}{003B71}
+\definecolor{groveCanvas}{HTML}{F3F7F4}
+\definecolor{groveText}{HTML}{241523}
+\definecolor{groveMuted}{HTML}{746C73}
+\definecolor{groveBorder}{HTML}{CBD5D1}
+\definecolor{groveAccent}{HTML}{1B7D50}
+\newfontfamily\titlefont[
+  Path=./,
+  UprightFont=InstrumentSerif-Regular.ttf
+]{Instrument Serif}
 \hypersetup{
   colorlinks=true,
-  urlcolor=black,
+  urlcolor=groveAccent,
   pdfauthor={Uzair Khan Ghori},
   pdftitle={Uzair Khan Ghori - Resume}
 }
@@ -23,23 +32,23 @@
 
 \newcommand{\sectionheading}[1]{%
   \vspace{0.4em}%
-  {\color{resumeBlue}\fontsize{10.5}{11.2}\selectfont\bfseries\MakeUppercase{#1}}%
+  {\titlefont\color{groveAccent}\fontsize{12}{12.5}\selectfont\MakeUppercase{#1}}%
   \par\vspace{-0.05em}%
-  {\color{resumeBlue}\hrule height 0.45pt}%
+  {\color{groveBorder}\hrule height 0.6pt}%
   \vspace{0.45em}%
 }
 
 \newcommand{\entry}[3]{%
   \hspace*{\entryindent}%
   \begin{tabular*}{\dimexpr\textwidth-\entryindent\relax}{@{\extracolsep{\fill}}lr}
-    \textbf{#1} $\mid$ #2 & \textbf{#3}
+    {\titlefont\fontsize{11.5}{12}\selectfont #1} {\color{groveMuted}$\mid$} #2 & \textbf{#3}
   \end{tabular*}%
 }
 
 \newcommand{\project}[3]{%
   \hspace*{\entryindent}%
   \begin{tabular*}{\dimexpr\textwidth-\entryindent\relax}{@{\extracolsep{\fill}}lr}
-    \textbf{\href{#2}{#1}} & \textbf{#3}
+    {\titlefont\fontsize{11.5}{12}\selectfont\href{#2}{#1}} & \textbf{#3}
   \end{tabular*}%
 }
 
@@ -48,10 +57,12 @@
 }
 
 \begin{document}
+\pagecolor{groveCanvas}
+\color{groveText}
 \fontsize{10}{10.5}\selectfont
 
 {\centering
-  {\color{resumeBlue}\fontsize{20}{22}\selectfont\bfseries Uzair Khan Ghori}\par
+  {\titlefont\color{groveAccent}\fontsize{25}{26}\selectfont Uzair Khan Ghori}\par
   \vspace{0.05em}
   {\fontsize{9.5}{10.5}\selectfont
     \href{mailto:ukghori08@gmail.com}{ukghori08@gmail.com}

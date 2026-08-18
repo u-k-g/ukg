@@ -10,10 +10,14 @@
     packages = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
       tex = pkgs.texliveSmall;
+      instrumentSerif = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/google/fonts/main/ofl/instrumentserif/InstrumentSerif-Regular.ttf";
+        hash = "sha256-SY79Rh9t38t6ERv5pWVwnSCF1IIB1QHq2WDZPoT/u4g=";
+      };
       resume = pkgs.runCommand "ukg-resume.pdf" {
         nativeBuildInputs = [pkgs.nushell tex];
       } ''
-        nu ${./scripts/build-resume.nu} ${./resume/resume.tex} "$out"
+        nu ${./scripts/build-resume.nu} ${./resume/resume.tex} "$out" ${instrumentSerif}
       '';
       qwigley = pkgs.fetchurl {
         url = "https://fonts.gstatic.com/s/qwigley/v20/1cXzaU3UGJb5tGoCiVtminuCicA.woff2";
@@ -65,6 +69,7 @@
       };
 
       inherit resume;
+      "instrument-serif" = instrumentSerif;
 
       default = self.packages.${system}.site;
     });
