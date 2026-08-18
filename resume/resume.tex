@@ -64,25 +64,34 @@
 \entry{Blue Vigil}{Embedded Software Engineer}{Aug. 2025--Aug. 2026}
 \detail{Wrote embedded C++ for a tethered drone lighting system, integrating RS-485, I2C, OneWire, and UDP across Teensy, Raspberry Pi, 8-bit AVR, and Cube microcontrollers.}
 \detail{Refactored a multi-board firmware monorepo into a modular architecture with safety monitors, fault handlers, and CI/CD pipelines.}
-\detail{Led migrations from C++ to embedded Rust and from Raspbian to NixOS, improving safety and system consistency.}
+\detail{Led embedded Linux and firmware migrations to NixOS and embedded Rust, improving safety and system consistency.}
 \detail{Developed \href{https://github.com/BlueVigil/beacon}{Beacon}, a native desktop application for user-friendly Teensy microcontroller flashing and interaction.}
 
 \vspace{0.14em}
-\entry{Independence High School Robotics}{VEX Competition Team Lead}{2024--2025}
+\project{VEX V5 Robotics Competition}{https://github.com/u-k-g/monte-carlo-localization}{2024--2025}
 \detail{Coordinated and led a student engineering team through the design, construction, programming, testing, documentation, and competition strategy of multiple game-playing robots.}
 \detail{Prototyped mechanisms in Fusion 360, integrated sensors and actuators, and iterated on physical designs through field testing and debugging.}
 \detail{Developed autonomous motion planning and a 7,500-particle Monte Carlo localization filter combining wheel odometry with field-facing distance sensors to limit pose drift.}
 \detail{Integrated autonomous selection and competition-ready driver control for a six-motor drivetrain using C++20, PROS, LemLib, and LVGL.}
 
+\sectionheading{Open Source Contributions}
+
+\project{PaperWM.spoon - PR \#162}{https://github.com/mogenson/PaperWM.spoon/pull/162}{2026}
+\detail{Added an opt-in configuration hook for tiling selected non-maximizable macOS windows while preserving default behavior, with user-facing configuration documentation.}
+
+\vspace{0.14em}
+\project{avr-device - PR \#259}{https://github.com/Rahix/avr-device/pull/259}{2026}
+\detail{Added AVR128DB32 peripheral-access support, including vendor ATDF metadata, a Cargo feature, generated device module, public re-exports, and crate documentation.}
+
 \sectionheading{Projects}
 
-\project{Modular Wearables}{https://github.com/u-k-g/pulse}{2026}
+\project{Modular Wearables [WIP]}{https://github.com/u-k-g/pulse}{2026}
 \detail{Designed modular wearable and charging-dock hardware around an nRF52840, dual haptic motors, battery management, and custom PCB layouts.}
 \detail{Wrote Embassy-based embedded Rust firmware to schedule alarms, sequence both motor channels, control external power, and enter System OFF after each cycle.}
 \detail{Built a repeatable flash workflow that compiles alarm timing into the firmware, converts builds to UF2, detects the bootloader volume, and flashes the device.}
 
 \vspace{0.14em}
-\project{NRP - Nix Release Pinning}{https://github.com/u-k-g/nrp}{2026}
+\project{NRP - Nix Release Pinning [WIP]}{https://github.com/u-k-g/nrp}{2026}
 \detail{Built a Rust and Nix companion CLI that resolves GitHub release assets dynamically during explicit bumps while keeping builds fully static.}
 \detail{Implemented latest-marked and newest-release strategies, configurable asset patterns, and optional prerelease and draft selection.}
 \detail{Prefetches assets through the Nix store, records exact URLs and SRI hashes in a JSON lock file, and reuses hashes when upstream metadata is unchanged.}
@@ -108,6 +117,6 @@
 \textbf{Languages:} Rust, Embedded C/C++, Python, TypeScript/JavaScript\par
 \textbf{Embedded \& Electrical:} Microcontrollers, single-board computers, HV power systems and rectifiers, multi-board firmware architecture, protocol design\par
 \textbf{Design \& Fabrication:} PCB design, Fusion 360, 3D printing\par
-\textbf{Systems:} Nix, NixOS, CI/CD
+\textbf{Systems:} Embedded Linux, Nix, NixOS, CI/CD
 
 \end{document}
