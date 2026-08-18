@@ -69,61 +69,63 @@
 \sectionheading{Experience}
 
 \entry{Blue Vigil}{Embedded Software Engineer}{Aug. 2025--Aug. 2026}
-\detail{Wrote embedded C++ for a tethered drone lighting system, integrating RS-485, I2C, OneWire, and UDP across Teensy, Raspberry Pi, 8-bit AVR, and Cube microcontrollers.}
-\detail{Refactored a multi-board firmware monorepo and led migrations to embedded Rust and NixOS, improving safety and system consistency.}
-\detail{Developed \href{https://github.com/BlueVigil/beacon}{Beacon}, a native desktop application for user-friendly Teensy microcontroller flashing and interaction.}
+\detail{Built embedded C++ for a tethered drone light system across Teensy, Raspberry Pi, AVR, and Cube.}
+\detail{Designed device communications over RS-485, I2C, OneWire, and UDP.}
+\detail{Built and maintained a modular multi-board firmware monorepo; led migrations to embedded Rust and NixOS.}
+\detail{Developed \href{https://github.com/BlueVigil/beacon}{Beacon}, a native desktop app for user-friendly Teensy flashing and interaction.}
 
 \vspace{0.1em}
 \project{VEX V5 Robotics Competition}{https://github.com/u-k-g/monte-carlo-localization}{2024--2025}
-\detail{Developed autonomous motion control and competition-ready driver controls for a six-motor omni-wheel robot using C++20, PROS, LemLib, and LVGL.}
-\detail{Coordinated and led a student engineering team through the design, construction, programming, testing, documentation, and competition strategy of multiple game-playing robots.}
-\detail{Prototyped mechanisms in Fusion 360, integrated sensors and actuators, and iterated on physical designs through field testing and debugging.}
-\detail{Developed autonomous motion planning and a 7,500-particle Monte Carlo localization filter combining wheel odometry with field-facing distance sensors to limit pose drift.}
+\detail{Developed autonomous motion and driver controls for a six-motor omni-wheel competition robot.}
+\detail{Led a student team through robot design, construction, programming, testing, documentation, and competition strategy.}
+\detail{Designed mechanisms in Fusion 360, integrated sensors and actuators, and iterated through field testing.}
+\detail{Developed autonomous path planning and a 7,500-particle Monte Carlo localization filter using odometry and distance sensors.}
 
 \sectionheading{Projects}
 
 \project{Modular Wearables [WIP]}{https://github.com/u-k-g/pulse}{2026}
-\detail{Designed modular wearable and charging-dock hardware around an nRF52840, dual haptic motors, battery management, and custom PCB layouts.}
+\detail{Designed modular nRF52840 wearable and charging-dock PCBs with dual haptics and battery management.}
 
 \vspace{0.1em}
 \project{NRP - Nix Release Pinning [WIP]}{https://github.com/u-k-g/nrp}{2026}
-\detail{Built a Rust and Nix companion CLI that resolves GitHub release assets dynamically during explicit bumps while keeping builds fully static.}
-\detail{Implemented latest-marked and newest-release strategies, configurable asset patterns, and optional prerelease and draft selection.}
-\detail{Prefetches assets through the Nix store, records exact URLs and SRI hashes in a JSON lock file, and reuses hashes when upstream metadata is unchanged.}
+\detail{Built a Rust/Nix CLI that pins GitHub release assets as exact URLs and SRI hashes during explicit bumps.}
+\detail{Added latest-marked and newest-release selection, asset patterns, and prerelease/draft controls.}
+\detail{Prefetched assets through Nix, recorded exact URLs and hashes in JSON, and reused hashes when metadata was unchanged.}
 
 \vspace{0.1em}
 \project{Suda}{https://github.com/u-k-g/suda}{2026}
-\detail{Built a Chromium extension from Vimium, combining Helix-style bindings, keyboard-driven browser navigation, and a Zen-style command bar.}
+\detail{Built a Vimium-based Chromium extension with Helix-style bindings, keyboard navigation, and a Zen-style command bar.}
 
 \vspace{0.1em}
 \project{Aerial Path Generation for DroneForge}{https://github.com/u-k-g/drone-pathgen}{2025}
-\detail{Built a lightweight Python interface around GCopter for \href{https://thedroneforge.com/}{DroneForge}, generating smooth, collision-free multicopter trajectories in complex 3D environments.}
-\detail{Added voxel-map support, safe-flight corridors, jerk-limited trajectories, and optimization for time, energy, feasibility, and vehicle dynamics.}
+\detail{Built a Python interface to GCopter for \href{https://thedroneforge.com/}{DroneForge}, generating collision-free multicopter trajectories in 3D environments.}
+\detail{Added voxel maps, safe-flight corridors, jerk-limited trajectories, and time/energy optimization.}
 
 \vspace{0.1em}
 \project{3D Printers}{https://x.com/uzairkghori/status/1851831278523293983}{2024}
-\detail{Heavily modified an Ender 3 to substantially increase printing speed and performance, including intricate mechanical, electrical, and hardware changes.}
-\detail{Modeled custom parts in Fusion 360 and implemented Klipper firmware for advanced motion control, calibration, and print-quality tuning.}
+\detail{Modified an Ender 3 for higher speed and performance through extensive mechanical and electrical changes.}
+\detail{Modeled custom parts in Fusion 360 and configured Klipper for motion control, calibration, and print tuning.}
 
 \vspace{0.1em}
 \project{Voice-Controlled Computer Use}{https://github.com/u-k-g/vacNAV}{2024}
-\detail{Developed a hands-free computer navigation system for launching applications, searching the web, controlling media, and adjusting system volume.}
-\detail{Leveraged agentic large language models through Open Interpreter to understand natural-language requests and execute multi-step system actions.}
+\detail{Built hands-free computer navigation for launching apps, searching the web, controlling media, and adjusting volume.}
+\detail{Used LLM agents through Open Interpreter to interpret natural-language requests and execute multi-step actions.}
 \detail{Published in February 2024, months before Anthropic and OpenAI publicly launched computer-use products.}
 
 \sectionheading{Open Source Contributions}
 
 \project{PaperWM.spoon - PR \#162}{https://github.com/mogenson/PaperWM.spoon/pull/162}{2026}
-\detail{Added an opt-in configuration hook for tiling selected non-maximizable macOS windows while preserving default behavior, with user-facing configuration documentation.}
+\detail{Added opt-in tiling for non-maximizable macOS windows while preserving defaults, with user-facing documentation.}
 
 \vspace{0.1em}
 \project{avr-device - PR \#259}{https://github.com/Rahix/avr-device/pull/259}{2026}
-\detail{Added AVR128DB32 peripheral-access support, including vendor ATDF metadata, a Cargo feature, generated device module, public re-exports, and crate documentation.}
+\detail{Added AVR128DB32 support with vendor ATDF metadata, a Cargo feature, generated modules, re-exports, and documentation.}
 
 \sectionheading{Technical Skills}
 
 \textbf{Languages:} Rust, Embedded C/C++, Python, TypeScript/JavaScript\par
-\textbf{Embedded \& Electrical:} Microcontrollers, single-board computers, HV power systems and rectifiers, multi-board firmware architecture, protocol design\par
+\textbf{Embedded:} Microcontrollers, single-board computers, multi-board firmware architecture, protocol design\par
+\textbf{Electrical:} HV power systems and rectifiers\par
 \textbf{Design \& Fabrication:} PCB design, Fusion 360, 3D printing\par
 \textbf{Systems:} Embedded Linux, Nix, NixOS, CI/CD
 
