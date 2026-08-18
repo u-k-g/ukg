@@ -41,7 +41,8 @@
 \newcommand{\entry}[3]{%
   \hspace*{\entryindent}%
   \begin{tabular*}{\dimexpr\textwidth-\entryindent\relax}{@{\extracolsep{\fill}}lr}
-    {\titlefont\fontsize{11.5}{12}\selectfont #1} {\color{groveMuted}$\mid$} #2 & \textbf{#3}
+    {\titlefont\fontsize{11.5}{12}\selectfont #1}%
+    \if\relax\detokenize{#2}\relax\else\ {\color{groveMuted}$\mid$} #2\fi & \textbf{#3}
   \end{tabular*}%
 }
 
@@ -74,8 +75,8 @@
 
 \sectionheading{Education}
 
-\entry{Independence High School}{Advanced Diploma}{2022--2025}
-\detail{Graduated one year early with an Advanced Diploma.}
+\entry{Northern Virginia Community College}{}{2025}
+\detail{Learned nothing. Dropped out.}
 
 \sectionheading{Experience}
 
@@ -98,7 +99,7 @@
 \detail{Designed modular nRF52840 wearable and charging-dock PCBs with dual haptics and battery management.}
 
 \vspace{0.1em}
-\project{NRP - Nix Release Pinning}{https://github.com/u-k-g/nrp}{[WIP]}
+\project{NRP}{https://github.com/u-k-g/nrp}{[WIP]}
 \detail{Developing a Rust/Nix CLI for pinning GitHub release assets as exact URLs with SRI hashes.}
 
 \vspace{0.1em}
