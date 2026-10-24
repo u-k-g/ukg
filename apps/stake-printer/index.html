@@ -96,6 +96,8 @@
   .row2 .field{flex:1;margin-bottom:0}
   .hint{color:var(--faint);font-size:13px;margin:8px 0 0}
   .actions{display:flex;flex-direction:column;gap:10px}
+  .check{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:13px;font-weight:500;color:var(--muted)}
+  .check input{width:16px;height:16px;margin:0;accent-color:var(--accent-deep)}
   button{
     font:500 14px var(--font);cursor:pointer;border-radius:var(--r-ctrl);border:1px solid transparent;
     height:40px;padding:0 16px;transition:background .12s,border-color .12s,color .12s;
@@ -209,7 +211,7 @@
           <div class="adv">
             <div class="field">
               <label for="printHeight">Print height (in)</label>
-              <input id="printHeight" type="number" value="0.53" min="0.01" max="90" step="0.001" />
+              <input id="printHeight" type="number" value="0.25" min="0.01" max="90" step="0.001" />
             </div>
             <div class="field">
               <label for="reg">Registration</label>
@@ -226,7 +228,7 @@
             </div>
             <div class="field">
               <label for="gap">Gap (in)</label>
-              <input id="gap" type="number" value="0.095" min="0" max="1" step="0.001" />
+              <input id="gap" type="number" value="0.38" min="0" max="1" step="0.001" />
             </div>
             <div class="field">
               <label for="direction">Print orientation</label>
@@ -240,7 +242,8 @@
               <input id="density" type="number" value="1" min="0" max="15" />
             </div>
           </div>
-          <p class="hint">Print height controls TSPL SIZE, not the physical-tag outline. Default 0.53 in. Changing it can change feed spacing; the gap remains a separate setting.</p>
+          <p class="hint">Print height controls TSPL SIZE, not the physical-tag outline. Default 0.25 in. Changing it can change feed spacing; the gap remains a separate setting.</p>
+          <label class="check"><input id="alignmentDot" type="checkbox" /> Alignment dot</label>
         </details>
 
         <div>
@@ -257,11 +260,11 @@
           <div class="row2" style="margin-top:12px">
             <div class="field">
               <label for="offsetY">Bitmap Y (dots)</label>
-              <input id="offsetY" type="number" value="58" min="0" max="65535" step="1" />
+              <input id="offsetY" type="number" value="4" min="0" max="65535" step="1" />
             </div>
             <div class="field">
               <label for="offsetYIn">Bitmap Y (in)</label>
-              <input id="offsetYIn" type="number" value="0.2857" min="0" step="0.001" />
+              <input id="offsetYIn" type="number" value="0.0197" min="0" step="0.001" />
             </div>
           </div>
         </div>
@@ -391,6 +394,7 @@ function restoreSettings(){
       }
       input.value = input.maxLength > 0 ? saved[id].slice(0, input.maxLength) : saved[id];
     }
+    if(saved.alignmentDot === '1' || saved.alignmentDot === '0') $('alignmentDot').checked = saved.alignmentDot === '1';
   } catch {
     log('Could not restore saved settings. Using defaults.', true);
   }
@@ -402,6 +406,7 @@ function saveSettings(){
     if(importedBitmap) saved.importedBitmap = {
       stride: importedBitmap.stride, height: importedBitmap.height, bytes: Array.from(importedBitmap.bytes),
     };
+    saved.alignmentDot = $('alignmentDot').checked ? '1' : '0';
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(saved));
   } catch {
     log('Browser storage is unavailable. Changes will not survive refresh.', true);
@@ -418,10 +423,11 @@ const TAG_PXH = TAG_H * SCALE;
 const CV_H = Math.ceil(CV_PY * 2 + TAG_PXH);
 const ix = v => CV_PX + v * SCALE;
 const iy = v => CV_PY + v * SCALE;
-// Physical registration observed at X 128, Y 52 with a 50-dot two-line bitmap.
+// Printer origin on the physical tag, from the alignment square at X 128, Y 0.
+// Its top-left was 0.57 in from the left edge and 0.17 in from the top edge.
 // Keep this fixed when text, offsets or page settings change. It affects preview only.
-const PREVIEW_ORIGIN_X = -0.03;
-const PREVIEW_ORIGIN_Y = TAG_H / 2 - (52 + 50 / 2) / 203;
+const PREVIEW_ORIGIN_X = 0.57 - 128 / 203;
+const PREVIEW_ORIGIN_Y = 0.17;
 const printerX = dots => ix(PREVIEW_ORIGIN_X + dots / 203);
 const printerY = dots => iy(PREVIEW_ORIGIN_Y + dots / 203);
 
@@ -486,7 +492,7 @@ function opts(){
     name: $('name').value,
     line2: $('line2').value,
     copies: Math.max(1, parseInt($('copies').value || '1', 10)),
-    printHeight: clamp(parseFloat($('printHeight').value) || 0.53, 0.01, 90),
+    printHeight: clamp(parseFloat($('printHeight').value) || 0.25, 0.01, 90),
     reg: $('reg').value,
     gap: parseFloat($('gap').value || '0') || 0,
     speed: $('speed').value,
@@ -593,16 +599,37 @@ function cropToInk(pixels, width, height){
   return { x: left, y: top, width: croppedWidth, height: croppedHeight, pixels: cropped };
 }
 
+const ALIGN_DOT = 8;
+
+function stampAlignmentDot(bitmap){
+  const bytes = new Uint8Array(bitmap.bytes);
+  const size = Math.min(ALIGN_DOT, bitmap.height, bitmap.stride * 8);
+  for(let y = 0; y < size; y++){
+    for(let x = 0; x < size; x++) bytes[y * bitmap.stride + (x >> 3)] &= ~(0x80 >> (x & 7));
+  }
+  return { ...bitmap, bytes };
+}
+
+function alignmentBitmap(o){
+  return stampAlignmentDot({
+    x: o.offsetX, y: o.offsetY, stride: 1, height: ALIGN_DOT, bytes: new Uint8Array(ALIGN_DOT).fill(255),
+  });
+}
+
 function prepareBitmap(o, imported = importedBitmap){
-  if(imported) return { ...imported, x: o.offsetX, y: o.offsetY };
-  if(!o.name && !o.line2) return null;
+  if(imported){
+    const placed = { ...imported, x: o.offsetX, y: o.offsetY };
+    return $('alignmentDot').checked ? stampAlignmentDot(placed) : placed;
+  }
+  if(!o.name && !o.line2) return $('alignmentDot').checked ? alignmentBitmap(o) : null;
   const raster = renderLabel(o);
   const pixels = raster.getContext('2d').getImageData(0, 0, raster.width, raster.height).data;
   const ink = cropToInk(pixels, raster.width, raster.height);
-  if(!ink) return null;
+  if(!ink) return $('alignmentDot').checked ? alignmentBitmap(o) : null;
   const stride = Math.ceil(ink.width / 8);
-  return { x: o.offsetX, y: o.offsetY, stride, height: ink.height,
+  const bitmap = { x: o.offsetX, y: o.offsetY, stride, height: ink.height,
     bytes: packBitmap(ink.pixels, ink.width, ink.height) };
+  return $('alignmentDot').checked ? stampAlignmentDot(bitmap) : bitmap;
 }
 
 function unpackBitmap(bitmap){
@@ -984,6 +1011,7 @@ target.addEventListener('pointercancel', endDrag);
 /* wire up */
 installResetButtons();
 bindOffsetGuides(canvas);
+$('alignmentDot').addEventListener('change', () => { saveSettings(); drawPreview(); });
 $('modeGranularBtn').onclick = () => setMode('granular');
 $('modeListBtn').onclick = () => setMode('list');
 $('connectBtn').onclick = () => { if(device){ device = null; outEp = null; setConn(false); log('Disconnected.'); } else connect(); };

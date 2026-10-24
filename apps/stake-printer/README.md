@@ -38,6 +38,8 @@ pnpm test
 - Download list TSPL bundles those jobs into one file. The importer currently
   accepts single-label files only, not multi-job list bundles.
 - The mode and pasted list persist locally alongside the other form values.
+- Alignment dot adds an 8-dot black square to the sent bitmap. Its top-left
+  corner is the bitmap origin. Measure that corner, not the square's center.
 - USB vendor `0x1203`, product `0x0126`.
 - Two empty text lines, Arial Bold and Arial Regular at 8 pt.
 - Browser rasterization, monochrome packing and TSPL BITMAP output.
@@ -57,18 +59,19 @@ pnpm test
   refresh and are not stored server-side. Storage is
   specific to the browser profile and origin, including the port. Clearing site
   data removes saved settings; private browsing may discard them when closed.
-- Print defaults are SIZE 4.00,0.53, GAP 0.095,0, bitmap offsets X 128
-  and Y 58 dots, and DIRECTION 1,0.
-- Printer settings includes Print height (in), default 0.53, to change the
+- Print defaults are SIZE 4.00,0.25, GAP 0.38,0, bitmap offsets X 128
+  and Y 4 dots, and DIRECTION 1,0.
+- Printer settings includes Print height (in), default 0.25, to change the
   TSPL SIZE height independently of the physical preview. The gap is separate;
   changing the print height can change feed spacing.
 
 The physical preview is 4 by 0.625 inches, with the leftmost 0.5 inches reduced
 to a vertically centered 0.53 inches tall, leaving 0.0475 inches above and below.
 The print page and physical preview heights differ. The
-bitmap is cropped to ink bounds; physical alignment after that change has not
-yet been confirmed on the printer. Tests verify command generation, not hardware
-registration.
+bitmap is cropped to ink bounds. Preview registration comes from one printed
+alignment square at X 128, Y 0: its top-left was 0.57 in from the left edge
+and 0.17 in from the top edge. Tests verify that mapping, not a new hardware
+measurement.
 
 Interface fonts currently load from Google Fonts. Label text uses locally
 available Arial and does not upload text to a rendering service. No hosting or
