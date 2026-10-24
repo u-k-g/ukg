@@ -209,7 +209,7 @@
           <div class="adv">
             <div class="field">
               <label for="printHeight">Print height (in)</label>
-              <input id="printHeight" type="number" value="0.28" min="0.01" max="90" step="0.001" />
+              <input id="printHeight" type="number" value="0.53" min="0.01" max="90" step="0.001" />
             </div>
             <div class="field">
               <label for="reg">Registration</label>
@@ -226,7 +226,7 @@
             </div>
             <div class="field">
               <label for="gap">Gap (in)</label>
-              <input id="gap" type="number" value="0.35" min="0" max="1" step="0.01" />
+              <input id="gap" type="number" value="0.095" min="0" max="1" step="0.001" />
             </div>
             <div class="field">
               <label for="direction">Print orientation</label>
@@ -240,28 +240,28 @@
               <input id="density" type="number" value="1" min="0" max="15" />
             </div>
           </div>
-          <p class="hint">Print height controls TSPL SIZE, not the physical-tag outline. Default 0.28 in. Changing it can change feed spacing; the gap remains a separate setting.</p>
+          <p class="hint">Print height controls TSPL SIZE, not the physical-tag outline. Default 0.53 in. Changing it can change feed spacing; the gap remains a separate setting.</p>
         </details>
 
         <div>
           <div class="row2">
             <div class="field">
               <label for="offsetX">Bitmap X (dots)</label>
-              <input id="offsetX" type="number" value="108" min="0" max="65535" step="1" />
+              <input id="offsetX" type="number" value="128" min="0" max="65535" step="1" />
             </div>
             <div class="field">
               <label for="offsetXIn">Bitmap X (in)</label>
-              <input id="offsetXIn" type="number" value="0.5320" min="0" step="0.001" />
+              <input id="offsetXIn" type="number" value="0.6305" min="0" step="0.001" />
             </div>
           </div>
           <div class="row2" style="margin-top:12px">
             <div class="field">
               <label for="offsetY">Bitmap Y (dots)</label>
-              <input id="offsetY" type="number" value="6" min="0" max="65535" step="1" />
+              <input id="offsetY" type="number" value="52" min="0" max="65535" step="1" />
             </div>
             <div class="field">
               <label for="offsetYIn">Bitmap Y (in)</label>
-              <input id="offsetYIn" type="number" value="0.0296" min="0" step="0.001" />
+              <input id="offsetYIn" type="number" value="0.2562" min="0" step="0.001" />
             </div>
           </div>
         </div>
@@ -480,7 +480,7 @@ function opts(){
     name: $('name').value,
     line2: $('line2').value,
     copies: Math.max(1, parseInt($('copies').value || '1', 10)),
-    printHeight: clamp(parseFloat($('printHeight').value) || 0.28, 0.01, 90),
+    printHeight: clamp(parseFloat($('printHeight').value) || 0.53, 0.01, 90),
     reg: $('reg').value,
     gap: parseFloat($('gap').value || '0') || 0,
     speed: $('speed').value,
@@ -624,11 +624,15 @@ function bitmapCanvas(bitmap){
   return raster;
 }
 
+function formatInches(n){
+  return n.toFixed(3).replace(/0+$/, '').replace(/\.$/, '');
+}
+
 function jobParts(o, bitmap){
   const L = [];
   L.push('SIZE 4.00,' + o.printHeight);
-  if(o.reg === 'gap') L.push('GAP ' + o.gap.toFixed(2) + ',0');
-  else if(o.reg === 'bline') L.push('BLINE ' + o.gap.toFixed(2) + ',0');
+  if(o.reg === 'gap') L.push('GAP ' + formatInches(o.gap) + ',0');
+  else if(o.reg === 'bline') L.push('BLINE ' + formatInches(o.gap) + ',0');
   else if(o.reg === 'continuous') L.push('GAP 0,0');
   L.push('SPEED ' + o.speed);
   L.push('DENSITY ' + o.density);
