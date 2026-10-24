@@ -33,6 +33,7 @@
     --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   }
   *{box-sizing:border-box}
+  [hidden]{display:none !important}
   html,body{margin:0}
   body{
     background:var(--frame);
@@ -47,8 +48,6 @@
   .brand{display:flex;align-items:center;gap:10px;min-width:0}
   .mark{width:22px;height:22px;flex:none;color:var(--ink)}
   .brand .name{font-size:16px;font-weight:600;letter-spacing:-0.01em}
-  .brand .sep{width:1px;height:18px;background:var(--border);margin:0 2px}
-  .brand .scope{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
   .pill{display:inline-flex;align-items:center;gap:7px;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap}
   .pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
@@ -57,10 +56,8 @@
 
   .sheet{background:var(--sheet);border:1px solid var(--border);border-radius:var(--r-sheet);padding:24px;min-height:calc(100vh - 68px);display:flex;flex-direction:column}
 
-  .titlerow{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px}
-  h1{font-size:22px;font-weight:600;letter-spacing:-0.015em;margin:0 0 4px}
-  .sub{color:var(--muted);font-size:14px;margin:0;max-width:52ch}
-  .meta{font:400 13px/1.6 var(--font);font-variant-numeric:tabular-nums;color:var(--faint);white-space:nowrap;text-align:right}
+  .titlerow{margin-bottom:22px}
+  h1{font-size:22px;font-weight:600;letter-spacing:-0.015em;margin:0}
 
   .workspace{display:grid;grid-template-columns:340px minmax(0,1fr);gap:20px;align-items:start}
   .form{display:flex;flex-direction:column;gap:18px;min-width:0}
@@ -68,7 +65,9 @@
   .field:last-child{margin-bottom:0}
   label{font-size:13px;font-weight:500;color:var(--muted)}
   .setting-label{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 8px;min-height:20px}
-  .reset-setting{height:auto;padding:0;background:none;border:0;border-radius:0;font-size:12px;color:var(--accent-deep);text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+  .reset-setting{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;padding:5px;background:none;border:0;border-radius:var(--r-ctrl);color:var(--accent-deep);flex:none}
+  .reset-setting:hover{background:var(--well)}
+  .reset-setting svg{width:16px;height:16px}
   .reset-setting[hidden]{display:none}
   input,select{
     height:40px;width:100%;border:1px solid var(--control);border-radius:var(--r-ctrl);
@@ -78,6 +77,21 @@
     outline:2px solid var(--accent-deep);outline-offset:2px;
   }
   input:focus,select:focus{border-color:var(--accent-deep)}
+  textarea{width:100%;min-height:300px;resize:vertical;padding:12px;border:1px solid var(--control);border-radius:var(--r-ctrl);background:var(--sheet);color:var(--ink);font:400 14px/1.6 var(--font)}
+  textarea:focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+  .granular-inputs{display:flex;flex-direction:column;gap:18px}
+  .mode-switch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .mode-button{display:flex;align-items:center;justify-content:center;gap:8px;height:44px;border:2px solid transparent;background:var(--well);color:var(--muted)}
+  .mode-button svg{width:18px;height:18px;flex:none}
+  .mode-button[aria-pressed="true"]{border-color:var(--accent-deep);background:var(--sheet);color:var(--ink)}
+  .mode-button:hover{border-color:var(--control)}
+  .mode-button[aria-pressed="true"]:hover{border-color:var(--accent-deep)}
+  .list-errors{margin:10px 0 0;padding-left:20px;font-size:13px;color:var(--danger)}
+  .batch-preview{padding:16px 0;border-top:1px solid var(--border)}
+  .batch-preview:first-child{border-top:0;padding-top:0}
+  .batch-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .batch-heading h3{font-size:14px;font-weight:500;margin:0;overflow-wrap:anywhere}
+  .batch-quantity{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--muted)}
   .row2{display:flex;gap:12px}
   .row2 .field{flex:1;margin-bottom:0}
   .hint{color:var(--faint);font-size:13px;margin:8px 0 0}
@@ -104,11 +118,9 @@
   .adv .field{margin-bottom:0}
 
   .canvas{background:var(--well);border:1px solid var(--border);border-radius:var(--r-panel);padding:18px;min-width:0}
-  .canvas-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}
+  .canvas-head{margin-bottom:14px}
   .canvas-head h2{font-size:14px;font-weight:600;margin:0}
-  .canvas-head .dims{font:400 13px/1.5 var(--font);font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
   canvas{display:block;width:100%;height:auto;touch-action:none;cursor:default}
-  .cap{color:var(--muted);font-size:13px;margin:12px 0 0}
   .bitmap-view{margin-top:18px}
   .bitmap-view h3{font-size:14px;margin:0 0 8px;font-weight:600}
   .bitmap-scroll{overflow:auto;background:#ffffff;padding:12px;min-height:48px}
@@ -117,21 +129,10 @@
   .tspl-view h3{font-size:14px;margin:0 0 8px;font-weight:600}
   #tsplPreview{margin:0;padding:14px;background:var(--sheet);border:1px solid var(--border);border-radius:var(--r-ctrl);font:400 13px/1.6 var(--mono);overflow:auto;max-height:300px;white-space:pre}
 
-  .logwrap{margin-top:auto;padding-top:28px}
-  .loglabel{font-size:13px;font-weight:500;color:var(--faint);margin:0 0 8px}
-  #log{
-    font:400 13px/1.6 var(--mono);color:var(--muted);background:var(--sheet);
-    border:1px solid var(--border);border-radius:var(--r-panel);padding:12px 14px;
-    white-space:pre-wrap;max-height:150px;overflow:auto;margin:0;
-  }
   .err{color:var(--danger)}
 
   @media (max-width:820px){
     .workspace{grid-template-columns:1fr}
-    .titlerow{flex-direction:column;gap:8px}
-    .meta{text-align:left;white-space:normal}
-    .brand .scope{display:none}
-    .brand .sep{display:none}
   }
   @media (max-width:520px){
     .app{padding:0 10px 10px}
@@ -151,8 +152,6 @@
         <circle cx="7.4" cy="7.4" r="1.5" fill="var(--accent)" stroke="none"/>
       </svg>
       <span class="name">TTP-247</span>
-      <span class="sep"></span>
-      <span class="scope">Pot-stake printer</span>
       <span id="status" class="pill off"><span class="dot"></span><span id="statusText">Offline</span></span>
     </div>
     <div class="connect">
@@ -164,15 +163,25 @@
 
   <main class="sheet">
     <div class="titlerow">
-      <div>
-        <h1>Stake labels</h1>
-        <p class="sub">Lay a plant name out on the tag, preview it against the real shape, and print over USB with raw TSPL. No driver.</p>
-      </div>
-      <div class="meta">4.00 &times; 0.625 in<br>USB 1203:0126 · Layout v5</div>
+      <h1>Stake labels</h1>
     </div>
 
     <div class="workspace">
       <form class="form" onsubmit="return false">
+        <div class="field">
+          <input id="editMode" type="hidden" value="granular" />
+          <div class="mode-switch" role="group" aria-label="Editing mode">
+            <button id="modeGranularBtn" class="mode-button" type="button" aria-pressed="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/></svg>
+              Granular
+            </button>
+            <button id="modeListBtn" class="mode-button" type="button" aria-pressed="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+              List
+            </button>
+          </div>
+        </div>
+        <div id="granularInputs" class="granular-inputs">
         <div class="field">
           <label for="name">Line one · Arial Bold, 8 pt</label>
           <input id="name" type="text" value="" maxlength="40" autocomplete="off" />
@@ -188,6 +197,13 @@
           </div>
         </div>
 
+        </div>
+        <div id="listInputs" hidden>
+          <label for="listText">Plant names and quantities</label>
+          <textarea id="listText" spellcheck="false" aria-describedby="listSummary"></textarea>
+          <p id="listSummary" class="hint" role="status">Paste a list to preview the labels.</p>
+          <ul id="listErrors" class="list-errors" hidden></ul>
+        </div>
         <details>
           <summary>Printer settings</summary>
           <div class="adv">
@@ -206,7 +222,7 @@
             </div>
             <div class="field">
               <label for="speed">Speed (ips)</label>
-              <select id="speed"><option>2</option><option selected>3</option><option>4</option><option>5</option></select>
+              <select id="speed"><option selected>2</option><option>3</option><option>4</option><option>5</option></select>
             </div>
             <div class="field">
               <label for="gap">Gap (in)</label>
@@ -230,61 +246,73 @@
         <div>
           <div class="row2">
             <div class="field">
-              <label for="padX">Padding X (in)</label>
-              <input id="padX" type="number" value="0.53" min="0" max="2" step="0.01" />
+              <label for="offsetX">Bitmap X (dots)</label>
+              <input id="offsetX" type="number" value="108" min="0" max="65535" step="1" />
             </div>
             <div class="field">
-              <label for="padY">Padding Y (in)</label>
-              <input id="padY" type="number" value="0.03" min="0" max="0.31" step="0.01" />
+              <label for="offsetXIn">Bitmap X (in)</label>
+              <input id="offsetXIn" type="number" value="0.5320" min="0" step="0.001" />
             </div>
           </div>
-          <p class="hint">Drag the guides on the tag, or type a value. Padding is mirrored on both sides of each axis.</p>
+          <div class="row2" style="margin-top:12px">
+            <div class="field">
+              <label for="offsetY">Bitmap Y (dots)</label>
+              <input id="offsetY" type="number" value="6" min="0" max="65535" step="1" />
+            </div>
+            <div class="field">
+              <label for="offsetYIn">Bitmap Y (in)</label>
+              <input id="offsetYIn" type="number" value="0.0296" min="0" step="0.001" />
+            </div>
+          </div>
         </div>
 
         <div class="actions">
           <button id="printBtn" class="btn-primary" disabled>Print label</button>
           <button id="dlBtn" class="btn-secondary" type="button">Download TSPL</button>
+          <button id="importBtn" class="btn-secondary" type="button">Import TSPL</button>
+          <input id="importFile" type="file" accept=".tspl,.tsplk,.prn,.bin,application/octet-stream" hidden />
+          <button id="clearImportBtn" class="btn-secondary" type="button" hidden>Clear imported bitmap</button>
         </div>
-        <p id="settingsStatus" class="hint" role="status">Settings stay in this browser.</p>
+        <p id="importStatus" class="hint" hidden>Imported bitmap. Text cannot be recovered from pixels. Clear it to edit text.</p>
+        <p id="errorMessage" class="hint err" role="alert" hidden></p>
+        <p id="printProgress" class="hint" role="status" hidden></p>
       </form>
 
       <section class="canvas" aria-label="Label preview">
         <div class="canvas-head">
           <h2>Preview</h2>
-          <span class="dims">4.00 &times; 0.625 in</span>
         </div>
-        <canvas id="preview" width="1600" height="390" role="img" aria-label="Stake label showing the left cut-out and padding guides"></canvas>
-        <p class="cap">Main height 0.625 in. The left 0.5 in is 0.53 in tall and vertically centered. Drag the guides to set padding.</p>
+        <div id="granularPreview">
+        <canvas id="preview" width="1600" height="390" role="img" aria-label="Stake label showing the left cut-out and bitmap offset guides"></canvas>
         <div class="bitmap-view">
           <h3>Sent bitmap</h3>
           <div class="bitmap-scroll"><canvas id="wireBitmap" width="1" height="1" role="img" aria-label="Exact monochrome bitmap sent over USB, without preview guides"></canvas></div>
-          <p id="bitmapInfo" class="cap" aria-live="polite">No text, no bitmap sent.</p>
         </div>
         <div class="tspl-view">
           <h3>TSPL preview</h3>
           <pre id="tsplPreview" aria-label="Current TSPL print commands"></pre>
-          <p class="cap">Live commands for the current settings. The binary pixel payload is shown as a byte-count placeholder; Download TSPL includes the real bytes.</p>
         </div>
+        </div>
+        <div id="listPreviews" hidden aria-label="Parsed label previews"></div>
       </section>
     </div>
 
-    <div class="logwrap">
-      <p class="loglabel">Last job</p>
-      <pre id="log">Not connected. Connect the TTP-247 over USB to print.</pre>
-    </div>
   </main>
 </div>
 
 <script>
 const VID = 0x1203, PID = 0x0126;
 let device = null, outEp = null;
+let importedBitmap = null;
+let printing = false;
+const LIST_LINE_TWO = 'www.roothappyplants.com';
 
 const $ = id => document.getElementById(id);
 const hex = n => '0x' + n.toString(16).padStart(4, '0');
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const SETTINGS_KEY = 'ukg.stake-printer.settings.v1';
-const SETTINGS_IDS = ['name', 'line2', 'padX', 'padY', 'copies', 'printHeight', 'reg', 'gap', 'speed', 'density', 'direction'];
-const RESET_SETTING_IDS = SETTINGS_IDS.filter(id => id !== 'name' && id !== 'line2');
+const SETTINGS_IDS = ['name', 'line2', 'offsetX', 'offsetY', 'copies', 'printHeight', 'reg', 'gap', 'speed', 'density', 'direction', 'editMode', 'listText'];
+const RESET_SETTING_IDS = SETTINGS_IDS.filter(id => !['name', 'line2', 'copies', 'editMode', 'listText'].includes(id));
 const resetButtons = new Map();
 
 function defaultSettingValue(input){
@@ -321,7 +349,8 @@ function installResetButtons(){
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'reset-setting';
-    button.textContent = 'Restore default';
+    button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2.6 8.4"/><path d="M3 4v6h6"/></svg>';
+    button.title = 'Restore default';
     button.setAttribute('aria-label', 'Restore default for ' + label.textContent);
     button.addEventListener('click', () => resetSetting(id));
     row.append(label, button);
@@ -335,8 +364,24 @@ function restoreSettings(){
     if(!raw) return;
     const saved = JSON.parse(raw);
     if(!saved || typeof saved !== 'object' || Array.isArray(saved)) return;
+    const image = saved.importedBitmap;
+    if(image && Number.isInteger(image.stride) && image.stride >= 1 && image.stride <= 102 &&
+      Number.isInteger(image.height) && image.height >= 1 && image.height <= 4096 &&
+      Array.isArray(image.bytes) && image.bytes.length === image.stride * image.height &&
+      image.bytes.every(byte => Number.isInteger(byte) && byte >= 0 && byte <= 255)){
+      importedBitmap = { stride: image.stride, height: image.height, bytes: new Uint8Array(image.bytes) };
+    }
+    // Migrate previously saved padding inches to explicit bitmap offsets.
+    for(const axis of ['X', 'Y']){
+      const legacy = saved['pad' + axis];
+      if(saved['offset' + axis] === undefined && typeof legacy === 'string' && legacy.trim() !== '' &&
+        Number.isFinite(Number(legacy)) && Number(legacy) >= 0){
+        saved['offset' + axis] = String(Math.round(Number(legacy) * 203));
+      }
+    }
     for(const id of SETTINGS_IDS){
       if(typeof saved[id] !== 'string') continue;
+      if(id === 'editMode' && !['granular', 'list'].includes(saved[id])) continue;
       const input = $(id);
       if(input.tagName === 'SELECT' && !Array.from(input.options).some(option => option.value === saved[id])) continue;
       if(input.type === 'number' && saved[id] !== ''){
@@ -346,19 +391,20 @@ function restoreSettings(){
       }
       input.value = input.maxLength > 0 ? saved[id].slice(0, input.maxLength) : saved[id];
     }
-    $('settingsStatus').textContent = 'Restored settings from this browser.';
   } catch {
-    $('settingsStatus').textContent = 'Could not restore saved settings. Using defaults.';
+    log('Could not restore saved settings. Using defaults.', true);
   }
 }
 
 function saveSettings(){
   try {
     const saved = Object.fromEntries(SETTINGS_IDS.map(id => [id, $(id).value]));
+    if(importedBitmap) saved.importedBitmap = {
+      stride: importedBitmap.stride, height: importedBitmap.height, bytes: Array.from(importedBitmap.bytes),
+    };
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(saved));
-    $('settingsStatus').textContent = 'Saved in this browser.';
   } catch {
-    $('settingsStatus').textContent = 'Browser storage is unavailable. Changes will not survive refresh.';
+    log('Browser storage is unavailable. Changes will not survive refresh.', true);
   }
 }
 
@@ -372,13 +418,11 @@ const TAG_PXH = TAG_H * SCALE;                    // 230
 const CV_H = Math.ceil(CV_PY * 2 + TAG_PXH); // 390
 const ix = v => CV_PX + v * SCALE;
 const iy = v => CV_PY + v * SCALE;
-const invX = px => (px - CV_PX) / SCALE;
-const invY = py => (py - CV_PY) / SCALE;
 
 function setConn(on){
   $('status').className = 'pill ' + (on ? 'on' : 'off');
   $('statusText').textContent = on ? 'Connected' : 'Offline';
-  $('printBtn').disabled = !on;
+  updatePrintControls();
   const btn = $('connectBtn');
   btn.classList.toggle('btn-primary', !on);
   btn.classList.toggle('btn-secondary', on);
@@ -387,9 +431,9 @@ function setConn(on){
 }
 
 function log(msg, isError){
-  const el = $('log');
-  el.textContent = msg;
-  el.classList.toggle('err', !!isError);
+  const el = $('errorMessage');
+  el.textContent = isError ? msg : '';
+  el.hidden = !isError;
 }
 
 function findBulkOut(d){
@@ -442,9 +486,54 @@ function opts(){
     speed: $('speed').value,
     direction: $('direction').value,
     density: parseInt($('density').value || '1', 10),
-    padX: clamp(parseFloat($('padX').value || '0') || 0, 0, TAG_W / 2),
-    padY: clamp(parseFloat($('padY').value || '0') || 0, 0, TAG_H / 2),
+    offsetX: clamp(Math.round(Number($('offsetX').value) || 0), 0, 65535),
+    offsetY: clamp(Math.round(Number($('offsetY').value) || 0), 0, 65535),
   };
+}
+
+function parsePlantList(text){
+  const entries = [], errors = [];
+  text.split(/\r\n|\n|\r/).forEach((raw, index) => {
+    const line = raw.trim();
+    if(!line) return;
+    const match = /^(.*?)\s+(\d+)$/u.exec(line);
+    if(!match || !match[1].trim()){
+      errors.push({ line: index + 1, message: 'End the line with a whole-number quantity, separated by spaces or a tab.' });
+      return;
+    }
+    const copies = Number(match[2]);
+    if(!Number.isSafeInteger(copies) || copies < 1 || copies > 999){
+      errors.push({ line: index + 1, message: 'Quantity must be between 1 and 999.' });
+      return;
+    }
+    entries.push({ name: match[1].trim().replace(/\s+/gu, ' '), copies, line: index + 1 });
+  });
+  return { entries, errors, total: entries.reduce((sum, entry) => sum + entry.copies, 0) };
+}
+
+function listOptions(base, entry){
+  return { ...base, name: entry.name, line2: LIST_LINE_TWO, copies: entry.copies };
+}
+
+function setMode(mode){
+  if(printing) return;
+  $('editMode').value = mode;
+  saveSettings();
+  drawPreview();
+}
+
+function updatePrintControls(parsed = parsePlantList($('listText').value)){
+  const list = $('editMode').value === 'list';
+  $('modeGranularBtn').setAttribute('aria-pressed', String(!list));
+  $('modeListBtn').setAttribute('aria-pressed', String(list));
+  $('modeGranularBtn').disabled = $('modeListBtn').disabled = printing;
+  const invalid = list && (!parsed.entries.length || parsed.errors.length > 0);
+  $('printBtn').disabled = printing || !device || invalid;
+  $('printBtn').textContent = printing ? 'Sending…' : list ? 'Print ' + parsed.total.toLocaleString() + ' labels' : 'Print label';
+  $('dlBtn').disabled = printing || invalid;
+  $('dlBtn').textContent = list ? 'Download list TSPL' : 'Download TSPL';
+  $('connectBtn').disabled = $('importBtn').disabled = $('clearImportBtn').disabled = printing;
+  $('editMode').disabled = $('listText').disabled = printing;
 }
 
 function renderLabel(o){
@@ -455,25 +544,14 @@ function renderLabel(o){
   const ctx = raster.getContext('2d');
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, raster.width, raster.height);
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(o.padX * dpi, o.padY * dpi,
-    Math.max(0, (TAG_W - 2 * o.padX) * dpi),
-    Math.max(0, (TAG_H - 2 * o.padY) * dpi));
-  ctx.clip();
   ctx.fillStyle = '#000000';
   ctx.textBaseline = 'top';
   const fontSize = 8 * dpi / 72;
   const lineHeight = Math.round(fontSize * 1.25);
   ctx.font = '700 ' + fontSize + 'px Arial';
-  ctx.fillText(o.name, Math.round(o.padX * dpi), Math.round(o.padY * dpi));
+  ctx.fillText(o.name, 0, 0);
   ctx.font = '400 ' + fontSize + 'px Arial';
-  ctx.fillText(o.line2, Math.round(o.padX * dpi), Math.round(o.padY * dpi) + lineHeight);
-  ctx.restore();
-  // The narrower left section leaves equal cut-outs above and below it.
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, Math.round(LEFT_W * dpi), Math.round(LEFT_INSET * dpi));
-  ctx.fillRect(0, Math.round((TAG_H - LEFT_INSET) * dpi), Math.round(LEFT_W * dpi), raster.height);
+  ctx.fillText(o.line2, 0, lineHeight);
   return raster;
 }
 
@@ -509,14 +587,15 @@ function cropToInk(pixels, width, height){
   return { x: left, y: top, width: croppedWidth, height: croppedHeight, pixels: cropped };
 }
 
-function prepareBitmap(o){
+function prepareBitmap(o, imported = importedBitmap){
+  if(imported) return { ...imported, x: o.offsetX, y: o.offsetY };
   if(!o.name && !o.line2) return null;
   const raster = renderLabel(o);
   const pixels = raster.getContext('2d').getImageData(0, 0, raster.width, raster.height).data;
   const ink = cropToInk(pixels, raster.width, raster.height);
   if(!ink) return null;
   const stride = Math.ceil(ink.width / 8);
-  return { x: ink.x, y: ink.y, stride, height: ink.height,
+  return { x: o.offsetX, y: o.offsetY, stride, height: ink.height,
     bytes: packBitmap(ink.pixels, ink.width, ink.height) };
 }
 
@@ -565,9 +644,9 @@ function jobParts(o, bitmap){
   return parts;
 }
 
-function buildTSPL(o){
+function buildTSPL(o, bitmap = prepareBitmap(o)){
   const encoder = new TextEncoder();
-  const parts = jobParts(o, prepareBitmap(o)).map(part =>
+  const parts = jobParts(o, bitmap).map(part =>
     typeof part === 'string' ? encoder.encode(part) : part);
   const result = new Uint8Array(parts.reduce((sum, p) => sum + p.length, 0));
   let offset = 0;
@@ -575,27 +654,141 @@ function buildTSPL(o){
   return result;
 }
 
+function currentJobs(){
+  const base = opts();
+  if($('editMode').value !== 'list') return [{ name: base.name, copies: base.copies, bytes: buildTSPL(base) }];
+  const parsed = parsePlantList($('listText').value);
+  if(parsed.errors.length || !parsed.entries.length) throw new Error('Fix the list errors before printing or downloading.');
+  return parsed.entries.map(entry => {
+    const o = listOptions(base, entry);
+    return { name: o.name, copies: o.copies, bytes: buildTSPL(o, prepareBitmap(o, null)) };
+  });
+}
+
+async function sendPrintJobs(target, endpoint, jobs, progress){
+  for(let index = 0; index < jobs.length; index++){
+    progress(index, jobs[index]);
+    try {
+      const bytes = jobs[index].bytes;
+      const result = await target.transferOut(endpoint, bytes);
+      if(result.status !== 'ok' || result.bytesWritten !== bytes.length) throw new Error('USB transfer incomplete');
+    } catch(error){
+      throw new Error('Stopped at batch ' + (index + 1) + ' of ' + jobs.length + ': ' + error.message +
+        '. Earlier batches were sent. This batch may be partially sent; do not retry the whole list blindly.');
+    }
+  }
+}
+
 async function printLabel(){
+  if(printing) return;
   if(!device || !outEp){ log('Not connected.', true); return; }
-  const o = opts();
-  const tspl = buildTSPL(o);
-  try{
-    const result = await device.transferOut(outEp.endpointNumber, tspl);
-    if(result.status !== 'ok' || result.bytesWritten !== tspl.length) throw new Error('USB transfer incomplete');
-    log('Layout v5 · Sent ' + tspl.length + ' bytes.\n' +
-      'SIZE 4.00,' + o.printHeight + ' · DIRECTION ' + o.direction + ',0\n' +
-      'Padding X ' + o.padX + ' in · Y ' + o.padY + ' in.\n' +
-      'Arial Bold / Regular, 8 pt. Bitmap trimmed to text bounds.');
-  }catch(e){ log('Print failed: ' + e.message, true); }
+  try {
+    const jobs = currentJobs();
+    printing = true;
+    updatePrintControls();
+    log();
+    $('printProgress').hidden = false;
+    await sendPrintJobs(device, outEp.endpointNumber, jobs, (index, job) => {
+      $('printProgress').textContent = 'Sending batch ' + (index + 1) + ' of ' + jobs.length + ' · ' + job.name + ' · ' + job.copies + ' labels';
+    });
+  } catch(error){ log(error.message, true); }
+  finally {
+    printing = false;
+    $('printProgress').hidden = true;
+    updatePrintControls();
+  }
 }
 
 function download(){
-  const blob = new Blob([buildTSPL(opts())], { type:'application/octet-stream' });
+  let jobs;
+  try { jobs = currentJobs(); }
+  catch(error){ log(error.message, true); return; }
+  const blob = new Blob(jobs.map(job => job.bytes), { type:'application/octet-stream' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'label.tspl';
+  a.download = $('editMode').value === 'list' ? 'labels.tspl' : 'label.tspl';
   a.click();
   URL.revokeObjectURL(a.href);
+}
+
+function parseTSPL(bytes){
+  if(bytes.length > 1024 * 1024) throw new Error('TSPL file exceeds 1 MB.');
+  const decoder = new TextDecoder('ascii');
+  const settings = { name: '', line2: '', reg: 'current' };
+  const seen = new Set();
+  let bitmap = null, pos = 0;
+  while(pos < bytes.length){
+    if(bytes[pos] === 13 || bytes[pos] === 10){ pos++; continue; }
+    if(seen.has('PRINT')) throw new Error('Only one print job can be imported.');
+    const prefix = decoder.decode(bytes.subarray(pos, pos + 100));
+    const image = /^BITMAP\s+(\d+),(\d+),(\d+),(\d+),0,/i.exec(prefix);
+    if(image){
+      if(bitmap || !seen.has('CLS')) throw new Error('Expected one bitmap after CLS.');
+      const [x, y, stride, height] = image.slice(1).map(Number);
+      if(x > 65535 || y > 65535 || stride < 1 || stride > 102 || height < 1 || height > 4096){
+        throw new Error('Bitmap dimensions or coordinates are outside the supported range.');
+      }
+      pos += image[0].length;
+      const end = pos + stride * height;
+      if(end > bytes.length) throw new Error('Bitmap pixel data is truncated.');
+      bitmap = { stride, height, bytes: bytes.slice(pos, end) };
+      settings.offsetX = String(x); settings.offsetY = String(y);
+      pos = end;
+      if(bytes[pos] !== 13 && bytes[pos] !== 10) throw new Error('Missing line ending after bitmap pixels.');
+      continue;
+    }
+    const end = bytes.indexOf(10, pos);
+    const lineEnd = end < 0 ? bytes.length : end;
+    const line = decoder.decode(bytes.subarray(pos, lineEnd)).trim();
+    pos = lineEnd + 1;
+    const command = line.split(/\s/)[0].toUpperCase();
+    if(seen.has(command)) throw new Error('Repeated command: ' + command);
+    let match;
+    if((match = /^SIZE\s+4(?:\.0+)?,([\d.]+)$/i.exec(line))){
+      const height = Number(match[1]);
+      if(!Number.isFinite(height) || height < 0.01 || height > 90) throw new Error('Invalid print height.');
+      settings.printHeight = String(height);
+    } else if((match = /^(GAP|BLINE)\s+([\d.]+),0$/i.exec(line))){
+      if(seen.has('GAP') || seen.has('BLINE')) throw new Error('Conflicting registration commands.');
+      const gap = Number(match[2]);
+      if(!Number.isFinite(gap) || gap < 0 || gap > 1) throw new Error('Invalid gap.');
+      settings.reg = match[1].toUpperCase() === 'BLINE' ? 'bline' : gap === 0 ? 'continuous' : 'gap';
+      settings.gap = String(gap);
+    } else if((match = /^SPEED\s+([2-5])$/i.exec(line))){
+      settings.speed = match[1];
+    } else if((match = /^DENSITY\s+(\d+)$/i.exec(line)) && Number(match[1]) <= 15){
+      settings.density = String(Number(match[1]));
+    } else if((match = /^DIRECTION\s+([01]),0$/i.exec(line))){
+      settings.direction = match[1];
+    } else if(/^CLS$/i.test(line)){
+      if(bitmap) throw new Error('CLS after bitmap is not supported.');
+    } else if((match = /^PRINT\s+(\d+),1$/i.exec(line)) && Number(match[1]) >= 1 && Number(match[1]) <= 999){
+      if(!seen.has('CLS')) throw new Error('Missing CLS before PRINT.');
+      settings.copies = String(Number(match[1]));
+    } else {
+      throw new Error('Unsupported TSPL command: ' + line.slice(0, 80) + '. Import a file exported by this app.');
+    }
+    seen.add(command);
+  }
+  if(!seen.has('SIZE') || !seen.has('PRINT')) throw new Error('Missing SIZE or PRINT command.');
+  return { settings, bitmap };
+}
+
+async function importFile(file){
+  if(!file) return;
+  try {
+    if(file.size > 1024 * 1024) throw new Error('TSPL file exceeds 1 MB.');
+    const parsed = parseTSPL(new Uint8Array(await file.arrayBuffer()));
+    for(const [id, value] of Object.entries(parsed.settings)) $(id).value = value;
+    importedBitmap = parsed.bitmap;
+    $('editMode').value = 'granular';
+    saveSettings();
+    drawPreview();
+    log('Imported ' + file.name + '. Nothing sent to the printer.');
+  } catch(error){
+    log('Import failed: ' + error.message, true);
+  }
+  $('importFile').value = '';
 }
 
 /* ---------- preview ---------- */
@@ -612,19 +805,22 @@ function tagPath(ctx, off){
   ctx.closePath();
 }
 
-function vdim(ctx, x, yA, yB, label){
-  ctx.strokeStyle = '#9aa39b'; ctx.lineWidth = 1.5;
-  ctx.beginPath(); ctx.moveTo(x, yA); ctx.lineTo(x, yB); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(x - 8, yA); ctx.lineTo(x + 8, yA);
-  ctx.moveTo(x - 8, yB); ctx.lineTo(x + 8, yB); ctx.stroke();
-  ctx.save(); ctx.translate(x - 14, (yA + yB) / 2); ctx.rotate(-Math.PI / 2);
-  ctx.fillStyle = '#5f6b63'; ctx.font = '500 30px "IBM Plex Sans", Inter, sans-serif';
-  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(label, 0, 0); ctx.restore();
-}
-
 function drawPreview(){
+  const list = $('editMode').value === 'list';
+  $('granularInputs').hidden = $('granularPreview').hidden = list;
+  $('listInputs').hidden = $('listPreviews').hidden = !list;
+  $('name').disabled = $('line2').disabled = !!importedBitmap;
+  $('clearImportBtn').hidden = $('importStatus').hidden = list || !importedBitmap;
   updateResetButtons();
   const o = opts();
+  $('offsetXIn').value = (o.offsetX / 203).toFixed(4);
+  $('offsetYIn').value = (o.offsetY / 203).toFixed(4);
+  const parsed = parsePlantList($('listText').value);
+  updatePrintControls(parsed);
+  if(list){
+    renderListPreviews(parsed, o);
+    return;
+  }
   const bitmap = prepareBitmap(o);
   $('tsplPreview').textContent = jobParts(o, bitmap).map(part =>
     typeof part === 'string' ? part : '<binary pixels: ' + part.length + ' bytes>').join('');
@@ -634,10 +830,64 @@ function drawPreview(){
   wire.height = image ? image.height : 1;
   const wireCtx = wire.getContext('2d');
   if(image) wireCtx.drawImage(image, 0, 0);
-  $('bitmapInfo').textContent = bitmap
-    ? (bitmap.stride * 8) + ' × ' + bitmap.height + ' dots · ' + bitmap.bytes.length + ' bytes · BITMAP ' + bitmap.x + ',' + bitmap.y + ',' + bitmap.stride + ',' + bitmap.height + ',0. One screen pixel per printer dot. Guides are not sent.'
-    : 'No text, no bitmap sent.';
-  const c = $('preview'), ctx = c.getContext('2d');
+  drawTag($('preview'), o, bitmap, image);
+}
+
+let listPreviewKey = null;
+let listPreviewNodes = [];
+
+function renderListPreviews(parsed, base){
+  $('listSummary').textContent = parsed.entries.length
+    ? parsed.entries.length + ' batches · ' + parsed.total.toLocaleString() + ' labels' +
+      (parsed.errors.length ? ' · fix ' + parsed.errors.length + ' invalid rows before printing' : '')
+    : parsed.errors.length ? 'No valid rows. Fix the errors below.' : 'Paste a list to preview the labels.';
+  $('listErrors').hidden = parsed.errors.length === 0;
+  $('listErrors').replaceChildren();
+  for(const error of parsed.errors){
+    const item = document.createElement('li');
+    item.textContent = 'Line ' + error.line + ': ' + error.message;
+    $('listErrors').append(item);
+  }
+  const key = JSON.stringify(parsed.entries);
+  if(key !== listPreviewKey){
+    $('listPreviews').replaceChildren();
+    listPreviewNodes = [];
+    for(const entry of parsed.entries){
+      const article = document.createElement('article');
+      article.className = 'batch-preview';
+      const heading = document.createElement('div');
+      heading.className = 'batch-heading';
+      const name = document.createElement('h3');
+      name.textContent = entry.name;
+      const quantity = document.createElement('span');
+      quantity.className = 'batch-quantity';
+      quantity.textContent = entry.copies + ' labels';
+      heading.append(name, quantity);
+      const preview = document.createElement('canvas');
+      preview.width = CV_W; preview.height = CV_H;
+      preview.setAttribute('role', 'img');
+      preview.setAttribute('aria-label', entry.name + ', ' + entry.copies + ' labels');
+      bindOffsetGuides(preview);
+      article.append(heading, preview);
+      $('listPreviews').append(article);
+      listPreviewNodes.push(preview);
+    }
+    if(!parsed.entries.length){
+      const empty = document.createElement('p');
+      empty.className = 'hint';
+      empty.textContent = 'Your parsed labels will appear here.';
+      $('listPreviews').append(empty);
+    }
+    listPreviewKey = key;
+  }
+  parsed.entries.forEach((entry, index) => {
+    const o = listOptions(base, entry);
+    drawTag(listPreviewNodes[index], o, prepareBitmap(o, null));
+  });
+}
+
+function drawTag(c, o, bitmap, image = bitmap ? bitmapCanvas(bitmap) : null){
+  const ctx = c.getContext('2d');
   ctx.clearRect(0, 0, CV_W, CV_H);
   ctx.lineJoin = 'miter';
 
@@ -646,86 +896,101 @@ function drawPreview(){
   ctx.fillStyle = '#ffffff'; ctx.fill();
   ctx.strokeStyle = '#c9c3b4'; ctx.lineWidth = 2; ctx.stroke();
 
-  const x0 = ix(o.padX), x1 = ix(TAG_W - o.padX);
-  const y0 = iy(o.padY), y1 = iy(TAG_H - o.padY);
-
-  // padding bands, clipped to the material so the left notch stays empty
+  // The physical outline clips the positioned view, not the sent bitmap.
   ctx.save(); tagPath(ctx, 0); ctx.clip();
   if(image){
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(image, ix(bitmap.x / 203), iy(bitmap.y / 203),
       image.width * SCALE / 203, image.height * SCALE / 203);
   }
-  ctx.fillStyle = 'rgba(42,74,57,0.09)';
-  ctx.fillRect(ix(0), iy(0), x0 - ix(0), iy(TAG_H) - iy(0));
-  ctx.fillRect(x1, iy(0), ix(TAG_W) - x1, iy(TAG_H) - iy(0));
-  ctx.fillRect(x0, iy(0), x1 - x0, y0 - iy(0));
-  ctx.fillRect(x0, y1, x1 - x0, iy(TAG_H) - y1);
 
   ctx.restore();
 
-  // guides, across the full tag height so they reveal the left notch
+  // Offset path: down or up from the label origin, then across to the bitmap corner.
   ctx.save();
-  ctx.beginPath(); ctx.rect(ix(0), iy(0), ix(TAG_W) - ix(0), iy(TAG_H) - iy(0)); ctx.clip();
+  ctx.beginPath(); ctx.rect(ix(0) - 2, iy(0) - 2, ix(TAG_W) - ix(0) + 4, iy(TAG_H) - iy(0) + 4); ctx.clip();
   ctx.lineWidth = 2;
   ctx.strokeStyle = '#2a4a39';
-  ctx.beginPath(); ctx.moveTo(x0, iy(0)); ctx.lineTo(x0, iy(TAG_H)); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(ix(0), y0); ctx.lineTo(ix(TAG_W), y0); ctx.stroke();
-  ctx.strokeStyle = 'rgba(42,74,57,0.28)';
-  ctx.beginPath(); ctx.moveTo(x1, iy(0)); ctx.lineTo(x1, iy(TAG_H)); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(ix(0), y1); ctx.lineTo(ix(TAG_W), y1); ctx.stroke();
-  ctx.fillStyle = '#2a4a39'; ctx.beginPath(); ctx.arc(x0, y0, 9, 0, Math.PI * 2); ctx.fill();
+  for(const segment of offsetSegments(o)){
+    ctx.beginPath(); ctx.moveTo(segment.x1, segment.y1); ctx.lineTo(segment.x2, segment.y2); ctx.stroke();
+  }
   ctx.restore();
-
-  vdim(ctx, ix(TAG_W) + 30, iy(0), iy(TAG_H), '0.625 in');
 }
 
 /* drag the guides */
 const canvas = $('preview');
-let dragAxis = null;
 
-function canvasPos(e){
-  const r = canvas.getBoundingClientRect();
+function offsetSegments(o){
+  const x = ix(o.offsetX / 203), y = iy(o.offsetY / 203);
+  return [
+    { axis: 'y', x1: ix(0), y1: iy(0), x2: ix(0), y2: y },
+    { axis: 'x', x1: ix(0), y1: y, x2: x, y2: y },
+  ];
+}
+
+function canvasPos(e, target = canvas){
+  const r = target.getBoundingClientRect();
   return { x: (e.clientX - r.left) * (CV_W / r.width), y: (e.clientY - r.top) * (CV_H / r.height) };
 }
-function hitAxis(x, y){
+function hitAxis(x, y, target = canvas){
   if(x < ix(0) || x > ix(TAG_W) || y < iy(0) || y > iy(TAG_H)) return null;
-  const o = opts();
-  const dx = Math.abs(x - ix(o.padX)), dy = Math.abs(y - iy(o.padY));
-  const T = 12 * CV_W / canvas.getBoundingClientRect().width;
-  if(dx <= T && dx <= dy) return 'x';
-  if(dy <= T) return 'y';
-  return null;
+  const T = 12 * CV_W / target.getBoundingClientRect().width;
+  let nearest = null, distance = T;
+  for(const segment of offsetSegments(opts())){
+    const px = clamp(x, segment.x1, segment.x2), py = clamp(y, segment.y1, segment.y2);
+    const d = Math.hypot(x - px, y - py);
+    if(d < distance){ nearest = segment.axis; distance = d; }
+  }
+  return nearest;
 }
-function setPad(axis, val){
-  if(axis === 'x') $('padX').value = clamp(val, 0, TAG_W / 2).toFixed(2);
-  else $('padY').value = clamp(val, 0, TAG_H / 2).toFixed(2);
+function setOffset(axis, dots){
+  $('offset' + axis).value = String(clamp(Math.round(dots), 0, 65535));
   saveSettings();
   drawPreview();
 }
-canvas.addEventListener('pointerdown', e => {
-  const p = canvasPos(e), a = hitAxis(p.x, p.y);
+function bindOffsetGuides(target){
+let dragAxis = null, dragStart = null;
+target.addEventListener('pointerdown', e => {
+  const p = canvasPos(e, target), a = hitAxis(p.x, p.y, target);
   if(!a) return;
-  dragAxis = a; canvas.setPointerCapture(e.pointerId); e.preventDefault();
+  dragAxis = a;
+  dragStart = { pointer: a === 'x' ? p.x : p.y, dots: a === 'x' ? opts().offsetX : opts().offsetY };
+  target.setPointerCapture(e.pointerId); e.preventDefault();
 });
-canvas.addEventListener('pointermove', e => {
-  const p = canvasPos(e);
-  if(dragAxis) setPad(dragAxis, dragAxis === 'x' ? invX(p.x) : invY(p.y));
-  else { const a = hitAxis(p.x, p.y); canvas.style.cursor = a === 'x' ? 'ew-resize' : a === 'y' ? 'ns-resize' : 'default'; }
+target.addEventListener('pointermove', e => {
+  const p = canvasPos(e, target);
+  if(dragAxis){
+    const delta = (dragAxis === 'x' ? p.x : p.y) - dragStart.pointer;
+    setOffset(dragAxis.toUpperCase(), dragStart.dots + delta * 203 / SCALE);
+  }
+  else { const a = hitAxis(p.x, p.y, target); target.style.cursor = a === 'x' ? 'ew-resize' : a === 'y' ? 'ns-resize' : 'default'; }
 });
-const endDrag = e => { if(dragAxis){ dragAxis = null; try{ canvas.releasePointerCapture(e.pointerId); }catch(_){} } };
-canvas.addEventListener('pointerup', endDrag);
-canvas.addEventListener('pointercancel', endDrag);
+const endDrag = e => { if(dragAxis){ dragAxis = null; dragStart = null; try{ target.releasePointerCapture(e.pointerId); }catch(_){} } };
+target.addEventListener('pointerup', endDrag);
+target.addEventListener('pointercancel', endDrag);
+}
 
 /* wire up */
 installResetButtons();
+bindOffsetGuides(canvas);
+$('modeGranularBtn').onclick = () => setMode('granular');
+$('modeListBtn').onclick = () => setMode('list');
 $('connectBtn').onclick = () => { if(device){ device = null; outEp = null; setConn(false); log('Disconnected.'); } else connect(); };
 $('printBtn').onclick = printLabel;
 $('dlBtn').onclick = download;
+$('importBtn').onclick = () => $('importFile').click();
+$('importFile').addEventListener('change', e => importFile(e.target.files[0]));
+$('clearImportBtn').onclick = () => { importedBitmap = null; saveSettings(); drawPreview(); };
 for(const id of SETTINGS_IDS){
   const update = () => { saveSettings(); drawPreview(); };
   $(id).addEventListener('input', update);
   $(id).addEventListener('change', update);
+}
+for(const axis of ['X', 'Y']){
+  $('offset' + axis + 'In').addEventListener('change', () => {
+    const inches = Number($('offset' + axis + 'In').value);
+    if(Number.isFinite(inches)) setOffset(axis, inches * 203);
+  });
 }
 if(navigator.usb){
   navigator.usb.addEventListener('disconnect', e => {
