@@ -257,11 +257,11 @@
           <div class="row2" style="margin-top:12px">
             <div class="field">
               <label for="offsetY">Bitmap Y (dots)</label>
-              <input id="offsetY" type="number" value="52" min="0" max="65535" step="1" />
+              <input id="offsetY" type="number" value="58" min="0" max="65535" step="1" />
             </div>
             <div class="field">
               <label for="offsetYIn">Bitmap Y (in)</label>
-              <input id="offsetYIn" type="number" value="0.2562" min="0" step="0.001" />
+              <input id="offsetYIn" type="number" value="0.2857" min="0" step="0.001" />
             </div>
           </div>
         </div>
@@ -412,12 +412,18 @@ function saveSettings(){
 const TAG_W = 4.0, TAG_H = 0.625, LEFT_W = 0.5, LEFT_H = 0.53;
 const LEFT_INSET = (TAG_H - LEFT_H) / 2;
 /* canvas layout */
-const CV_W = 1600, CV_PX = 64, CV_PY = 80;
-const SCALE = (CV_W - 2 * CV_PX) / TAG_W;         // 368 px per inch
-const TAG_PXH = TAG_H * SCALE;                    // 230
-const CV_H = Math.ceil(CV_PY * 2 + TAG_PXH); // 390
+const CV_W = 1600, CV_PX = 128, CV_PY = 90;
+const SCALE = (CV_W - 2 * CV_PX) / TAG_W;
+const TAG_PXH = TAG_H * SCALE;
+const CV_H = Math.ceil(CV_PY * 2 + TAG_PXH);
 const ix = v => CV_PX + v * SCALE;
 const iy = v => CV_PY + v * SCALE;
+// Physical registration observed at X 128, Y 52 with a 50-dot two-line bitmap.
+// Keep this fixed when text, offsets or page settings change. It affects preview only.
+const PREVIEW_ORIGIN_X = -0.03;
+const PREVIEW_ORIGIN_Y = TAG_H / 2 - (52 + 50 / 2) / 203;
+const printerX = dots => ix(PREVIEW_ORIGIN_X + dots / 203);
+const printerY = dots => iy(PREVIEW_ORIGIN_Y + dots / 203);
 
 function setConn(on){
   $('status').className = 'pill ' + (on ? 'on' : 'off');
@@ -904,15 +910,16 @@ function drawTag(c, o, bitmap, image = bitmap ? bitmapCanvas(bitmap) : null){
   ctx.save(); tagPath(ctx, 0); ctx.clip();
   if(image){
     ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(image, ix(bitmap.x / 203), iy(bitmap.y / 203),
+    ctx.drawImage(image, printerX(bitmap.x), printerY(bitmap.y),
       image.width * SCALE / 203, image.height * SCALE / 203);
   }
 
   ctx.restore();
 
-  // Offset path: down or up from the label origin, then across to the bitmap corner.
+  // Offset path: from the registered printer origin, vertically then horizontally.
   ctx.save();
-  ctx.beginPath(); ctx.rect(ix(0) - 2, iy(0) - 2, ix(TAG_W) - ix(0) + 4, iy(TAG_H) - iy(0) + 4); ctx.clip();
+  ctx.beginPath(); ctx.rect(printerX(0) - 2, printerY(0) - 2,
+    ix(TAG_W) - printerX(0) + 4, iy(TAG_H) - printerY(0) + 4); ctx.clip();
   ctx.lineWidth = 2;
   ctx.strokeStyle = '#2a4a39';
   for(const segment of offsetSegments(o)){
@@ -925,10 +932,10 @@ function drawTag(c, o, bitmap, image = bitmap ? bitmapCanvas(bitmap) : null){
 const canvas = $('preview');
 
 function offsetSegments(o){
-  const x = ix(o.offsetX / 203), y = iy(o.offsetY / 203);
+  const x = printerX(o.offsetX), y = printerY(o.offsetY);
   return [
-    { axis: 'y', x1: ix(0), y1: iy(0), x2: ix(0), y2: y },
-    { axis: 'x', x1: ix(0), y1: y, x2: x, y2: y },
+    { axis: 'y', x1: printerX(0), y1: printerY(0), x2: printerX(0), y2: y },
+    { axis: 'x', x1: printerX(0), y1: y, x2: x, y2: y },
   ];
 }
 
@@ -937,7 +944,7 @@ function canvasPos(e, target = canvas){
   return { x: (e.clientX - r.left) * (CV_W / r.width), y: (e.clientY - r.top) * (CV_H / r.height) };
 }
 function hitAxis(x, y, target = canvas){
-  if(x < ix(0) || x > ix(TAG_W) || y < iy(0) || y > iy(TAG_H)) return null;
+  if(x < printerX(0) || x > ix(TAG_W) || y < printerY(0) || y > iy(TAG_H)) return null;
   const T = 12 * CV_W / target.getBoundingClientRect().width;
   let nearest = null, distance = T;
   for(const segment of offsetSegments(opts())){
