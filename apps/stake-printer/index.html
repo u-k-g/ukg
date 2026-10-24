@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TTP-247 stake printer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --frame:#e7e6e0;
+    --sheet:#fafaf9;
+    --well:#f2f2ee;
+    --ink:#1b2821;
+    --muted:#4a574f;
+    --faint:#647068;
+    --border:#e0ded6;
+    --control:#cfccc2;
+    --primary:#1b2821;
+    --primary-ink:#f7f7f5;
+    --accent:#69d69a;
+    --accent-deep:#2a4a39;
+    --pos-bg:#e2f4e9;
+    --pos-ink:#0f4a2e;
+    --off-bg:#ece8dd;
+    --off-ink:#5a665e;
+    --danger:#a1362c;
+    --r-sheet:16px;
+    --r-panel:12px;
+    --r-ctrl:8px;
+    --font:"IBM Plex Sans", Inter, system-ui, -apple-system, sans-serif;
+    --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--frame);
+    color:var(--ink);
+    font:400 14px/1.5 var(--font);
+    -webkit-font-smoothing:antialiased;
+  }
+  .app{min-height:100vh;padding:0 12px 12px}
+  .num{font-variant-numeric:tabular-nums}
+
+  .topbar{height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:10px;min-width:0}
+  .mark{width:22px;height:22px;flex:none;color:var(--ink)}
+  .brand .name{font-size:16px;font-weight:600;letter-spacing:-0.01em}
+  .brand .sep{width:1px;height:18px;background:var(--border);margin:0 2px}
+  .brand .scope{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  .pill{display:inline-flex;align-items:center;gap:7px;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+  .pill.off{background:var(--off-bg);color:var(--off-ink)}
+  .pill.on{background:var(--pos-bg);color:var(--pos-ink)}
+
+  .sheet{background:var(--sheet);border:1px solid var(--border);border-radius:var(--r-sheet);padding:24px;min-height:calc(100vh - 68px);display:flex;flex-direction:column}
+
+  .titlerow{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px}
+  h1{font-size:22px;font-weight:600;letter-spacing:-0.015em;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:14px;margin:0;max-width:52ch}
+  .meta{font:400 13px/1.6 var(--font);font-variant-numeric:tabular-nums;color:var(--faint);white-space:nowrap;text-align:right}
+
+  .workspace{display:grid;grid-template-columns:340px minmax(0,1fr);gap:20px;align-items:start}
+  .form{display:flex;flex-direction:column;gap:18px;min-width:0}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+  .field:last-child{margin-bottom:0}
+  label{font-size:13px;font-weight:500;color:var(--muted)}
+  input,select{
+    height:40px;width:100%;border:1px solid var(--control);border-radius:var(--r-ctrl);
+    background:var(--sheet);color:var(--ink);font:400 14px var(--font);padding:0 12px;outline:none;
+  }
+  input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{
+    outline:2px solid var(--accent-deep);outline-offset:2px;
+  }
+  input:focus,select:focus{border-color:var(--accent-deep)}
+  .row2{display:flex;gap:12px}
+  .row2 .field{flex:1;margin-bottom:0}
+  .hint{color:var(--faint);font-size:13px;margin:8px 0 0}
+  .actions{display:flex;flex-direction:column;gap:10px}
+  button{
+    font:500 14px var(--font);cursor:pointer;border-radius:var(--r-ctrl);border:1px solid transparent;
+    height:40px;padding:0 16px;transition:background .12s,border-color .12s,color .12s;
+  }
+  button:active{transform:translateY(1px)}
+  button:disabled{cursor:not-allowed}
+  .btn-primary{background:var(--primary);color:var(--primary-ink)}
+  .btn-primary:hover{background:#26392e}
+  .btn-primary:disabled{background:var(--off-bg);color:var(--off-ink);border-color:var(--border)}
+  .btn-secondary{background:var(--sheet);border-color:var(--control);color:var(--ink)}
+  .btn-secondary:hover{background:var(--well)}
+  .connect .short{display:none}
+
+  details{border:1px solid var(--border);border-radius:var(--r-panel);padding:12px 14px;background:var(--sheet)}
+  summary{cursor:pointer;font-size:13px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--faint);font-weight:400;font-size:16px}
+  details[open] summary::after{content:"\2013"}
+  .adv{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  .adv .field{margin-bottom:0}
+
+  .canvas{background:var(--well);border:1px solid var(--border);border-radius:var(--r-panel);padding:18px;min-width:0}
+  .canvas-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}
+  .canvas-head h2{font-size:14px;font-weight:600;margin:0}
+  .canvas-head .dims{font:400 13px/1.5 var(--font);font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+  canvas{display:block;width:100%;height:auto;touch-action:none;cursor:default}
+  .cap{color:var(--muted);font-size:13px;margin:12px 0 0}
+
+  .logwrap{margin-top:auto;padding-top:28px}
+  .loglabel{font-size:13px;font-weight:500;color:var(--faint);margin:0 0 8px}
+  #log{
+    font:400 13px/1.6 var(--mono);color:var(--muted);background:var(--sheet);
+    border:1px solid var(--border);border-radius:var(--r-panel);padding:12px 14px;
+    white-space:pre-wrap;max-height:150px;overflow:auto;margin:0;
+  }
+  .err{color:var(--danger)}
+
+  @media (max-width:820px){
+    .workspace{grid-template-columns:1fr}
+    .titlerow{flex-direction:column;gap:8px}
+    .meta{text-align:left;white-space:normal}
+    .brand .scope{display:none}
+    .brand .sep{display:none}
+  }
+  @media (max-width:520px){
+    .app{padding:0 10px 10px}
+    .sheet{padding:18px;min-height:0}
+    .topbar{height:52px}
+    .connect .long{display:none}
+    .connect .short{display:inline}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.4 13.4 13.4 20.4a2 2 0 0 1-2.8 0L3 12.8V3h9.8l7.6 7.6a2 2 0 0 1 0 2.8Z"/>
+        <circle cx="7.4" cy="7.4" r="1.5" fill="var(--accent)" stroke="none"/>
+      </svg>
+      <span class="name">TTP-247</span>
+      <span class="sep"></span>
+      <span class="scope">Pot-stake printer</span>
+      <span id="status" class="pill off"><span class="dot"></span><span id="statusText">Offline</span></span>
+    </div>
+    <div class="connect">
+      <button id="connectBtn" class="btn-primary btn-sm" aria-label="Connect printer">
+        <span class="long">Connect printer</span><span class="short" aria-hidden="true">Connect</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="sheet">
+    <div class="titlerow">
+      <div>
+        <h1>Stake labels</h1>
+        <p class="sub">Lay a plant name out on the tag, preview it against the real shape, and print over USB with raw TSPL. No driver.</p>
+      </div>
+      <div class="meta">4.00 &times; 0.625 in<br>USB 1203:0126 · Layout v5</div>
+    </div>
+
+    <div class="workspace">
+      <form class="form" onsubmit="return false">
+        <div class="field">
+          <label for="name">Line one · Arial Bold, 8 pt</label>
+          <input id="name" type="text" value="" maxlength="40" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="line2">Line two · Arial Regular, 8 pt</label>
+          <input id="line2" type="text" value="" maxlength="80" autocomplete="off" />
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="copies">Copies</label>
+            <input id="copies" type="number" value="1" min="1" max="999" />
+          </div>
+        </div>
+
+        <details>
+          <summary>Printer settings</summary>
+          <div class="adv">
+            <div class="field">
+              <label for="reg">Registration</label>
+              <select id="reg">
+                <option value="current">Keep calibrated settings</option>
+                <option value="continuous">Continuous</option>
+                <option value="gap" selected>Gap sensor</option>
+                <option value="bline">Black mark</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="speed">Speed (ips)</label>
+              <select id="speed"><option>2</option><option selected>3</option><option>4</option><option>5</option></select>
+            </div>
+            <div class="field">
+              <label for="gap">Gap (in)</label>
+              <input id="gap" type="number" value="0.35" min="0" max="1" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="direction">Print orientation</label>
+              <select id="direction">
+                <option value="1" selected>Direction 1 (upright on your stock)</option>
+                <option value="0">Direction 0 (rotate 180°)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="density">Density (0–15)</label>
+              <input id="density" type="number" value="8" min="0" max="15" />
+            </div>
+          </div>
+        </details>
+
+        <div>
+          <div class="row2">
+            <div class="field">
+              <label for="padX">Padding X (in)</label>
+              <input id="padX" type="number" value="0.10" min="0" max="2" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="padY">Padding Y (in)</label>
+              <input id="padY" type="number" value="0.05" min="0" max="0.31" step="0.01" />
+            </div>
+          </div>
+          <p class="hint">Drag the guides on the tag, or type a value. Padding is mirrored on both sides of each axis.</p>
+        </div>
+
+        <div class="actions">
+          <button id="printBtn" class="btn-primary" disabled>Print label</button>
+          <button id="dlBtn" class="btn-secondary" type="button">Download TSPL</button>
+        </div>
+      </form>
+
+      <section class="canvas" aria-label="Label preview">
+        <div class="canvas-head">
+          <h2>Preview</h2>
+          <span class="dims">4.00 &times; 0.625 in</span>
+        </div>
+        <canvas id="preview" width="1600" height="620" role="img" aria-label="Two stake labels showing the left cut-out and padding guides"></canvas>
+        <p class="cap">Main height 0.625 in. The left 0.5 in drops to 0.53 in, which is the cut-out you see between tags. Drag the guides to set padding.</p>
+      </section>
+    </div>
+
+    <div class="logwrap">
+      <p class="loglabel">Last job</p>
+      <pre id="log">Not connected. Connect the TTP-247 over USB to print.</pre>
+    </div>
+  </main>
+</div>
+
+<script>
+const VID = 0x1203, PID = 0x0126;
+let device = null, outEp = null;
+
+const $ = id => document.getElementById(id);
+const hex = n => '0x' + n.toString(16).padStart(4, '0');
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+
+/* physical tag, in inches */
+const TAG_W = 4.0, TAG_H = 0.625, LEFT_W = 0.5, LEFT_H = 0.53, N_TAGS = 2;
+/* canvas layout */
+const CV_W = 1600, CV_PX = 64, CV_PY = 80;
+const SCALE = (CV_W - 2 * CV_PX) / TAG_W;         // 368 px per inch
+const TAG_PXH = TAG_H * SCALE;                    // 230
+const CV_H = Math.ceil(CV_PY * 2 + N_TAGS * TAG_PXH); // 620
+const ix = v => CV_PX + v * SCALE;
+const iy = v => CV_PY + v * SCALE;
+const invX = px => (px - CV_PX) / SCALE;
+const invY = py => (py - CV_PY) / SCALE;
+
+function setConn(on){
+  $('status').className = 'pill ' + (on ? 'on' : 'off');
+  $('statusText').textContent = on ? 'Connected' : 'Offline';
+  $('printBtn').disabled = !on;
+  const btn = $('connectBtn');
+  btn.classList.toggle('btn-primary', !on);
+  btn.classList.toggle('btn-secondary', on);
+  btn.querySelector('.long').textContent = on ? 'Disconnect' : 'Connect printer';
+  btn.querySelector('.short').textContent = on ? 'Disconnect' : 'Connect';
+}
+
+function log(msg, isError){
+  const el = $('log');
+  el.textContent = msg;
+  el.classList.toggle('err', !!isError);
+}
+
+function findBulkOut(d){
+  for(const iface of d.configuration.interfaces){
+    for(const alt of iface.alternates){
+      for(const ep of alt.endpoints){
+        if(ep.direction === 'out' && ep.type === 'bulk') return { ifaceNum: iface.interfaceNumber, ep };
+      }
+    }
+  }
+  return null;
+}
+
+async function attach(d){
+  await d.open();
+  if(!d.configuration) await d.selectConfiguration(1);
+  const found = findBulkOut(d);
+  if(!found) throw new Error('no bulk OUT endpoint');
+  try { await d.claimInterface(found.ifaceNum); }
+  catch(e){ await d.claimInterface(found.ifaceNum, true); }
+  device = d; outEp = found.ep;
+  setConn(true);
+  log('Connected ' + hex(d.vendorId) + ':' + hex(d.productId) + '. Ready to print.');
+}
+
+async function connect(){
+  if(!('usb' in navigator)){ log('WebUSB is not available here. Open this in Chrome or Edge, over https or localhost.', true); return; }
+  try{
+    const d = await navigator.usb.requestDevice({ filters:[{ vendorId: VID, productId: PID }] });
+    await attach(d);
+  }catch(e){ log('Connect failed: ' + e.message, true); }
+}
+
+async function reconnect(){
+  try{
+    const ds = await navigator.usb.getDevices();
+    const d = ds.find(x => x.vendorId === VID && x.productId === PID);
+    if(d) await attach(d);
+  }catch(e){}
+}
+
+function opts(){
+  return {
+    name: $('name').value,
+    line2: $('line2').value,
+    copies: Math.max(1, parseInt($('copies').value || '1', 10)),
+    reg: $('reg').value,
+    gap: parseFloat($('gap').value || '0') || 0,
+    speed: $('speed').value,
+    direction: $('direction').value,
+    density: parseInt($('density').value || '8', 10),
+    padX: clamp(parseFloat($('padX').value || '0') || 0, 0, TAG_W / 2),
+    padY: clamp(parseFloat($('padY').value || '0') || 0, 0, TAG_H / 2),
+  };
+}
+
+function renderLabel(o){
+  const raster = document.createElement('canvas');
+  const dpi = 203;
+  raster.width = Math.round(TAG_W * dpi);
+  raster.height = Math.round(TAG_H * dpi);
+  const ctx = raster.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, raster.width, raster.height);
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(o.padX * dpi, o.padY * dpi,
+    Math.max(0, (TAG_W - 2 * o.padX) * dpi),
+    Math.max(0, (TAG_H - 2 * o.padY) * dpi));
+  ctx.clip();
+  ctx.fillStyle = '#000000';
+  ctx.textBaseline = 'top';
+  const fontSize = 8 * dpi / 72;
+  const lineHeight = Math.round(fontSize * 1.25);
+  ctx.font = '700 ' + fontSize + 'px Arial';
+  ctx.fillText(o.name, Math.round(o.padX * dpi), Math.round(o.padY * dpi));
+  ctx.font = '400 ' + fontSize + 'px Arial';
+  ctx.fillText(o.line2, Math.round(o.padX * dpi), Math.round(o.padY * dpi) + lineHeight);
+  ctx.restore();
+  // Remove pixels where the left cut-out has no material.
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, Math.round(LEFT_H * dpi), Math.round(LEFT_W * dpi), raster.height);
+  return raster;
+}
+
+function packBitmap(pixels, width, height){
+  const stride = Math.ceil(width / 8);
+  const bytes = new Uint8Array(stride * height).fill(255);
+  for(let y = 0; y < height; y++){
+    for(let x = 0; x < width; x++){
+      const i = (y * width + x) * 4;
+      if(pixels[i] < 128) bytes[y * stride + (x >> 3)] &= ~(0x80 >> (x & 7));
+    }
+  }
+  return bytes;
+}
+
+function cropToInk(pixels, width, height){
+  let left = width, top = height, right = -1, bottom = -1;
+  for(let y = 0; y < height; y++){
+    for(let x = 0; x < width; x++){
+      if(pixels[(y * width + x) * 4] < 128){
+        left = Math.min(left, x); right = Math.max(right, x);
+        top = Math.min(top, y); bottom = Math.max(bottom, y);
+      }
+    }
+  }
+  if(right < 0) return null;
+  const croppedWidth = right - left + 1, croppedHeight = bottom - top + 1;
+  const cropped = new Uint8Array(croppedWidth * croppedHeight * 4);
+  for(let y = 0; y < croppedHeight; y++){
+    const start = ((top + y) * width + left) * 4;
+    cropped.set(pixels.subarray(start, start + croppedWidth * 4), y * croppedWidth * 4);
+  }
+  return { x: left, y: top, width: croppedWidth, height: croppedHeight, pixels: cropped };
+}
+
+function buildTSPL(o){
+  const L = [];
+  // Restore the print-page dimensions used before the padding UI was added.
+  L.push('SIZE 4.00,0.28');
+  if(o.reg === 'gap') L.push('GAP ' + o.gap.toFixed(2) + ',0');
+  else if(o.reg === 'bline') L.push('BLINE ' + o.gap.toFixed(2) + ',0');
+  else if(o.reg === 'continuous') L.push('GAP 0,0');
+  L.push('SPEED ' + o.speed);
+  L.push('DENSITY ' + o.density);
+  L.push('DIRECTION ' + o.direction + ',0');
+  L.push('CLS');
+  const encoder = new TextEncoder();
+  const parts = [encoder.encode(L.join('\r\n') + '\r\n')];
+  if(o.name || o.line2){
+    const raster = renderLabel(o);
+    const pixels = raster.getContext('2d').getImageData(0, 0, raster.width, raster.height).data;
+    const ink = cropToInk(pixels, raster.width, raster.height);
+    if(ink){
+      parts.push(encoder.encode('BITMAP ' + ink.x + ',' + ink.y + ',' + Math.ceil(ink.width / 8) + ',' + ink.height + ',0,'));
+      parts.push(packBitmap(ink.pixels, ink.width, ink.height));
+      parts.push(encoder.encode('\r\n'));
+    }
+  }
+  parts.push(encoder.encode('PRINT ' + o.copies + ',1\r\n'));
+  const result = new Uint8Array(parts.reduce((sum, p) => sum + p.length, 0));
+  let offset = 0;
+  for(const part of parts){ result.set(part, offset); offset += part.length; }
+  return result;
+}
+
+async function printLabel(){
+  if(!device || !outEp){ log('Not connected.', true); return; }
+  const o = opts();
+  const tspl = buildTSPL(o);
+  try{
+    const result = await device.transferOut(outEp.endpointNumber, tspl);
+    if(result.status !== 'ok' || result.bytesWritten !== tspl.length) throw new Error('USB transfer incomplete');
+    log('Layout v5 · Sent ' + tspl.length + ' bytes.\n' +
+      'SIZE 4.00,0.28 · DIRECTION ' + o.direction + ',0\n' +
+      'Padding X ' + o.padX + ' in · Y ' + o.padY + ' in.\n' +
+      'Arial Bold / Regular, 8 pt. Bitmap trimmed to text bounds.');
+  }catch(e){ log('Print failed: ' + e.message, true); }
+}
+
+function download(){
+  const blob = new Blob([buildTSPL(opts())], { type:'application/octet-stream' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'label.tspl';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ---------- preview ---------- */
+function tagPath(ctx, off){
+  ctx.beginPath();
+  ctx.moveTo(ix(0), iy(off));
+  ctx.lineTo(ix(TAG_W), iy(off));
+  ctx.lineTo(ix(TAG_W), iy(off + TAG_H));
+  ctx.lineTo(ix(LEFT_W), iy(off + TAG_H));
+  ctx.lineTo(ix(LEFT_W), iy(off + LEFT_H));
+  ctx.lineTo(ix(0), iy(off + LEFT_H));
+  ctx.closePath();
+}
+
+function vdim(ctx, x, yA, yB, label){
+  ctx.strokeStyle = '#9aa39b'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(x, yA); ctx.lineTo(x, yB); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x - 8, yA); ctx.lineTo(x + 8, yA);
+  ctx.moveTo(x - 8, yB); ctx.lineTo(x + 8, yB); ctx.stroke();
+  ctx.save(); ctx.translate(x - 14, (yA + yB) / 2); ctx.rotate(-Math.PI / 2);
+  ctx.fillStyle = '#5f6b63'; ctx.font = '500 30px "IBM Plex Sans", Inter, sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(label, 0, 0); ctx.restore();
+}
+
+function hdim(ctx, xA, xB, y, label){
+  ctx.strokeStyle = '#9aa39b'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(xA, y); ctx.lineTo(xB, y); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(xA, y - 8); ctx.lineTo(xA, y + 8);
+  ctx.moveTo(xB, y - 8); ctx.lineTo(xB, y + 8); ctx.stroke();
+  ctx.fillStyle = '#5f6b63'; ctx.font = '500 30px "IBM Plex Sans", Inter, sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText(label, (xA + xB) / 2, y - 12);
+}
+
+function drawPreview(){
+  const o = opts();
+  const c = $('preview'), ctx = c.getContext('2d');
+  ctx.clearRect(0, 0, CV_W, CV_H);
+  ctx.lineJoin = 'miter';
+
+  // the next tag, faded, so the left cut-out gap reads
+  tagPath(ctx, TAG_H);
+  ctx.fillStyle = '#f3f1e9'; ctx.fill();
+  ctx.strokeStyle = '#dcd7c9'; ctx.lineWidth = 2; ctx.stroke();
+
+  // the tag being designed
+  tagPath(ctx, 0);
+  ctx.fillStyle = '#ffffff'; ctx.fill();
+  ctx.strokeStyle = '#c9c3b4'; ctx.lineWidth = 2; ctx.stroke();
+
+  const x0 = ix(o.padX), x1 = ix(TAG_W - o.padX);
+  const y0 = iy(o.padY), y1 = iy(TAG_H - o.padY);
+
+  // padding bands, clipped to the material so the left notch stays empty
+  ctx.save(); tagPath(ctx, 0); ctx.clip();
+  ctx.drawImage(renderLabel(o), ix(0), iy(0), TAG_W * SCALE, TAG_H * SCALE);
+  ctx.fillStyle = 'rgba(42,74,57,0.09)';
+  ctx.fillRect(ix(0), iy(0), x0 - ix(0), iy(TAG_H) - iy(0));
+  ctx.fillRect(x1, iy(0), ix(TAG_W) - x1, iy(TAG_H) - iy(0));
+  ctx.fillRect(x0, iy(0), x1 - x0, y0 - iy(0));
+  ctx.fillRect(x0, y1, x1 - x0, iy(TAG_H) - y1);
+
+  ctx.restore();
+
+  // guides, across the full tag height so they reveal the left notch
+  ctx.save();
+  ctx.beginPath(); ctx.rect(ix(0), iy(0), ix(TAG_W) - ix(0), iy(TAG_H) - iy(0)); ctx.clip();
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = '#2a4a39';
+  ctx.beginPath(); ctx.moveTo(x0, iy(0)); ctx.lineTo(x0, iy(TAG_H)); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ix(0), y0); ctx.lineTo(ix(TAG_W), y0); ctx.stroke();
+  ctx.strokeStyle = 'rgba(42,74,57,0.28)';
+  ctx.beginPath(); ctx.moveTo(x1, iy(0)); ctx.lineTo(x1, iy(TAG_H)); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ix(0), y1); ctx.lineTo(ix(TAG_W), y1); ctx.stroke();
+  ctx.fillStyle = '#2a4a39'; ctx.beginPath(); ctx.arc(x0, y0, 9, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+
+  vdim(ctx, ix(0) - 30, iy(0), iy(LEFT_H), '0.53 in');
+  vdim(ctx, ix(TAG_W) + 30, iy(0), iy(TAG_H), '0.625 in');
+  hdim(ctx, ix(0), ix(LEFT_W), iy(0) - 36, '0.5 in');
+}
+
+/* drag the guides */
+const canvas = $('preview');
+let dragAxis = null;
+
+function canvasPos(e){
+  const r = canvas.getBoundingClientRect();
+  return { x: (e.clientX - r.left) * (CV_W / r.width), y: (e.clientY - r.top) * (CV_H / r.height) };
+}
+function hitAxis(x, y){
+  if(x < ix(0) || x > ix(TAG_W) || y < iy(0) || y > iy(TAG_H)) return null;
+  const o = opts();
+  const dx = Math.abs(x - ix(o.padX)), dy = Math.abs(y - iy(o.padY));
+  const T = 12 * CV_W / canvas.getBoundingClientRect().width;
+  if(dx <= T && dx <= dy) return 'x';
+  if(dy <= T) return 'y';
+  return null;
+}
+function setPad(axis, val){
+  if(axis === 'x') $('padX').value = clamp(val, 0, TAG_W / 2).toFixed(2);
+  else $('padY').value = clamp(val, 0, TAG_H / 2).toFixed(2);
+  drawPreview();
+}
+canvas.addEventListener('pointerdown', e => {
+  const p = canvasPos(e), a = hitAxis(p.x, p.y);
+  if(!a) return;
+  dragAxis = a; canvas.setPointerCapture(e.pointerId); e.preventDefault();
+});
+canvas.addEventListener('pointermove', e => {
+  const p = canvasPos(e);
+  if(dragAxis) setPad(dragAxis, dragAxis === 'x' ? invX(p.x) : invY(p.y));
+  else { const a = hitAxis(p.x, p.y); canvas.style.cursor = a === 'x' ? 'ew-resize' : a === 'y' ? 'ns-resize' : 'default'; }
+});
+const endDrag = e => { if(dragAxis){ dragAxis = null; try{ canvas.releasePointerCapture(e.pointerId); }catch(_){} } };
+canvas.addEventListener('pointerup', endDrag);
+canvas.addEventListener('pointercancel', endDrag);
+
+/* wire up */
+$('connectBtn').onclick = () => { if(device){ device = null; outEp = null; setConn(false); log('Disconnected.'); } else connect(); };
+$('printBtn').onclick = printLabel;
+$('dlBtn').onclick = download;
+['name', 'line2', 'padX', 'padY'].forEach(id => $(id).addEventListener('input', drawPreview));
+if(navigator.usb){
+  navigator.usb.addEventListener('disconnect', e => {
+    if(device && e.device === device){ device = null; outEp = null; setConn(false); log('Printer disconnected.'); }
+  });
+}
+canvas.width = CV_W; canvas.height = CV_H;
+reconnect();
+drawPreview();
+</script>
+</body>
+</html>

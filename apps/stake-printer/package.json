@@ -1,0 +1,12 @@
+{
+  "name": "@ukg/stake-printer",
+  "private": true,
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "dev": "node dev.cjs",
+    "test": "node stake-printer.test.cjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
