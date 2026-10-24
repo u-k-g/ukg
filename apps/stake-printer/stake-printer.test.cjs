@@ -4,7 +4,7 @@ const vm = require('node:vm');
 
 const source = fs.readFileSync(`${__dirname}/index.html`, 'utf8');
 assert.match(source, /id="offsetX"[^>]*value="128"/);
-assert.match(source, /id="offsetY"[^>]*value="4"/);
+assert.match(source, /id="offsetY"[^>]*value="2"/);
 assert.match(source, /id="printHeight"[^>]*value="0.25"/);
 assert.match(source, /id="gap"[^>]*value="0.38"/);
 assert.match(source, /id="density"[^>]*value="1"/);
@@ -50,7 +50,9 @@ const localStorage = {
   getItem: key => stored.get(key) ?? null,
   setItem: (key, value) => stored.set(key, value),
 };
-const scope = { document: { getElementById: get,
+const wasmBytes = fs.readFileSync(`${__dirname}/printer-core/target/wasm32-unknown-unknown/release/printer_core.wasm`);
+const printer = new WebAssembly.Instance(new WebAssembly.Module(wasmBytes)).exports;
+const scope = { PRINTER_EXPORTS: printer, document: { getElementById: get,
   querySelector: selector => ({textContent:selector, replaceWith(){}}),
   createElement: tag => tag === 'canvas' ? canvas() : {children:[], append(...children){this.children.push(...children);}, setAttribute(){}, addEventListener(){}},
 },

@@ -23,7 +23,7 @@ pnpm test
 
 ## Printing
 
-- Granular mode edits one label's two text lines and copy count.
+- Single mode edits one label's two text lines and copy count.
 - List mode takes one plant name and a trailing quantity per line, separated by
   spaces or tabs. Blank lines are ignored. Names retain Unicode punctuation;
   quantities must be whole numbers from 1 to 999. Invalid rows block printing
@@ -60,7 +60,7 @@ pnpm test
   specific to the browser profile and origin, including the port. Clearing site
   data removes saved settings; private browsing may discard them when closed.
 - Print defaults are SIZE 4.00,0.25, GAP 0.38,0, bitmap offsets X 128
-  and Y 4 dots, and DIRECTION 1,0.
+  and Y 2 dots, and DIRECTION 1,0.
 - Printer settings includes Print height (in), default 0.25, to change the
   TSPL SIZE height independently of the physical preview. The gap is separate;
   changing the print height can change feed spacing.
@@ -73,6 +73,12 @@ alignment square at X 128, Y 0: its top-left was 0.57 in from the left edge
 and 0.17 in from the top edge. Tests verify that mapping, not a new hardware
 measurement.
 
-Interface fonts currently load from Google Fonts. Label text uses locally
+The page caches itself after the first visit to `http://localhost:8000`.
+Later visits work with the Node server stopped. WebUSB still requires that
+localhost address; opening the HTML file directly cannot reach the printer.
+Bitmap packing, TSPL jobs, and the preview origin live in `printer-core` and
+run in the browser as WebAssembly.
+
+Label text uses locally
 available Arial and does not upload text to a rendering service. No hosting or
 Cloudflare configuration is included.

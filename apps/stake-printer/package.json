@@ -3,6 +3,9 @@
   "private": true,
   "packageManager": "pnpm@11.25.0",
   "scripts": {
+    "build": "node build-wasm.cjs",
+    "predev": "node build-wasm.cjs",
+    "pretest": "node build-wasm.cjs",
     "dev": "node dev.cjs",
     "test": "node stake-printer.test.cjs"
   },
