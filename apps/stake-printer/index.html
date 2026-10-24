@@ -67,6 +67,9 @@
   .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
   .field:last-child{margin-bottom:0}
   label{font-size:13px;font-weight:500;color:var(--muted)}
+  .setting-label{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 8px;min-height:20px}
+  .reset-setting{height:auto;padding:0;background:none;border:0;border-radius:0;font-size:12px;color:var(--accent-deep);text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+  .reset-setting[hidden]{display:none}
   input,select{
     height:40px;width:100%;border:1px solid var(--control);border-radius:var(--r-ctrl);
     background:var(--sheet);color:var(--ink);font:400 14px var(--font);padding:0 12px;outline:none;
@@ -106,6 +109,13 @@
   .canvas-head .dims{font:400 13px/1.5 var(--font);font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
   canvas{display:block;width:100%;height:auto;touch-action:none;cursor:default}
   .cap{color:var(--muted);font-size:13px;margin:12px 0 0}
+  .bitmap-view{margin-top:18px}
+  .bitmap-view h3{font-size:14px;margin:0 0 8px;font-weight:600}
+  .bitmap-scroll{overflow:auto;background:#ffffff;padding:12px;min-height:48px}
+  #wireBitmap{width:auto;max-width:none;image-rendering:pixelated;touch-action:auto}
+  .tspl-view{margin-top:18px}
+  .tspl-view h3{font-size:14px;margin:0 0 8px;font-weight:600}
+  #tsplPreview{margin:0;padding:14px;background:var(--sheet);border:1px solid var(--border);border-radius:var(--r-ctrl);font:400 13px/1.6 var(--mono);overflow:auto;max-height:300px;white-space:pre}
 
   .logwrap{margin-top:auto;padding-top:28px}
   .loglabel{font-size:13px;font-weight:500;color:var(--faint);margin:0 0 8px}
@@ -182,6 +192,10 @@
           <summary>Printer settings</summary>
           <div class="adv">
             <div class="field">
+              <label for="printHeight">Print height (in)</label>
+              <input id="printHeight" type="number" value="0.28" min="0.01" max="90" step="0.001" />
+            </div>
+            <div class="field">
               <label for="reg">Registration</label>
               <select id="reg">
                 <option value="current">Keep calibrated settings</option>
@@ -207,20 +221,21 @@
             </div>
             <div class="field">
               <label for="density">Density (0–15)</label>
-              <input id="density" type="number" value="8" min="0" max="15" />
+              <input id="density" type="number" value="1" min="0" max="15" />
             </div>
           </div>
+          <p class="hint">Print height controls TSPL SIZE, not the physical-tag outline. Default 0.28 in. Changing it can change feed spacing; the gap remains a separate setting.</p>
         </details>
 
         <div>
           <div class="row2">
             <div class="field">
               <label for="padX">Padding X (in)</label>
-              <input id="padX" type="number" value="0.10" min="0" max="2" step="0.01" />
+              <input id="padX" type="number" value="0.53" min="0" max="2" step="0.01" />
             </div>
             <div class="field">
               <label for="padY">Padding Y (in)</label>
-              <input id="padY" type="number" value="0.05" min="0" max="0.31" step="0.01" />
+              <input id="padY" type="number" value="0.03" min="0" max="0.31" step="0.01" />
             </div>
           </div>
           <p class="hint">Drag the guides on the tag, or type a value. Padding is mirrored on both sides of each axis.</p>
@@ -230,6 +245,7 @@
           <button id="printBtn" class="btn-primary" disabled>Print label</button>
           <button id="dlBtn" class="btn-secondary" type="button">Download TSPL</button>
         </div>
+        <p id="settingsStatus" class="hint" role="status">Settings stay in this browser.</p>
       </form>
 
       <section class="canvas" aria-label="Label preview">
@@ -237,8 +253,18 @@
           <h2>Preview</h2>
           <span class="dims">4.00 &times; 0.625 in</span>
         </div>
-        <canvas id="preview" width="1600" height="620" role="img" aria-label="Two stake labels showing the left cut-out and padding guides"></canvas>
-        <p class="cap">Main height 0.625 in. The left 0.5 in drops to 0.53 in, which is the cut-out you see between tags. Drag the guides to set padding.</p>
+        <canvas id="preview" width="1600" height="390" role="img" aria-label="Stake label showing the left cut-out and padding guides"></canvas>
+        <p class="cap">Main height 0.625 in. The left 0.5 in is 0.53 in tall and vertically centered. Drag the guides to set padding.</p>
+        <div class="bitmap-view">
+          <h3>Sent bitmap</h3>
+          <div class="bitmap-scroll"><canvas id="wireBitmap" width="1" height="1" role="img" aria-label="Exact monochrome bitmap sent over USB, without preview guides"></canvas></div>
+          <p id="bitmapInfo" class="cap" aria-live="polite">No text, no bitmap sent.</p>
+        </div>
+        <div class="tspl-view">
+          <h3>TSPL preview</h3>
+          <pre id="tsplPreview" aria-label="Current TSPL print commands"></pre>
+          <p class="cap">Live commands for the current settings. The binary pixel payload is shown as a byte-count placeholder; Download TSPL includes the real bytes.</p>
+        </div>
       </section>
     </div>
 
@@ -256,14 +282,94 @@ let device = null, outEp = null;
 const $ = id => document.getElementById(id);
 const hex = n => '0x' + n.toString(16).padStart(4, '0');
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const SETTINGS_KEY = 'ukg.stake-printer.settings.v1';
+const SETTINGS_IDS = ['name', 'line2', 'padX', 'padY', 'copies', 'printHeight', 'reg', 'gap', 'speed', 'density', 'direction'];
+const RESET_SETTING_IDS = SETTINGS_IDS.filter(id => id !== 'name' && id !== 'line2');
+const resetButtons = new Map();
+
+function defaultSettingValue(input){
+  if(input.tagName === 'SELECT'){
+    return (Array.from(input.options).find(option => option.defaultSelected) || input.options[0]).value;
+  }
+  return input.defaultValue;
+}
+
+function settingIsDefault(input){
+  const initial = defaultSettingValue(input);
+  return input.type === 'number' && input.value !== ''
+    ? Number(input.value) === Number(initial)
+    : input.value === initial;
+}
+
+function updateResetButtons(){
+  for(const [id, button] of resetButtons) button.hidden = settingIsDefault($(id));
+}
+
+function resetSetting(id){
+  $(id).value = defaultSettingValue($(id));
+  saveSettings();
+  drawPreview();
+  $(id).focus();
+}
+
+function installResetButtons(){
+  for(const id of RESET_SETTING_IDS){
+    const label = document.querySelector('label[for="' + id + '"]');
+    const row = document.createElement('div');
+    row.className = 'setting-label';
+    label.replaceWith(row);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'reset-setting';
+    button.textContent = 'Restore default';
+    button.setAttribute('aria-label', 'Restore default for ' + label.textContent);
+    button.addEventListener('click', () => resetSetting(id));
+    row.append(label, button);
+    resetButtons.set(id, button);
+  }
+}
+
+function restoreSettings(){
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    if(!raw) return;
+    const saved = JSON.parse(raw);
+    if(!saved || typeof saved !== 'object' || Array.isArray(saved)) return;
+    for(const id of SETTINGS_IDS){
+      if(typeof saved[id] !== 'string') continue;
+      const input = $(id);
+      if(input.tagName === 'SELECT' && !Array.from(input.options).some(option => option.value === saved[id])) continue;
+      if(input.type === 'number' && saved[id] !== ''){
+        const value = Number(saved[id]);
+        if(!Number.isFinite(value) || (input.min !== '' && value < Number(input.min)) ||
+          (input.max !== '' && value > Number(input.max))) continue;
+      }
+      input.value = input.maxLength > 0 ? saved[id].slice(0, input.maxLength) : saved[id];
+    }
+    $('settingsStatus').textContent = 'Restored settings from this browser.';
+  } catch {
+    $('settingsStatus').textContent = 'Could not restore saved settings. Using defaults.';
+  }
+}
+
+function saveSettings(){
+  try {
+    const saved = Object.fromEntries(SETTINGS_IDS.map(id => [id, $(id).value]));
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(saved));
+    $('settingsStatus').textContent = 'Saved in this browser.';
+  } catch {
+    $('settingsStatus').textContent = 'Browser storage is unavailable. Changes will not survive refresh.';
+  }
+}
 
 /* physical tag, in inches */
-const TAG_W = 4.0, TAG_H = 0.625, LEFT_W = 0.5, LEFT_H = 0.53, N_TAGS = 2;
+const TAG_W = 4.0, TAG_H = 0.625, LEFT_W = 0.5, LEFT_H = 0.53;
+const LEFT_INSET = (TAG_H - LEFT_H) / 2;
 /* canvas layout */
 const CV_W = 1600, CV_PX = 64, CV_PY = 80;
 const SCALE = (CV_W - 2 * CV_PX) / TAG_W;         // 368 px per inch
 const TAG_PXH = TAG_H * SCALE;                    // 230
-const CV_H = Math.ceil(CV_PY * 2 + N_TAGS * TAG_PXH); // 620
+const CV_H = Math.ceil(CV_PY * 2 + TAG_PXH); // 390
 const ix = v => CV_PX + v * SCALE;
 const iy = v => CV_PY + v * SCALE;
 const invX = px => (px - CV_PX) / SCALE;
@@ -330,11 +436,12 @@ function opts(){
     name: $('name').value,
     line2: $('line2').value,
     copies: Math.max(1, parseInt($('copies').value || '1', 10)),
+    printHeight: clamp(parseFloat($('printHeight').value) || 0.28, 0.01, 90),
     reg: $('reg').value,
     gap: parseFloat($('gap').value || '0') || 0,
     speed: $('speed').value,
     direction: $('direction').value,
-    density: parseInt($('density').value || '8', 10),
+    density: parseInt($('density').value || '1', 10),
     padX: clamp(parseFloat($('padX').value || '0') || 0, 0, TAG_W / 2),
     padY: clamp(parseFloat($('padY').value || '0') || 0, 0, TAG_H / 2),
   };
@@ -363,9 +470,10 @@ function renderLabel(o){
   ctx.font = '400 ' + fontSize + 'px Arial';
   ctx.fillText(o.line2, Math.round(o.padX * dpi), Math.round(o.padY * dpi) + lineHeight);
   ctx.restore();
-  // Remove pixels where the left cut-out has no material.
+  // The narrower left section leaves equal cut-outs above and below it.
   ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, Math.round(LEFT_H * dpi), Math.round(LEFT_W * dpi), raster.height);
+  ctx.fillRect(0, 0, Math.round(LEFT_W * dpi), Math.round(LEFT_INSET * dpi));
+  ctx.fillRect(0, Math.round((TAG_H - LEFT_INSET) * dpi), Math.round(LEFT_W * dpi), raster.height);
   return raster;
 }
 
@@ -401,10 +509,45 @@ function cropToInk(pixels, width, height){
   return { x: left, y: top, width: croppedWidth, height: croppedHeight, pixels: cropped };
 }
 
-function buildTSPL(o){
+function prepareBitmap(o){
+  if(!o.name && !o.line2) return null;
+  const raster = renderLabel(o);
+  const pixels = raster.getContext('2d').getImageData(0, 0, raster.width, raster.height).data;
+  const ink = cropToInk(pixels, raster.width, raster.height);
+  if(!ink) return null;
+  const stride = Math.ceil(ink.width / 8);
+  return { x: ink.x, y: ink.y, stride, height: ink.height,
+    bytes: packBitmap(ink.pixels, ink.width, ink.height) };
+}
+
+function unpackBitmap(bitmap){
+  const width = bitmap.stride * 8;
+  const pixels = new Uint8Array(width * bitmap.height * 4);
+  for(let y = 0; y < bitmap.height; y++){
+    for(let x = 0; x < width; x++){
+      const white = (bitmap.bytes[y * bitmap.stride + (x >> 3)] & (0x80 >> (x & 7))) !== 0;
+      const i = (y * width + x) * 4;
+      pixels[i] = pixels[i + 1] = pixels[i + 2] = white ? 255 : 0;
+      pixels[i + 3] = 255;
+    }
+  }
+  return pixels;
+}
+
+function bitmapCanvas(bitmap){
+  const raster = document.createElement('canvas');
+  raster.width = bitmap.stride * 8;
+  raster.height = bitmap.height;
+  const ctx = raster.getContext('2d');
+  const image = ctx.getImageData(0, 0, raster.width, raster.height);
+  image.data.set(unpackBitmap(bitmap));
+  ctx.putImageData(image, 0, 0);
+  return raster;
+}
+
+function jobParts(o, bitmap){
   const L = [];
-  // Restore the print-page dimensions used before the padding UI was added.
-  L.push('SIZE 4.00,0.28');
+  L.push('SIZE 4.00,' + o.printHeight);
   if(o.reg === 'gap') L.push('GAP ' + o.gap.toFixed(2) + ',0');
   else if(o.reg === 'bline') L.push('BLINE ' + o.gap.toFixed(2) + ',0');
   else if(o.reg === 'continuous') L.push('GAP 0,0');
@@ -412,19 +555,20 @@ function buildTSPL(o){
   L.push('DENSITY ' + o.density);
   L.push('DIRECTION ' + o.direction + ',0');
   L.push('CLS');
-  const encoder = new TextEncoder();
-  const parts = [encoder.encode(L.join('\r\n') + '\r\n')];
-  if(o.name || o.line2){
-    const raster = renderLabel(o);
-    const pixels = raster.getContext('2d').getImageData(0, 0, raster.width, raster.height).data;
-    const ink = cropToInk(pixels, raster.width, raster.height);
-    if(ink){
-      parts.push(encoder.encode('BITMAP ' + ink.x + ',' + ink.y + ',' + Math.ceil(ink.width / 8) + ',' + ink.height + ',0,'));
-      parts.push(packBitmap(ink.pixels, ink.width, ink.height));
-      parts.push(encoder.encode('\r\n'));
-    }
+  const parts = [L.join('\r\n') + '\r\n'];
+  if(bitmap){
+    parts.push('BITMAP ' + bitmap.x + ',' + bitmap.y + ',' + bitmap.stride + ',' + bitmap.height + ',0,');
+    parts.push(bitmap.bytes);
+    parts.push('\r\n');
   }
-  parts.push(encoder.encode('PRINT ' + o.copies + ',1\r\n'));
+  parts.push('PRINT ' + o.copies + ',1\r\n');
+  return parts;
+}
+
+function buildTSPL(o){
+  const encoder = new TextEncoder();
+  const parts = jobParts(o, prepareBitmap(o)).map(part =>
+    typeof part === 'string' ? encoder.encode(part) : part);
   const result = new Uint8Array(parts.reduce((sum, p) => sum + p.length, 0));
   let offset = 0;
   for(const part of parts){ result.set(part, offset); offset += part.length; }
@@ -439,7 +583,7 @@ async function printLabel(){
     const result = await device.transferOut(outEp.endpointNumber, tspl);
     if(result.status !== 'ok' || result.bytesWritten !== tspl.length) throw new Error('USB transfer incomplete');
     log('Layout v5 · Sent ' + tspl.length + ' bytes.\n' +
-      'SIZE 4.00,0.28 · DIRECTION ' + o.direction + ',0\n' +
+      'SIZE 4.00,' + o.printHeight + ' · DIRECTION ' + o.direction + ',0\n' +
       'Padding X ' + o.padX + ' in · Y ' + o.padY + ' in.\n' +
       'Arial Bold / Regular, 8 pt. Bitmap trimmed to text bounds.');
   }catch(e){ log('Print failed: ' + e.message, true); }
@@ -457,12 +601,14 @@ function download(){
 /* ---------- preview ---------- */
 function tagPath(ctx, off){
   ctx.beginPath();
-  ctx.moveTo(ix(0), iy(off));
+  ctx.moveTo(ix(0), iy(off + LEFT_INSET));
+  ctx.lineTo(ix(LEFT_W), iy(off + LEFT_INSET));
+  ctx.lineTo(ix(LEFT_W), iy(off));
   ctx.lineTo(ix(TAG_W), iy(off));
   ctx.lineTo(ix(TAG_W), iy(off + TAG_H));
   ctx.lineTo(ix(LEFT_W), iy(off + TAG_H));
-  ctx.lineTo(ix(LEFT_W), iy(off + LEFT_H));
-  ctx.lineTo(ix(0), iy(off + LEFT_H));
+  ctx.lineTo(ix(LEFT_W), iy(off + TAG_H - LEFT_INSET));
+  ctx.lineTo(ix(0), iy(off + TAG_H - LEFT_INSET));
   ctx.closePath();
 }
 
@@ -476,25 +622,24 @@ function vdim(ctx, x, yA, yB, label){
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(label, 0, 0); ctx.restore();
 }
 
-function hdim(ctx, xA, xB, y, label){
-  ctx.strokeStyle = '#9aa39b'; ctx.lineWidth = 1.5;
-  ctx.beginPath(); ctx.moveTo(xA, y); ctx.lineTo(xB, y); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(xA, y - 8); ctx.lineTo(xA, y + 8);
-  ctx.moveTo(xB, y - 8); ctx.lineTo(xB, y + 8); ctx.stroke();
-  ctx.fillStyle = '#5f6b63'; ctx.font = '500 30px "IBM Plex Sans", Inter, sans-serif';
-  ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText(label, (xA + xB) / 2, y - 12);
-}
-
 function drawPreview(){
+  updateResetButtons();
   const o = opts();
+  const bitmap = prepareBitmap(o);
+  $('tsplPreview').textContent = jobParts(o, bitmap).map(part =>
+    typeof part === 'string' ? part : '<binary pixels: ' + part.length + ' bytes>').join('');
+  const image = bitmap ? bitmapCanvas(bitmap) : null;
+  const wire = $('wireBitmap');
+  wire.width = image ? image.width : 1;
+  wire.height = image ? image.height : 1;
+  const wireCtx = wire.getContext('2d');
+  if(image) wireCtx.drawImage(image, 0, 0);
+  $('bitmapInfo').textContent = bitmap
+    ? (bitmap.stride * 8) + ' × ' + bitmap.height + ' dots · ' + bitmap.bytes.length + ' bytes · BITMAP ' + bitmap.x + ',' + bitmap.y + ',' + bitmap.stride + ',' + bitmap.height + ',0. One screen pixel per printer dot. Guides are not sent.'
+    : 'No text, no bitmap sent.';
   const c = $('preview'), ctx = c.getContext('2d');
   ctx.clearRect(0, 0, CV_W, CV_H);
   ctx.lineJoin = 'miter';
-
-  // the next tag, faded, so the left cut-out gap reads
-  tagPath(ctx, TAG_H);
-  ctx.fillStyle = '#f3f1e9'; ctx.fill();
-  ctx.strokeStyle = '#dcd7c9'; ctx.lineWidth = 2; ctx.stroke();
 
   // the tag being designed
   tagPath(ctx, 0);
@@ -506,7 +651,11 @@ function drawPreview(){
 
   // padding bands, clipped to the material so the left notch stays empty
   ctx.save(); tagPath(ctx, 0); ctx.clip();
-  ctx.drawImage(renderLabel(o), ix(0), iy(0), TAG_W * SCALE, TAG_H * SCALE);
+  if(image){
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(image, ix(bitmap.x / 203), iy(bitmap.y / 203),
+      image.width * SCALE / 203, image.height * SCALE / 203);
+  }
   ctx.fillStyle = 'rgba(42,74,57,0.09)';
   ctx.fillRect(ix(0), iy(0), x0 - ix(0), iy(TAG_H) - iy(0));
   ctx.fillRect(x1, iy(0), ix(TAG_W) - x1, iy(TAG_H) - iy(0));
@@ -528,9 +677,7 @@ function drawPreview(){
   ctx.fillStyle = '#2a4a39'; ctx.beginPath(); ctx.arc(x0, y0, 9, 0, Math.PI * 2); ctx.fill();
   ctx.restore();
 
-  vdim(ctx, ix(0) - 30, iy(0), iy(LEFT_H), '0.53 in');
   vdim(ctx, ix(TAG_W) + 30, iy(0), iy(TAG_H), '0.625 in');
-  hdim(ctx, ix(0), ix(LEFT_W), iy(0) - 36, '0.5 in');
 }
 
 /* drag the guides */
@@ -553,6 +700,7 @@ function hitAxis(x, y){
 function setPad(axis, val){
   if(axis === 'x') $('padX').value = clamp(val, 0, TAG_W / 2).toFixed(2);
   else $('padY').value = clamp(val, 0, TAG_H / 2).toFixed(2);
+  saveSettings();
   drawPreview();
 }
 canvas.addEventListener('pointerdown', e => {
@@ -570,16 +718,22 @@ canvas.addEventListener('pointerup', endDrag);
 canvas.addEventListener('pointercancel', endDrag);
 
 /* wire up */
+installResetButtons();
 $('connectBtn').onclick = () => { if(device){ device = null; outEp = null; setConn(false); log('Disconnected.'); } else connect(); };
 $('printBtn').onclick = printLabel;
 $('dlBtn').onclick = download;
-['name', 'line2', 'padX', 'padY'].forEach(id => $(id).addEventListener('input', drawPreview));
+for(const id of SETTINGS_IDS){
+  const update = () => { saveSettings(); drawPreview(); };
+  $(id).addEventListener('input', update);
+  $(id).addEventListener('change', update);
+}
 if(navigator.usb){
   navigator.usb.addEventListener('disconnect', e => {
     if(device && e.device === device){ device = null; outEp = null; setConn(false); log('Printer disconnected.'); }
   });
 }
 canvas.width = CV_W; canvas.height = CV_H;
+restoreSettings();
 reconnect();
 drawPreview();
 </script>
