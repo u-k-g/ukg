@@ -54,9 +54,7 @@ const printer = await Website("stake-printer", {
   Permissions-Policy: usb=(self), camera=(), microphone=(), geolocation=()
   Cache-Control: no-cache`,
   },
-  domains: attachProductionDomain
-    ? [{ domainName: "ttp.ukg.one", adopt: true }]
-    : undefined,
+  domains: [{ domainName: "ttp.ukg.one", adopt: true }],
   previewSubdomains: true,
   url: true,
 });

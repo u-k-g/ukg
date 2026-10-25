@@ -82,8 +82,8 @@ run in the browser as WebAssembly.
 ## Cloudflare deployment
 
 The root `alchemy.run.ts` deploys this app as the `ukg-ttp` static Worker,
-separate from the main website. Set `ATTACH_PRODUCTION_DOMAIN=true` to attach
-`ttp.ukg.one`. The existing Cloudflare account/token and Alchemy state secrets
+separate from the main website. Every deployment attaches `ttp.ukg.one` without
+requiring `ATTACH_PRODUCTION_DOMAIN`. The existing Cloudflare account/token and Alchemy state secrets
 are shared with the main site's deployment. The token needs permission to
 deploy Workers and attach custom domains in the `ukg.one` zone.
 
