@@ -95,6 +95,11 @@ get('name').value = 'banana';
 get('line2').value = 'second line';
 const job = new TextDecoder().decode(run('buildTSPL(opts())'));
 assert(job.includes('DIRECTION 1,0\r\nCLS'));
+for(const [value, command] of [['0', '0,0'], ['1', '1,0'], ['2', '0,1'], ['3', '1,1']]){
+  get('direction').value = value;
+  assert(new TextDecoder().decode(run('buildTSPL(opts())')).includes('DIRECTION ' + command + '\r\n'));
+}
+get('direction').value = '1';
 assert(source.includes('<option value="1" selected>'));
 assert(job.includes('SIZE 4.00,0.28\r\nGAP 0.35,0\r\n'));
 assert(!job.includes('REFERENCE '));
@@ -250,7 +255,10 @@ const encode = text => new TextEncoder().encode(text);
 assert.throws(() => parse(encode('SIZE 4,0.28\r\nCLS\r\nKILL "*"\r\nPRINT 1,1\r\n')), /Unsupported/);
 assert.throws(() => parse(encode('SIZE 4,0.28\r\nCLS\r\nBITMAP 0,0,33,49,0,')), /truncated/);
 assert.throws(() => parse(encode('SIZE 4,0.28\r\nCLS\r\nPRINT 1,1\r\nPRINT 1,1\r\n')), /one print job/);
-assert.throws(() => parse(encode('SIZE 4,0.28\r\nDIRECTION 1,1\r\nCLS\r\nPRINT 1,1\r\n')), /Unsupported/);
+for(const [value, command] of [['0', '0,0'], ['1', '1,0'], ['2', '0,1'], ['3', '1,1']]){
+  assert.equal(parse(encode('SIZE 4,0.28\r\nDIRECTION ' + command + '\r\nCLS\r\nPRINT 1,1\r\n')).settings.direction, value);
+}
+assert.throws(() => parse(encode('SIZE 4,0.28\r\nDIRECTION 2,0\r\nCLS\r\nPRINT 1,1\r\n')), /Unsupported/);
 assert.throws(() => parse(encode('SIZE 4,0.28\r\nCLS\r\nBITMAP 0,0,103,1,0,')), /supported range/);
 const binaryPixels = new Uint8Array([13, 10, 0, 255]);
 const embeddedNewlines = Buffer.concat([

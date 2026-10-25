@@ -215,7 +215,9 @@ fn job<'a>(
         3 => header.push_str("\r\nGAP 0,0"),
         _ => {}
     }
-    header.push_str(&format!("\r\nSPEED {speed}\r\nDENSITY {density}\r\nDIRECTION {direction},0\r\nCLS\r\n"));
+    let mirror = (direction >> 1) & 1;
+    let direction = direction & 1;
+    header.push_str(&format!("\r\nSPEED {speed}\r\nDENSITY {density}\r\nDIRECTION {direction},{mirror}\r\nCLS\r\n"));
     let mut parts = vec![Part::Text(header)];
     if let Some(bytes) = bitmap {
         parts.push(Part::Text(format!("BITMAP {x},{y},{stride},{height},0,")));
@@ -455,6 +457,8 @@ fn direction_value(line: &str) -> Option<u8> {
     match rest {
         "0,0" => Some(0),
         "1,0" => Some(1),
+        "0,1" => Some(2),
+        "1,1" => Some(3),
         _ => None,
     }
 }
