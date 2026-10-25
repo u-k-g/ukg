@@ -208,7 +208,7 @@
           <div class="adv">
             <div class="field">
               <label for="printHeight">Print height (in)</label>
-              <input id="printHeight" type="number" value="0.25" min="0.01" max="90" step="0.001" />
+              <input id="printHeight" type="number" value="0.28" min="0.01" max="90" step="0.001" />
             </div>
             <div class="field">
               <label for="reg">Registration</label>
@@ -225,7 +225,7 @@
             </div>
             <div class="field">
               <label for="gap">Gap (in)</label>
-              <input id="gap" type="number" value="0.38" min="0" max="1" step="0.001" />
+              <input id="gap" type="number" value="0.35" min="0" max="1" step="0.001" />
             </div>
             <div class="field">
               <label for="direction">Print orientation</label>
@@ -239,8 +239,8 @@
               <input id="density" type="number" value="1" min="0" max="15" />
             </div>
           </div>
-          <p class="hint">Print height controls TSPL SIZE, not the physical-tag outline. Default 0.25 in. Changing it can change feed spacing; the gap remains a separate setting.</p>
-          <label class="check"><input id="alignmentDot" type="checkbox" /> Alignment dot</label>
+          <p class="hint">Print height controls TSPL SIZE, not the physical-tag outline. Default 0.28 in. Changing it can change feed spacing; the gap remains a separate setting.</p>
+          <label class="check"><input id="alignmentDot" type="checkbox" /> Alignment angle</label>
         </details>
 
         <div>
@@ -511,7 +511,7 @@ function opts(){
     name: $('name').value,
     line2: $('line2').value,
     copies: Math.max(1, parseInt($('copies').value || '1', 10)),
-    printHeight: clamp(parseFloat($('printHeight').value) || 0.25, 0.01, 90),
+    printHeight: clamp(parseFloat($('printHeight').value) || 0.28, 0.01, 90),
     reg: $('reg').value,
     gap: parseFloat($('gap').value || '0') || 0,
     speed: $('speed').value,

@@ -150,13 +150,15 @@ pub extern "C" fn stamp_dot(bytes: *const u8, len: u32, stride: u32, height: u32
 
 fn stamp(src: &[u8], stride: usize, height: usize) -> Vec<u8> {
     let mut bytes = src.to_vec();
-    let size = 8.min(height).min(stride.saturating_mul(8));
-    for y in 0..size {
-        for x in 0..size {
-            let index = y * stride + (x >> 3);
-            if let Some(byte) = bytes.get_mut(index) {
-                *byte &= !(0x80 >> (x & 7));
-            }
+    let width = stride.saturating_mul(8);
+    for x in 0..width {
+        if let Some(byte) = bytes.get_mut(x >> 3) {
+            *byte &= !(0x80 >> (x & 7));
+        }
+    }
+    for y in 0..height {
+        if let Some(byte) = bytes.get_mut(y * stride) {
+            *byte &= !0x80;
         }
     }
     bytes

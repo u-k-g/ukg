@@ -38,8 +38,8 @@ pnpm test
 - Download list TSPL bundles those jobs into one file. The importer currently
   accepts single-label files only, not multi-job list bundles.
 - The mode and pasted list persist locally alongside the other form values.
-- Alignment dot adds an 8-dot black square to the sent bitmap. Its top-left
-  corner is the bitmap origin. Measure that corner, not the square's center.
+- Alignment angle paints the bitmap's top row and left column black. Their
+  corner is the bitmap origin.
 - USB vendor `0x1203`, product `0x0126`.
 - Two empty text lines, Arial Bold and Arial Regular at 8 pt.
 - Browser rasterization, monochrome packing and TSPL BITMAP output.
@@ -59,9 +59,9 @@ pnpm test
   refresh and are not stored server-side. Storage is
   specific to the browser profile and origin, including the port. Clearing site
   data removes saved settings; private browsing may discard them when closed.
-- Print defaults are SIZE 4.00,0.25, GAP 0.38,0, bitmap offsets X 128
+- Print defaults are SIZE 4.00,0.28, GAP 0.35,0, bitmap offsets X 128
   and Y 2 dots, and DIRECTION 1,0.
-- Printer settings includes Print height (in), default 0.25, to change the
+- Printer settings includes Print height (in), default 0.28, to change the
   TSPL SIZE height independently of the physical preview. The gap is separate;
   changing the print height can change feed spacing.
 
