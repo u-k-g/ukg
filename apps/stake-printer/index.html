@@ -6,24 +6,24 @@
 <title>TTP-247 stake printer</title>
 <style>
   :root{
-    --frame:#e7e6e0;
-    --sheet:#fafaf9;
-    --well:#f2f2ee;
-    --ink:#1b2821;
-    --muted:#4a574f;
-    --faint:#647068;
-    --border:#e0ded6;
-    --control:#cfccc2;
-    --primary:#1b2821;
-    --primary-ink:#f7f7f5;
-    --accent:#69d69a;
-    --accent-deep:#2a4a39;
-    --pos-bg:#e2f4e9;
-    --pos-ink:#0f4a2e;
-    --off-bg:#ece8dd;
-    --off-ink:#5a665e;
-    --danger:#a1362c;
-    --r-sheet:16px;
+    --paper:#FFFEFB;
+    --black:#000000;
+    --frame:var(--paper);
+    --sheet:var(--paper);
+    --well:var(--paper);
+    --ink:var(--black);
+    --muted:var(--black);
+    --faint:var(--black);
+    --border:var(--black);
+    --control:var(--black);
+    --primary:var(--black);
+    --primary-ink:var(--paper);
+    --accent:var(--black);
+    --accent-deep:var(--black);
+    --off-bg:var(--paper);
+    --off-ink:var(--black);
+    --danger:var(--black);
+    color-scheme:light;
     --r-panel:12px;
     --r-ctrl:8px;
     --font:Inter, system-ui, -apple-system, sans-serif;
@@ -41,17 +41,7 @@
   .app{min-height:100vh;padding:0 12px 12px}
   .num{font-variant-numeric:tabular-nums}
 
-  .topbar{height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-  .brand{display:flex;align-items:center;gap:10px;min-width:0}
-  .mark{width:22px;height:22px;flex:none;color:var(--ink)}
-  .brand .name{font-size:16px;font-weight:600;letter-spacing:-0.01em}
-
-  .pill{display:inline-flex;align-items:center;gap:7px;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap}
-  .pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
-  .pill.off{background:var(--off-bg);color:var(--off-ink)}
-  .pill.on{background:var(--pos-bg);color:var(--pos-ink)}
-
-  .sheet{background:var(--sheet);border:1px solid var(--border);border-radius:var(--r-sheet);padding:24px;min-height:calc(100vh - 68px);display:flex;flex-direction:column}
+  .sheet{background:var(--sheet);padding:24px;min-height:100vh;display:flex;flex-direction:column}
 
   .titlerow{margin-bottom:22px}
   h1{font-size:22px;font-weight:600;letter-spacing:-0.015em;margin:0}
@@ -63,7 +53,7 @@
   label{font-size:13px;font-weight:500;color:var(--muted)}
   .setting-label{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 8px;min-height:20px}
   .reset-setting{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;padding:5px;background:none;border:0;border-radius:var(--r-ctrl);color:var(--accent-deep);flex:none}
-  .reset-setting:hover{background:var(--well)}
+  .reset-setting:hover{background:var(--black);color:var(--paper)}
   .reset-setting svg{width:16px;height:16px}
   .reset-setting[hidden]{display:none}
   input,select{
@@ -74,13 +64,14 @@
     outline:2px solid var(--accent-deep);outline-offset:2px;
   }
   input:focus,select:focus{border-color:var(--accent-deep)}
+  input:disabled,select:disabled,textarea:disabled{color:var(--black);-webkit-text-fill-color:var(--black);opacity:1}
   textarea{width:100%;min-height:300px;resize:vertical;padding:12px;border:1px solid var(--control);border-radius:var(--r-ctrl);background:var(--sheet);color:var(--ink);font:400 14px/1.6 var(--font)}
   textarea:focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
   .granular-inputs{display:flex;flex-direction:column;gap:18px}
   .mode-switch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  .mode-button{display:flex;align-items:center;justify-content:center;gap:8px;height:44px;border:2px solid transparent;background:var(--well);color:var(--muted)}
+  .mode-button{display:flex;align-items:center;justify-content:center;gap:8px;height:44px;border:2px solid var(--black);background:var(--paper);color:var(--black)}
   .mode-button svg{width:18px;height:18px;flex:none}
-  .mode-button[aria-pressed="true"]{border-color:var(--accent-deep);background:var(--sheet);color:var(--ink)}
+  .mode-button[aria-pressed="true"]{border-color:var(--black);background:var(--black);color:var(--paper)}
   .mode-button:hover{border-color:var(--control)}
   .mode-button[aria-pressed="true"]:hover{border-color:var(--accent-deep)}
   .list-errors{margin:10px 0 0;padding-left:20px;font-size:13px;color:var(--danger)}
@@ -91,10 +82,15 @@
   .batch-quantity{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--muted)}
   .row2{display:flex;gap:12px}
   .row2 .field{flex:1;margin-bottom:0}
+  .offset-value{display:flex;align-items:center;gap:10px}
+  .offset-value input{width:100px;flex:none}
+  .offset-value span{white-space:nowrap;font-size:13px;font-variant-numeric:tabular-nums}
   .hint{color:var(--faint);font-size:13px;margin:8px 0 0}
   .actions{display:flex;flex-direction:column;gap:10px}
   .check{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:13px;font-weight:500;color:var(--muted)}
-  .check input{width:16px;height:16px;margin:0;accent-color:var(--accent-deep)}
+  .check input{appearance:none;position:relative;width:16px;height:16px;padding:0;margin:0;border:1px solid var(--black);border-radius:3px;background:var(--paper)}
+  .check input:checked{background:var(--black)}
+  .check input:checked::after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid var(--paper);border-width:0 2px 2px 0;transform:rotate(45deg)}
   button{
     font:500 14px var(--font);cursor:pointer;border-radius:var(--r-ctrl);border:1px solid transparent;
     height:40px;padding:0 16px;transition:background .12s,border-color .12s,color .12s;
@@ -102,11 +98,12 @@
   button:active{transform:translateY(1px)}
   button:disabled{cursor:not-allowed}
   .btn-primary{background:var(--primary);color:var(--primary-ink)}
-  .btn-primary:hover{background:#26392e}
+  .btn-primary:hover:not(:disabled){background:var(--paper);color:var(--black);border-color:var(--black)}
   .btn-primary:disabled{background:var(--off-bg);color:var(--off-ink);border-color:var(--border)}
   .btn-secondary{background:var(--sheet);border-color:var(--control);color:var(--ink)}
-  .btn-secondary:hover{background:var(--well)}
-  .connect .short{display:none}
+  .btn-secondary:hover:not(:disabled){background:var(--black);color:var(--paper)}
+  button:disabled{border-style:dashed}
+  .err,.list-errors{font-weight:600}
 
   details{border:1px solid var(--border);border-radius:var(--r-panel);padding:12px 14px;background:var(--sheet)}
   summary{cursor:pointer;font-size:13px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}
@@ -122,7 +119,7 @@
   canvas{display:block;width:100%;height:auto;touch-action:none;cursor:default}
   .bitmap-view{margin-top:18px}
   .bitmap-view h3{font-size:14px;margin:0 0 8px;font-weight:600}
-  .bitmap-scroll{overflow:auto;background:#ffffff;padding:12px;min-height:48px}
+  .bitmap-scroll{overflow:auto;background:var(--paper);padding:12px;min-height:48px}
   #wireBitmap{width:auto;max-width:none;image-rendering:pixelated;touch-action:auto}
   .tspl-view{margin-top:18px}
   .tspl-view h3{font-size:14px;margin:0 0 8px;font-weight:600}
@@ -136,33 +133,14 @@
   @media (max-width:520px){
     .app{padding:0 10px 10px}
     .sheet{padding:18px;min-height:0}
-    .topbar{height:52px}
-    .connect .long{display:none}
-    .connect .short{display:inline}
   }
 </style>
 </head>
 <body>
 <div class="app">
-  <header class="topbar">
-    <div class="brand">
-      <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">
-        <path d="M20.4 13.4 13.4 20.4a2 2 0 0 1-2.8 0L3 12.8V3h9.8l7.6 7.6a2 2 0 0 1 0 2.8Z"/>
-        <circle cx="7.4" cy="7.4" r="1.5" fill="var(--accent)" stroke="none"/>
-      </svg>
-      <span class="name">TTP-247</span>
-      <span id="status" class="pill off"><span class="dot"></span><span id="statusText">Offline</span></span>
-    </div>
-    <div class="connect">
-      <button id="connectBtn" class="btn-primary btn-sm" aria-label="Connect printer">
-        <span class="long">Connect printer</span><span class="short" aria-hidden="true">Connect</span>
-      </button>
-    </div>
-  </header>
-
   <main class="sheet">
     <div class="titlerow">
-      <h1>Stake labels</h1>
+      <h1>ttp.</h1>
     </div>
 
     <div class="workspace">
@@ -182,11 +160,11 @@
         </div>
         <div id="granularInputs" class="granular-inputs">
         <div class="field">
-          <label for="name">Line one · Arial Bold, 8 pt</label>
+          <label for="name">Text</label>
           <input id="name" type="text" value="" maxlength="40" autocomplete="off" />
         </div>
         <div class="field">
-          <label for="line2">Line two · Arial Regular, 8 pt</label>
+          <label for="line2">Subtext</label>
           <input id="line2" type="text" value="" maxlength="80" autocomplete="off" />
         </div>
         <div class="row2">
@@ -246,27 +224,26 @@
         <div>
           <div class="row2">
             <div class="field">
-              <label for="offsetX">Bitmap X (dots)</label>
-              <input id="offsetX" type="number" value="128" min="0" max="65535" step="1" />
-            </div>
-            <div class="field">
-              <label for="offsetXIn">Bitmap X (in)</label>
-              <input id="offsetXIn" type="number" value="0.6305" min="0" step="0.001" />
+              <label for="offsetX">Bitmap X</label>
+              <div class="offset-value">
+                <input id="offsetX" type="number" value="128" min="0" max="65535" step="1" aria-describedby="offsetXUnits" />
+                <span id="offsetXUnits">dots (<output id="offsetXIn" for="offsetX">0.6305</output> in)</span>
+              </div>
             </div>
           </div>
           <div class="row2" style="margin-top:12px">
             <div class="field">
-              <label for="offsetY">Bitmap Y (dots)</label>
-              <input id="offsetY" type="number" value="0" min="0" max="65535" step="1" />
-            </div>
-            <div class="field">
-              <label for="offsetYIn">Bitmap Y (in)</label>
-              <input id="offsetYIn" type="number" value="0.0000" min="0" step="0.001" />
+              <label for="offsetY">Bitmap Y</label>
+              <div class="offset-value">
+                <input id="offsetY" type="number" value="0" min="0" max="65535" step="1" aria-describedby="offsetYUnits" />
+                <span id="offsetYUnits">dots (<output id="offsetYIn" for="offsetY">0.0000</output> in)</span>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="actions">
+          <button id="connectBtn" class="btn-primary" type="button">Connect printer</button>
           <button id="printBtn" class="btn-primary" disabled>Print label</button>
           <button id="dlBtn" class="btn-secondary" type="button">Download TSPL</button>
           <button id="importBtn" class="btn-secondary" type="button">Import TSPL</button>
@@ -285,7 +262,7 @@
         <div id="granularPreview">
         <canvas id="preview" width="1600" height="390" role="img" aria-label="Stake label showing the left cut-out and bitmap offset guides"></canvas>
         <div class="bitmap-view">
-          <h3>Sent bitmap</h3>
+          <h3>Bitmap</h3>
           <div class="bitmap-scroll"><canvas id="wireBitmap" width="1" height="1" role="img" aria-label="Exact monochrome bitmap sent over USB, without preview guides"></canvas></div>
         </div>
         <div class="tspl-view">
@@ -451,14 +428,11 @@ const printerX = dots => ix(PREVIEW_ORIGIN_X + dots / 203);
 const printerY = dots => iy(PREVIEW_ORIGIN_Y + dots / 203);
 
 function setConn(on){
-  $('status').className = 'pill ' + (on ? 'on' : 'off');
-  $('statusText').textContent = on ? 'Connected' : 'Offline';
   updatePrintControls();
   const btn = $('connectBtn');
   btn.classList.toggle('btn-primary', !on);
   btn.classList.toggle('btn-secondary', on);
-  btn.querySelector('.long').textContent = on ? 'Disconnect' : 'Connect printer';
-  btn.querySelector('.short').textContent = on ? 'Disconnect' : 'Connect';
+  btn.textContent = on ? 'Disconnect printer' : 'Connect printer';
 }
 
 function log(msg, isError){
@@ -652,6 +626,9 @@ function bitmapCanvas(bitmap){
   const ctx = raster.getContext('2d');
   const image = ctx.getImageData(0, 0, raster.width, raster.height);
   image.data.set(unpackBitmap(bitmap));
+  for(let i = 0; i < image.data.length; i += 4){
+    if(image.data[i] === 255){ image.data[i + 1] = 254; image.data[i + 2] = 251; }
+  }
   ctx.putImageData(image, 0, 0);
   return raster;
 }
@@ -810,8 +787,8 @@ function drawPreview(){
   $('clearImportBtn').hidden = $('importStatus').hidden = list || !importedBitmap;
   updateResetButtons();
   const o = opts();
-  $('offsetXIn').value = (o.offsetX / 203).toFixed(4);
-  $('offsetYIn').value = (o.offsetY / 203).toFixed(4);
+  $('offsetXIn').textContent = (o.offsetX / 203).toFixed(4);
+  $('offsetYIn').textContent = (o.offsetY / 203).toFixed(4);
   const parsed = parsePlantList($('listText').value);
   updatePrintControls(parsed);
   if(list){
@@ -890,8 +867,8 @@ function drawTag(c, o, bitmap, image = bitmap ? bitmapCanvas(bitmap) : null){
 
   // the tag being designed
   tagPath(ctx, 0);
-  ctx.fillStyle = '#ffffff'; ctx.fill();
-  ctx.strokeStyle = '#c9c3b4'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = '#FFFEFB'; ctx.fill();
+  ctx.strokeStyle = '#000000'; ctx.lineWidth = 2; ctx.stroke();
 
   // The physical outline clips the positioned view, not the sent bitmap.
   ctx.save(); tagPath(ctx, 0); ctx.clip();
@@ -908,7 +885,7 @@ function drawTag(c, o, bitmap, image = bitmap ? bitmapCanvas(bitmap) : null){
   ctx.beginPath(); ctx.rect(printerX(0) - 2, printerY(0) - 2,
     ix(TAG_W) - printerX(0) + 4, iy(TAG_H) - printerY(0) + 4); ctx.clip();
   ctx.lineWidth = 2;
-  ctx.strokeStyle = '#2a4a39';
+  ctx.strokeStyle = '#000000';
   for(const segment of offsetSegments(o)){
     ctx.beginPath(); ctx.moveTo(segment.x1, segment.y1); ctx.lineTo(segment.x2, segment.y2); ctx.stroke();
   }
@@ -984,12 +961,6 @@ for(const id of SETTINGS_IDS){
   const update = () => { saveSettings(); drawPreview(); };
   $(id).addEventListener('input', update);
   $(id).addEventListener('change', update);
-}
-for(const axis of ['X', 'Y']){
-  $('offset' + axis + 'In').addEventListener('change', () => {
-    const inches = Number($('offset' + axis + 'In').value);
-    if(Number.isFinite(inches)) setOffset(axis, inches * 203);
-  });
 }
 if(navigator.usb){
   navigator.usb.addEventListener('disconnect', e => {

@@ -50,7 +50,7 @@ pnpm test
   bitmap, files up to 1 MB, and only commands represented by this app's controls.
   Unknown commands are rejected, not forwarded to the printer.
 - Draggable bitmap X/Y offset guides and a shaped physical-tag preview.
-- X/Y are explicit BITMAP coordinates in whole dots, with editable inch
+- X/Y are explicit BITMAP coordinates in whole dots, with read-only inch
   equivalents at 203 dpi. The bitmap is cropped before positioning; font
   bearings do not add to X/Y. Offsets do not create mirrored margins or clip
   the bitmap. The physical outline clips only the positioned preview.

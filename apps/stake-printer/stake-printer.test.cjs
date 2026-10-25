@@ -3,6 +3,8 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 
 const source = fs.readFileSync(`${__dirname}/index.html`, 'utf8');
+const css = source.match(/<style>([\s\S]*?)<\/style>/)[1];
+assert.deepEqual([...new Set(css.match(/#[\da-f]{6}\b/gi).map(color => color.toUpperCase()))].sort(), ['#000000', '#FFFEFB']);
 assert.match(source, /id="offsetX"[^>]*value="128"/);
 assert.match(source, /id="offsetY"[^>]*value="0"/);
 assert.match(source, /id="printHeight"[^>]*value="0.25"/);
@@ -170,8 +172,9 @@ assert.equal(saved.name, 'Persisted plant');
 assert.equal(saved.line2, 'Persisted description');
 assert.equal(saved.offsetX, '106');
 assert.equal(saved.offsetY, '6');
-assert.equal(get('offsetXIn').value, (106 / 203).toFixed(4));
-assert.equal(get('offsetYIn').value, (6 / 203).toFixed(4));
+assert.equal(get('offsetXIn').textContent, (106 / 203).toFixed(4));
+assert.equal(get('offsetYIn').textContent, (6 / 203).toFixed(4));
+assert(!/<input[^>]*id="offset[XY]In"/.test(source));
 for(const id of run('SETTINGS_IDS')) get(id).value = '';
 run('restoreSettings()');
 for(const [id, value] of Object.entries(saved)){
