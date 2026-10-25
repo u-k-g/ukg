@@ -43,9 +43,11 @@
   .num{font-variant-numeric:tabular-nums}
 
   .sheet{background:var(--sheet);padding:24px;min-height:calc(100vh - 32px);display:flex;flex-direction:column}
-  .toolbar{display:flex;align-items:baseline;gap:20px;height:32px;padding:0 12px;border-bottom:1px solid var(--border)}
+  .toolbar{position:sticky;top:0;z-index:10;background:var(--paper);display:flex;align-items:baseline;gap:20px;height:32px;padding:0 12px;border-bottom:1px solid var(--border)}
   .toolbar-actions{display:flex;align-items:center;align-self:center;gap:6px;margin-left:auto}
   .toolbar-actions>button{height:24px;padding:0 10px;font-size:var(--ui-size);white-space:nowrap}
+  #printBtn{border:0;background:transparent;color:var(--black)}
+  #printBtn:hover:not(:disabled){background:color-mix(in srgb,var(--black) 7%,var(--paper))}
   h1{font-size:16px;font-weight:700;letter-spacing:-0.015em;line-height:1;margin:0}
   .app-menu-trigger{height:auto;padding:0;border:0;font:inherit;letter-spacing:inherit;line-height:inherit;background:var(--paper);color:var(--black)}
   .app-menu-trigger:hover{color:#A41E14}
@@ -200,11 +202,15 @@
           <textarea id="listText" spellcheck="false" aria-describedby="listSummary"></textarea>
           <p id="listSummary" class="hint" role="status">Paste a list to preview the labels.</p>
           <ul id="listErrors" class="list-errors" hidden></ul>
+          <div class="field">
+            <label for="listLine2">Subtext</label>
+            <input id="listLine2" type="text" value="www.roothappyplants.com" maxlength="80" autocomplete="off" />
+          </div>
         </div>
         <div>
           <div class="row2">
             <div class="field">
-              <label for="offsetX">Bitmap X</label>
+              <label for="offsetX">X offset</label>
               <div class="offset-value">
                 <input id="offsetX" type="number" value="128" min="0" max="65535" step="1" aria-describedby="offsetXUnits" />
                 <span id="offsetXUnits">dots (<output id="offsetXIn" for="offsetX">0.6305</output> in)</span>
@@ -213,10 +219,10 @@
           </div>
           <div class="row2" style="margin-top:12px">
             <div class="field">
-              <label for="offsetY">Bitmap Y</label>
+              <label for="offsetY">Y offset</label>
               <div class="offset-value">
-                <input id="offsetY" type="number" value="0" min="0" max="65535" step="1" aria-describedby="offsetYUnits" />
-                <span id="offsetYUnits">dots (<output id="offsetYIn" for="offsetY">0.0000</output> in)</span>
+                <input id="offsetY" type="number" value="1" min="0" max="65535" step="1" aria-describedby="offsetYUnits" />
+                <span id="offsetYUnits">dots (<output id="offsetYIn" for="offsetY">0.0049</output> in)</span>
               </div>
             </div>
           </div>
@@ -267,6 +273,7 @@
           </div>
           <p class="hint">Print height controls TSPL SIZE, not the physical-tag outline. Default 0.25 in. Changing it can change feed spacing; the gap remains a separate setting.</p>
           <label class="check"><input id="alignmentDot" type="checkbox" /> Alignment angle</label>
+          <label class="check"><input id="showOffsetGuides" type="checkbox" /> Show offset lines</label>
         </details>
       </form>
 
@@ -281,7 +288,7 @@
           <div class="bitmap-scroll"><canvas id="wireBitmap" width="1" height="1" role="img" aria-label="Exact monochrome bitmap sent over USB, without preview guides"></canvas></div>
         </div>
         <div class="tspl-view">
-          <h3>TSPL preview</h3>
+          <h3>TSPL</h3>
           <pre id="tsplPreview" aria-label="Current TSPL print commands"></pre>
         </div>
         </div>
@@ -298,14 +305,13 @@ const VID = 0x1203, PID = 0x0126;
 let device = null, outEp = null;
 let importedBitmap = null;
 let printing = false;
-const LIST_LINE_TWO = 'www.roothappyplants.com';
 
 const $ = id => document.getElementById(id);
 const hex = n => '0x' + n.toString(16).padStart(4, '0');
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const SETTINGS_KEY = 'ukg.stake-printer.settings.v1';
-const SETTINGS_IDS = ['name', 'line2', 'offsetX', 'offsetY', 'copies', 'printHeight', 'reg', 'gap', 'speed', 'density', 'direction', 'editMode', 'listText'];
-const RESET_SETTING_IDS = SETTINGS_IDS.filter(id => !['name', 'line2', 'copies', 'editMode', 'listText'].includes(id));
+const SETTINGS_IDS = ['name', 'line2', 'listLine2', 'offsetX', 'offsetY', 'copies', 'printHeight', 'reg', 'gap', 'speed', 'density', 'direction', 'editMode', 'listText'];
+const RESET_SETTING_IDS = SETTINGS_IDS.filter(id => !['name', 'line2', 'listLine2', 'copies', 'editMode', 'listText'].includes(id));
 const resetButtons = new Map();
 
 function defaultSettingValue(input){
@@ -385,6 +391,7 @@ function restoreSettings(){
       input.value = input.maxLength > 0 ? saved[id].slice(0, input.maxLength) : saved[id];
     }
     if(saved.alignmentDot === '1' || saved.alignmentDot === '0') $('alignmentDot').checked = saved.alignmentDot === '1';
+    if(saved.showOffsetGuides === '1' || saved.showOffsetGuides === '0') $('showOffsetGuides').checked = saved.showOffsetGuides === '1';
   } catch {
     log('Could not restore saved settings. Using defaults.', true);
   }
@@ -397,6 +404,7 @@ function saveSettings(){
       stride: importedBitmap.stride, height: importedBitmap.height, bytes: Array.from(importedBitmap.bytes),
     };
     saved.alignmentDot = $('alignmentDot').checked ? '1' : '0';
+    saved.showOffsetGuides = $('showOffsetGuides').checked ? '1' : '0';
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(saved));
   } catch {
     log('Browser storage is unavailable. Changes will not survive refresh.', true);
@@ -530,7 +538,7 @@ function parsePlantList(text){
 }
 
 function listOptions(base, entry){
-  return { ...base, name: entry.name, line2: LIST_LINE_TWO, copies: entry.copies };
+  return { ...base, name: entry.name, line2: $('listLine2').value, copies: entry.copies };
 }
 
 function setMode(mode){
@@ -895,6 +903,7 @@ function drawTag(c, o, bitmap, image = bitmap ? bitmapCanvas(bitmap) : null){
   ctx.restore();
 
   // Offset path: from the registered printer origin, vertically then horizontally.
+  if(!$('showOffsetGuides').checked) return;
   ctx.save();
   ctx.beginPath(); ctx.rect(printerX(0) - 2, printerY(0) - 2,
     ix(TAG_W) - printerX(0) + 4, iy(TAG_H) - printerY(0) + 4); ctx.clip();
@@ -922,6 +931,7 @@ function canvasPos(e, target = canvas){
   return { x: (e.clientX - r.left) * (CV_W / r.width), y: (e.clientY - r.top) * (CV_H / r.height) };
 }
 function hitAxis(x, y, target = canvas){
+  if(!$('showOffsetGuides').checked) return null;
   if(x < printerX(0) || x > ix(TAG_W) || y < printerY(0) || y > iy(TAG_H)) return null;
   const T = 12 * CV_W / target.getBoundingClientRect().width;
   let nearest = null, distance = T;
@@ -966,6 +976,7 @@ $('appMenu').addEventListener('toggle', event => {
   $('appMenuBtn').setAttribute('aria-expanded', String(event.newState === 'open'));
 });
 $('alignmentDot').addEventListener('change', () => { saveSettings(); drawPreview(); });
+$('showOffsetGuides').addEventListener('change', () => { saveSettings(); drawPreview(); });
 $('modeGranularBtn').onclick = () => setMode('granular');
 $('modeListBtn').onclick = () => setMode('list');
 $('connectBtn').onclick = () => { if(device){ device = null; outEp = null; setConn(false); log('Disconnected.'); } else connect(); };

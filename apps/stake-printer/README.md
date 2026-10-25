@@ -60,7 +60,7 @@ pnpm test
   specific to the browser profile and origin, including the port. Clearing site
   data removes saved settings; private browsing may discard them when closed.
 - Print defaults are SIZE 4.00,0.25, GAP 0.38,0, bitmap offsets X 128
-  and Y 0 dots, and DIRECTION 1,0.
+  and Y 1 dot, and DIRECTION 1,0.
 - Printer settings includes Print height (in), default 0.25, to change the
   TSPL SIZE height independently of the physical preview. The gap is separate;
   changing the print height can change feed spacing.

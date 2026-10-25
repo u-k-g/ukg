@@ -6,7 +6,7 @@ const source = fs.readFileSync(`${__dirname}/index.html`, 'utf8');
 const css = source.match(/<style>([\s\S]*?)<\/style>/)[1];
 assert.deepEqual([...new Set(css.match(/#[\da-f]{6}\b/gi).map(color => color.toUpperCase()))].sort(), ['#000000', '#6AD69A', '#A41E14', '#FFFEFB']);
 assert.match(source, /id="offsetX"[^>]*value="128"/);
-assert.match(source, /id="offsetY"[^>]*value="0"/);
+assert.match(source, /id="offsetY"[^>]*value="1"/);
 assert.match(source, /id="printHeight"[^>]*value="0.25"/);
 assert.match(source, /id="gap"[^>]*value="0.38"/);
 assert.match(source, /id="density"[^>]*value="1"/);
@@ -36,8 +36,9 @@ const get = id => {
   const options = select ? Array.from(select[1].matchAll(/<option([^>]*)>([^<]*)<\/option>/g), match => ({
     value: match[1].match(/value="([^"]*)"/)?.[1] ?? match[2], defaultSelected: /\bselected\b/.test(match[1]),
   })) : undefined;
-  return nodes[id] = { value: values[id] ?? '', tagName: select ? 'SELECT' : 'INPUT', options,
+  return nodes[id] = { value: values[id] ?? input?.[0].match(/value="([^"]*)"/)?.[1] ?? '', tagName: select ? 'SELECT' : 'INPUT', options,
     defaultValue: input?.[0].match(/value="([^"]*)"/)?.[1] ?? '',
+    checked: /\bchecked\b/.test(input?.[0] ?? ''),
     type: input?.[0].match(/type="([^"]*)"/)?.[1] ?? '',
     min: input?.[0].match(/min="([^"]*)"/)?.[1] ?? '',
     max: input?.[0].match(/max="([^"]*)"/)?.[1] ?? '',
@@ -79,6 +80,9 @@ assert.equal(segments[1].x1, run('printerX(0)'));
 assert.equal(segments[1].x2, run('printerX(108)'));
 assert.equal(segments[1].y1, segments[0].y2);
 assert.equal(segments[1].y2, segments[0].y2);
+assert.equal(get('showOffsetGuides').checked, false);
+assert.equal(run('hitAxis(printerX(40), printerY(6))'), null);
+get('showOffsetGuides').checked = true;
 assert.equal(run('hitAxis(printerX(40), printerY(6))'), 'x');
 assert.equal(run('hitAxis(printerX(0), printerY(3))'), 'y');
 assert(Math.abs(run('printerX(128) - ix(0.57)')) < 1e-8);
@@ -182,9 +186,18 @@ assert(!/<input[^>]*id="offset[XY]In"/.test(source));
 for(const id of run('SETTINGS_IDS')) get(id).value = '';
 run('restoreSettings()');
 for(const [id, value] of Object.entries(saved)){
-  if(id === 'alignmentDot' || id === 'importedBitmap') continue;
+  if(id === 'alignmentDot' || id === 'showOffsetGuides' || id === 'importedBitmap') continue;
   assert.equal(get(id).value, value);
 }
+get('showOffsetGuides').checked = false;
+const withoutGuides = run('currentJobs()[0].bytes');
+assert.equal(run('hitAxis(printerX(0), printerY(0))'), null);
+run('saveSettings()');
+get('showOffsetGuides').checked = true;
+run('restoreSettings()');
+assert.equal(get('showOffsetGuides').checked, false);
+assert.deepEqual(run('currentJobs()[0].bytes'), withoutGuides);
+get('showOffsetGuides').checked = true;
 stored.set(run('SETTINGS_KEY'), JSON.stringify({padX:'0.53',padY:'0.03',name:'Legacy text'}));
 run('restoreSettings()');
 assert.equal(get('offsetX').value, '108');
@@ -289,6 +302,11 @@ listJobs.forEach((job, index) => {
   assert(new TextDecoder().decode(job.bytes).includes('BITMAP 108,6,1,1,0,'));
 });
 assert(draws.some(d => d.text === 'www.roothappyplants.com' && d.font.startsWith('400 ')));
+get('listLine2').value = 'Custom list subtext';
+assert.equal(run('listOptions({}, {name: "Plant", copies: 1}).line2'), 'Custom list subtext');
+get('listLine2').value = '';
+assert.equal(run('listOptions({}, {name: "Plant", copies: 1}).line2'), '');
+get('listLine2').value = 'Custom list subtext';
 run('drawPreview()');
 assert.equal(run('listPreviewNodes.length'), 22);
 assert(get('listSummary').textContent.includes('1,192'));
@@ -303,6 +321,7 @@ get('editMode').value = 'granular'; get('listText').value = '';
 run('restoreSettings()');
 assert.equal(get('editMode').value, 'list');
 assert.equal(get('listText').value, listText);
+assert.equal(get('listLine2').value, 'Custom list subtext');
 get('listText').value = 'Good plant 32\nBad row';
 run('drawPreview()');
 assert.equal(get('printBtn').disabled, true);
