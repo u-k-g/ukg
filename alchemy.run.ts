@@ -46,7 +46,7 @@ const printer = await Website("stake-printer", {
   build: "node apps/stake-printer/build.cjs",
   assets: {
     directory: "./apps/stake-printer/dist",
-    html_handling: "none",
+    html_handling: "auto-trailing-slash",
     not_found_handling: "none",
     _headers: `/*
   X-Content-Type-Options: nosniff
