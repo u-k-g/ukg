@@ -33,6 +33,52 @@ body {
   font: 400 var(--ui-size)/1.5 var(--font);
   -webkit-font-smoothing: antialiased;
 }
+.toasts {
+  position: fixed;
+  top: 44px;
+  right: 12px;
+  z-index: 20;
+  width: min(360px, calc(100vw - 24px));
+  display: grid;
+  gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  overflow-wrap: anywhere;
+  pointer-events: auto;
+}
+.toast > span {
+  flex: 1;
+  min-width: 0;
+}
+.toast-dismiss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  padding: 6px;
+  margin: -3px -3px -3px 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+}
+.toast-dismiss:hover {
+  background: var(--black);
+  color: var(--paper);
+}
+.toast-dismiss svg {
+  width: var(--ui-size);
+  height: var(--ui-size);
+}
 .app {
   min-height: 100vh;
 }

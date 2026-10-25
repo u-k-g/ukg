@@ -375,6 +375,26 @@ export default function App() {
 
   return (
     <div class="app">
+      <div class="toasts" aria-label="Notifications">
+        <Show when={error()}>
+          <div id="errorMessage" class="toast" role="alert">
+            <span>{error()}</span>
+            <button
+              class="toast-dismiss"
+              type="button"
+              aria-label="Dismiss notification"
+              onClick={() => setError("")}
+            >
+              <Icon path="M6 6l12 12M18 6 6 18" />
+            </button>
+          </div>
+        </Show>
+        <Show when={progress()}>
+          <div id="printProgress" class="toast" role="status">
+            {progress()}
+          </div>
+        </Show>
+      </div>
       <header class="toolbar" aria-label="Printer toolbar">
         <h1>
           <button
@@ -530,12 +550,6 @@ export default function App() {
             </div>
             <p id="importStatus" class="hint" hidden={list() || !importedBitmap()}>
               Imported bitmap. Text cannot be recovered from pixels. Clear it to edit text.
-            </p>
-            <p id="errorMessage" class="hint err" role="alert" hidden={!error()}>
-              {error()}
-            </p>
-            <p id="printProgress" class="hint" role="status" hidden={!progress()}>
-              {progress()}
             </p>
             <details>
               <summary>Advanced settings</summary>
