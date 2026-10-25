@@ -1,12 +1,12 @@
 # Stake printer
 
 Static TSC TTP-247 pot-stake label editor. Sends binary TSPL over WebUSB in
-Chrome or Edge. No Windows driver, backend, build step or external dependencies.
+Chrome or Edge. No Windows driver or backend. The Rust printer core builds to WASM.
 
 ## Run locally
 
-Requires Node 22 or newer. Node is an explicit exception to the repository's
-Deno default, requested for this app. No dependency installation is needed.
+Requires Node 24 LTS, pnpm, Rust stable and the `wasm32-unknown-unknown` target.
+Run `pnpm install --frozen-lockfile` from the repo root first.
 
 ```sh
 cd apps/stake-printer
@@ -88,7 +88,7 @@ are shared with the main site's deployment. The token needs permission to
 deploy Workers and attach custom domains in the `ukg.one` zone.
 
 `pnpm build` compiles the Rust core and writes the deployable files to `dist/`.
-Builds require Node 22+, Rust's stable toolchain, and its
+Builds require Node 24 LTS, Rust's stable toolchain, and its
 `wasm32-unknown-unknown` target. CI installs Node and Rust before running the
 printer checks and the existing Alchemy deployment. Deployment runs on pushes
 to `master` or through the workflow's manual trigger.

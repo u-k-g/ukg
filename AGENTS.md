@@ -86,14 +86,11 @@ The governing qualities are:
 
 ## JavaScript and TypeScript
 
-- If JavaScript or TypeScript tooling is needed, choose Deno by default.
-- Pin Deno through Nix and dependencies through `deno.json` and `deno.lock`.
-- Prefer Web APIs and Deno-native capabilities over Node-specific packages.
-- Use npm packages through Deno only when they provide meaningful value.
-- Explicitly approve any required npm lifecycle scripts. Do not broadly allow
-  dependency scripts.
-- Do not introduce Node, Bun, npm, yarn, or pnpm unless Deno cannot reasonably
-  support a required tool, and document the reason if that exception is made.
+- Use Node 24 LTS and pnpm. Nix supplies Node; `packageManager` pins pnpm.
+- Keep dependencies in the root `pnpm-lock.yaml` and packages in the pnpm workspace.
+- Use tsrs for TypeScript checking, Oxfmt for formatting, and Oxlint for linting.
+- Approve dependency lifecycle scripts individually in `pnpm-workspace.yaml`.
+- Do not introduce another runtime or tool without asking the operator.
 
 ## Dependencies
 
@@ -109,8 +106,10 @@ The governing qualities are:
 Before considering a change complete, run the relevant checks:
 
 ```sh
-deno fmt --check
-deno task check
+pnpm fmt:check
+pnpm lint
+pnpm check
+pnpm test
 nix flake check
 git diff --check
 ```

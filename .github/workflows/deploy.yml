@@ -23,9 +23,15 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/determinate-nix-action@v3
 
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -41,8 +47,9 @@ jobs:
 
       - name: Check Alchemy program
         run: |
-          nix develop --command deno ci
-          nix develop --command deno task check
+          pnpm check
+          pnpm lint
+          pnpm fmt:check
 
       - name: Deploy to Cloudflare
         run: nix run .#deploy

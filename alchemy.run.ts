@@ -31,9 +31,9 @@ const site = await Website("site", {
   },
   domains: attachProductionDomain
     ? [
-      { domainName: "ukg.one", adopt: true },
-      { domainName: "www.ukg.one", adopt: true },
-    ]
+        { domainName: "ukg.one", adopt: true },
+        { domainName: "www.ukg.one", adopt: true },
+      ]
     : undefined,
   previewSubdomains: true,
   url: true,

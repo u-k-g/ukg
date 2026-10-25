@@ -1,0 +1,16 @@
+{
+  "ignorePatterns": [
+    "node_modules/**",
+    "dist/**",
+    "apps/stake-printer/dist/**",
+    "apps/stake-printer/printer-core/target/**",
+    "apps/stake-printer/printer-boot.js",
+    "pnpm-lock.yaml",
+    "index.html",
+    "apps/stake-printer/index.html",
+    "apps/stake-printer/*.cjs",
+    "apps/stake-printer/sw.js",
+    "apps/stake-printer/README.md",
+    "AGENTS.md"
+  ]
+}

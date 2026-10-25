@@ -62,9 +62,9 @@
 
       deploy = pkgs.writeShellApplication {
         name = "deploy-ukg-one";
-        runtimeInputs = [pkgs.deno pkgs.nix];
+        runtimeInputs = [pkgs.nodejs_24 pkgs.pnpm pkgs.nix];
         text = ''
-          exec deno task deploy "$@"
+          exec pnpm run deploy "$@"
         '';
       };
 
@@ -78,7 +78,7 @@
       deploy = {
         type = "app";
         program = "${self.packages.${system}.deploy}/bin/deploy-ukg-one";
-        meta.description = "Deploy ukg.one to Cloudflare with Deno and Alchemy";
+        meta.description = "Deploy ukg.one to Cloudflare with Node and Alchemy";
       };
     });
 
@@ -91,7 +91,7 @@
       tex = pkgs.texliveSmall;
     in {
       default = pkgs.mkShell {
-        packages = [pkgs.deno pkgs.nushell pkgs.openssl tex];
+        packages = [pkgs.nodejs_24 pkgs.pnpm pkgs.nushell pkgs.openssl tex];
       };
     });
   };

@@ -1,7 +1,6 @@
 {
   "name": "@ukg/stake-printer",
   "private": true,
-  "packageManager": "pnpm@11.25.0",
   "scripts": {
     "build": "node build.cjs",
     "predev": "node build-wasm.cjs",
@@ -10,6 +9,7 @@
     "test": "node stake-printer.test.cjs"
   },
   "engines": {
-    "node": ">=22"
-  }
+    "node": ">=24 <25"
+  },
+  "packageManager": "pnpm@11.25.0"
 }

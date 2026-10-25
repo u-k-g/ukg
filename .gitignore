@@ -13,10 +13,14 @@
 !/resume/*.tex
 
 !/AGENTS.md
+!/README.md
 !/CNAME
 !/alchemy.run.ts
-!/deno.json
-!/deno.lock
+!/package.json
+!/pnpm-lock.yaml
+!/pnpm-workspace.yaml
+!/tsconfig.json
+!/.oxfmtrc.json
 !/flake.lock
 !/flake.nix
 !/index.html
@@ -24,7 +28,6 @@
 !/apps/stake-printer/README.md
 !/apps/stake-printer/dev.cjs
 !/apps/stake-printer/package.json
-!/apps/stake-printer/pnpm-lock.yaml
 !/apps/stake-printer/stake-printer.test.cjs
 !/apps/stake-printer/build-wasm.cjs
 !/apps/stake-printer/build.cjs
@@ -34,3 +37,4 @@
 !/apps/stake-printer/printer-core/src/
 !/apps/stake-printer/printer-core/src/lib.rs
 !/scripts/build-resume.nu
+!/scripts/serve.cjs
