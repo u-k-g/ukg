@@ -1,12 +1,23 @@
 {
   "name": "@ukg/stake-printer",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "node build.cjs",
     "predev": "node build-wasm.cjs",
     "pretest": "node build-wasm.cjs",
-    "dev": "node dev.cjs",
+    "dev": "vite",
+    "preview": "vite preview",
+    "check": "tsrs --noEmit -p tsconfig.json",
     "test": "node stake-printer.test.cjs"
+  },
+  "dependencies": {
+    "solid-js": "1.9.17"
+  },
+  "devDependencies": {
+    "@types/w3c-web-usb": "1.0.14",
+    "vite": "8.3.5",
+    "vite-plugin-solid": "2.11.14"
   },
   "engines": {
     "node": ">=24 <25"

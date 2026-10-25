@@ -103,6 +103,10 @@ The governing qualities are:
 
 ## Verification
 
+Never start a development or preview server. Provide the command for the operator
+to run instead. Use an already-running server for browser checks; if none is
+running, ask the operator to start it.
+
 Before considering a change complete, run the relevant checks:
 
 ```sh

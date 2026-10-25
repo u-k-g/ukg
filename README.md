@@ -30,9 +30,9 @@ nix flake check
 ```
 
 `pnpm check` runs the pinned experimental tsrs Rust TypeScript checker against
-the Alchemy program. `pnpm lint` runs Oxlint against the deployment and Node
-scripts. Oxfmt checks the tooling configuration; existing page and printer
-sources are excluded from formatting to avoid a repo-wide formatting change.
+the Alchemy program and SolidJS printer app. `pnpm lint` runs Oxlint against the
+deployment, frontend and Node scripts. Oxfmt checks the tooling configuration and
+Solid app sources; the main page and existing printer scripts stay excluded.
 The printer tests execute the compiled WASM core.
 
 ## Deployment
