@@ -41,4 +41,26 @@ const site = await Website("site", {
 
 console.log(`Deployed ukg.one site: ${site.url}`);
 
+const printer = await Website("stake-printer", {
+  name: "ukg-ttp",
+  build: "node apps/stake-printer/build.cjs",
+  assets: {
+    directory: "./apps/stake-printer/dist",
+    html_handling: "none",
+    not_found_handling: "none",
+    _headers: `/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: usb=(self), camera=(), microphone=(), geolocation=()
+  Cache-Control: no-cache`,
+  },
+  domains: attachProductionDomain
+    ? [{ domainName: "ttp.ukg.one", adopt: true }]
+    : undefined,
+  previewSubdomains: true,
+  url: true,
+});
+
+console.log(`Deployed TTP-247 printer: ${printer.url}`);
+
 await app.finalize();

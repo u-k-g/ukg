@@ -70,7 +70,7 @@ to a vertically centered 0.53 inches tall, leaving 0.0475 inches above and below
 The print page and physical preview heights differ. The
 bitmap is cropped to ink bounds. Preview registration comes from one printed
 alignment square at X 128, Y 0: its top-left was 0.57 in from the left edge
-and 0.17 in from the top edge. Tests verify that mapping, not a new hardware
+and 0.1745 in from the top edge. Tests verify that mapping, not a new hardware
 measurement.
 
 The page caches itself after the first visit to `http://localhost:8000`.
@@ -78,6 +78,25 @@ Later visits work with the Node server stopped. WebUSB still requires that
 localhost address; opening the HTML file directly cannot reach the printer.
 Bitmap packing, TSPL jobs, and the preview origin live in `printer-core` and
 run in the browser as WebAssembly.
+
+## Cloudflare deployment
+
+The root `alchemy.run.ts` deploys this app as the `ukg-ttp` static Worker,
+separate from the main website. Set `ATTACH_PRODUCTION_DOMAIN=true` to attach
+`ttp.ukg.one`. The existing Cloudflare account/token and Alchemy state secrets
+are shared with the main site's deployment. The token needs permission to
+deploy Workers and attach custom domains in the `ukg.one` zone.
+
+`pnpm build` compiles the Rust core and writes the deployable files to `dist/`.
+Builds require Node 22+, Rust's stable toolchain, and its
+`wasm32-unknown-unknown` target. CI installs Node and Rust before running the
+printer checks and the existing Alchemy deployment. Deployment runs on pushes
+to `master` or through the workflow's manual trigger.
+
+Open `https://ttp.ukg.one` directly in Chrome or Edge, not in an embedded frame.
+Settings and USB permissions are separate from localhost. All text rendering,
+job generation and USB transfers stay in the browser. After the service worker
+finishes caching the first visit, the site can reload without the server.
 
 Label text uses locally
 available Arial and does not upload text to a rendering service. No hosting or

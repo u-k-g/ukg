@@ -55,7 +55,7 @@ pub extern "C" fn preview_origin_x() -> f64 {
 
 #[no_mangle]
 pub extern "C" fn preview_origin_y() -> f64 {
-    0.17
+    0.1745
 }
 
 fn is_ink(pixels: &[u8], index: usize) -> bool {

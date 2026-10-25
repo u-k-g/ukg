@@ -23,6 +23,19 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/determinate-nix-action@v3
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Check printer core and app
+        run: |
+          node apps/stake-printer/build.cjs
+          node apps/stake-printer/stake-printer.test.cjs
+
       - name: Check flake
         run: nix flake check
 

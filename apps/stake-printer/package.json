@@ -3,7 +3,7 @@
   "private": true,
   "packageManager": "pnpm@11.25.0",
   "scripts": {
-    "build": "node build-wasm.cjs",
+    "build": "node build.cjs",
     "predev": "node build-wasm.cjs",
     "pretest": "node build-wasm.cjs",
     "dev": "node dev.cjs",

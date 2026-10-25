@@ -27,6 +27,7 @@
 !/apps/stake-printer/pnpm-lock.yaml
 !/apps/stake-printer/stake-printer.test.cjs
 !/apps/stake-printer/build-wasm.cjs
+!/apps/stake-printer/build.cjs
 !/apps/stake-printer/sw.js
 !/apps/stake-printer/printer-core/
 !/apps/stake-printer/printer-core/Cargo.toml
