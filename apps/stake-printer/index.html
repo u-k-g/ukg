@@ -24,8 +24,9 @@
     --off-ink:var(--black);
     --danger:var(--black);
     color-scheme:light;
-    --r-panel:12px;
-    --r-ctrl:8px;
+    --r-panel:0;
+    --r-ctrl:0;
+    --ui-size:12px;
     --font:Inter, system-ui, -apple-system, sans-serif;
     --mono:ui-monospace, SFMono-Regular, Menlo, monospace;
   }
@@ -35,64 +36,71 @@
   body{
     background:var(--frame);
     color:var(--ink);
-    font:400 14px/1.5 var(--font);
+    font:400 var(--ui-size)/1.5 var(--font);
     -webkit-font-smoothing:antialiased;
   }
-  .app{min-height:100vh;padding:0 12px 12px}
+  .app{min-height:100vh}
   .num{font-variant-numeric:tabular-nums}
 
-  .sheet{background:var(--sheet);padding:24px;min-height:100vh;display:flex;flex-direction:column}
+  .sheet{background:var(--sheet);padding:24px;min-height:calc(100vh - 32px);display:flex;flex-direction:column}
+  .toolbar{display:flex;align-items:baseline;gap:20px;height:32px;padding:0 12px;border-bottom:1px solid var(--border)}
+  .toolbar-actions{display:flex;align-items:center;align-self:center;gap:6px;margin-left:auto}
+  .toolbar-actions>button{height:24px;padding:0 10px;font-size:var(--ui-size);white-space:nowrap}
+  h1{font-size:16px;font-weight:700;letter-spacing:-0.015em;line-height:1;margin:0}
+  .app-menu-trigger{height:auto;padding:0;border:0;font:inherit;letter-spacing:inherit;line-height:inherit;background:var(--paper);color:var(--black)}
+  .app-menu-trigger:hover{color:#A41E14}
+  .app-menu-trigger:has(#connectionDot[data-connected="true"]):hover{color:#6AD69A}
+  #connectionDot{color:#A41E14}
+  #connectionDot[data-connected="true"]{color:#6AD69A}
+  .app-menu{position:fixed;inset:36px auto auto 12px;margin:0;width:248px;max-width:calc(100vw - 24px);padding:6px;border:1px solid var(--black);background:var(--paper);color:var(--black)}
+  .menu-item{display:flex;align-items:center;gap:12px;width:100%;height:38px;padding:0 10px;text-align:left;border:0;background:var(--paper);color:var(--black)}
+  .menu-item:hover:not(:disabled),.menu-item:focus-visible{background:var(--black);color:var(--paper)}
+  .menu-item svg{width:var(--ui-size);height:var(--ui-size);flex:none}
 
-  .titlerow{margin-bottom:22px}
-  h1{font-size:22px;font-weight:600;letter-spacing:-0.015em;margin:0}
-
-  .workspace{display:grid;grid-template-columns:340px minmax(0,1fr);gap:20px;align-items:start}
-  .form{display:flex;flex-direction:column;gap:18px;min-width:0}
+  .workspace{display:grid;grid-template-columns:380px minmax(0,1fr);gap:28px;align-items:start}
+  .form{display:flex;flex-direction:column;gap:18px;min-width:0;padding:18px;border:1px solid var(--border);border-radius:var(--r-panel);background:var(--sheet)}
   .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
   .field:last-child{margin-bottom:0}
-  label{font-size:13px;font-weight:500;color:var(--muted)}
+  label{font-size:var(--ui-size);font-weight:500;color:var(--muted)}
   .setting-label{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 8px;min-height:20px}
   .reset-setting{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;padding:5px;background:none;border:0;border-radius:var(--r-ctrl);color:var(--accent-deep);flex:none}
   .reset-setting:hover{background:var(--black);color:var(--paper)}
-  .reset-setting svg{width:16px;height:16px}
+  .reset-setting svg{width:var(--ui-size);height:var(--ui-size)}
   .reset-setting[hidden]{display:none}
   input,select{
     height:40px;width:100%;border:1px solid var(--control);border-radius:var(--r-ctrl);
-    background:var(--sheet);color:var(--ink);font:400 14px var(--font);padding:0 12px;outline:none;
+    background:var(--sheet);color:var(--ink);font:400 var(--ui-size) var(--font);padding:0 12px;outline:none;
   }
   input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{
     outline:2px solid var(--accent-deep);outline-offset:2px;
   }
   input:focus,select:focus{border-color:var(--accent-deep)}
   input:disabled,select:disabled,textarea:disabled{color:var(--black);-webkit-text-fill-color:var(--black);opacity:1}
-  textarea{width:100%;min-height:300px;resize:vertical;padding:12px;border:1px solid var(--control);border-radius:var(--r-ctrl);background:var(--sheet);color:var(--ink);font:400 14px/1.6 var(--font)}
+  textarea{width:100%;min-height:300px;resize:vertical;padding:12px;border:1px solid var(--control);border-radius:var(--r-ctrl);background:var(--sheet);color:var(--ink);font:400 var(--ui-size)/1.6 var(--font)}
   textarea:focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
   .granular-inputs{display:flex;flex-direction:column;gap:18px}
-  .mode-switch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  .mode-button{display:flex;align-items:center;justify-content:center;gap:8px;height:44px;border:2px solid var(--black);background:var(--paper);color:var(--black)}
-  .mode-button svg{width:18px;height:18px;flex:none}
-  .mode-button[aria-pressed="true"]{border-color:var(--black);background:var(--black);color:var(--paper)}
-  .mode-button:hover{border-color:var(--control)}
-  .mode-button[aria-pressed="true"]:hover{border-color:var(--accent-deep)}
-  .list-errors{margin:10px 0 0;padding-left:20px;font-size:13px;color:var(--danger)}
+  .mode-switch{display:flex;align-items:baseline;gap:2px;height:31px}
+  .mode-button{display:block;height:31px;padding:2px 10px 0;font-size:var(--ui-size);line-height:20px;border:0;border-bottom:2px solid transparent;border-radius:0;background:var(--paper);color:var(--black)}
+  .mode-button[aria-pressed="true"]{border-bottom-color:var(--black)}
+  .list-errors{margin:10px 0 0;padding-left:20px;font-size:var(--ui-size);color:var(--danger)}
   .batch-preview{padding:16px 0;border-top:1px solid var(--border)}
   .batch-preview:first-child{border-top:0;padding-top:0}
   .batch-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-  .batch-heading h3{font-size:14px;font-weight:500;margin:0;overflow-wrap:anywhere}
-  .batch-quantity{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--muted)}
+  .batch-heading h3{font-size:var(--ui-size);font-weight:500;margin:0;overflow-wrap:anywhere}
+  .batch-quantity{font-size:var(--ui-size);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--muted)}
   .row2{display:flex;gap:12px}
   .row2 .field{flex:1;margin-bottom:0}
   .offset-value{display:flex;align-items:center;gap:10px}
   .offset-value input{width:100px;flex:none}
-  .offset-value span{white-space:nowrap;font-size:13px;font-variant-numeric:tabular-nums}
-  .hint{color:var(--faint);font-size:13px;margin:8px 0 0}
+  .offset-value span{white-space:nowrap;font-size:var(--ui-size);font-variant-numeric:tabular-nums}
+  .hint{color:var(--faint);font-size:var(--ui-size);margin:8px 0 0}
   .actions{display:flex;flex-direction:column;gap:10px}
-  .check{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:13px;font-weight:500;color:var(--muted)}
-  .check input{appearance:none;position:relative;width:16px;height:16px;padding:0;margin:0;border:1px solid var(--black);border-radius:3px;background:var(--paper)}
+  .check{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:var(--ui-size);font-weight:500;color:var(--muted)}
+  .check input{appearance:none;position:relative;width:16px;height:16px;padding:0;margin:0;border:1px solid var(--black);border-radius:0;background:var(--paper)}
   .check input:checked{background:var(--black)}
   .check input:checked::after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid var(--paper);border-width:0 2px 2px 0;transform:rotate(45deg)}
   button{
-    font:500 14px var(--font);cursor:pointer;border-radius:var(--r-ctrl);border:1px solid transparent;
+    font:500 var(--ui-size) var(--font);cursor:pointer;border-radius:var(--r-ctrl);border:1px solid transparent;
     height:40px;padding:0 16px;transition:background .12s,border-color .12s,color .12s;
   }
   button:active{transform:translateY(1px)}
@@ -105,25 +113,26 @@
   button:disabled{border-style:dashed}
   .err,.list-errors{font-weight:600}
 
-  details{border:1px solid var(--border);border-radius:var(--r-panel);padding:12px 14px;background:var(--sheet)}
-  summary{cursor:pointer;font-size:13px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  details{border:0;padding:0;background:var(--sheet)}
+  summary{cursor:pointer;font-size:var(--ui-size);font-weight:600;list-style:none;display:flex;gap:12px;align-items:center;min-height:36px}
   summary::-webkit-details-marker{display:none}
-  summary::after{content:"+";color:var(--faint);font-weight:400;font-size:16px}
-  details[open] summary::after{content:"\2013"}
+  summary::before{content:"";order:1;flex:1;border-top:1px solid var(--border)}
+  summary::after{content:"";order:2;width:6px;height:6px;margin-right:3px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);transform:rotate(-45deg)}
+  details[open] summary::after{transform:rotate(45deg)}
   .adv{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
   .adv .field{margin-bottom:0}
 
-  .canvas{background:var(--well);border:1px solid var(--border);border-radius:var(--r-panel);padding:18px;min-width:0}
+  .canvas{padding:18px 0;min-width:0}
   .canvas-head{margin-bottom:14px}
-  .canvas-head h2{font-size:14px;font-weight:600;margin:0}
+  .canvas-head h2{font-size:var(--ui-size);font-weight:600;margin:0}
   canvas{display:block;width:100%;height:auto;touch-action:none;cursor:default}
   .bitmap-view{margin-top:18px}
-  .bitmap-view h3{font-size:14px;margin:0 0 8px;font-weight:600}
+  .bitmap-view h3{font-size:var(--ui-size);margin:0 0 8px;font-weight:600}
   .bitmap-scroll{overflow:auto;background:var(--paper);padding:12px;min-height:48px}
   #wireBitmap{width:auto;max-width:none;image-rendering:pixelated;touch-action:auto}
   .tspl-view{margin-top:18px}
-  .tspl-view h3{font-size:14px;margin:0 0 8px;font-weight:600}
-  #tsplPreview{margin:0;padding:14px;background:var(--sheet);border:1px solid var(--border);border-radius:var(--r-ctrl);font:400 13px/1.6 var(--mono);overflow:auto;max-height:300px;white-space:pre}
+  .tspl-view h3{font-size:var(--ui-size);margin:0 0 8px;font-weight:600}
+  #tsplPreview{margin:0;padding:14px;background:var(--sheet);border:1px solid var(--border);border-radius:var(--r-ctrl);font:400 11px/1.6 var(--mono);overflow:auto;max-height:300px;white-space:pre}
 
   .err{color:var(--danger)}
 
@@ -131,33 +140,44 @@
     .workspace{grid-template-columns:1fr}
   }
   @media (max-width:520px){
-    .app{padding:0 10px 10px}
     .sheet{padding:18px;min-height:0}
   }
 </style>
 </head>
 <body>
 <div class="app">
-  <main class="sheet">
-    <div class="titlerow">
-      <h1>ttp.</h1>
-    </div>
-
-    <div class="workspace">
-      <form class="form" onsubmit="return false">
-        <div class="field">
+  <header class="toolbar" aria-label="Printer toolbar">
+      <h1><button id="appMenuBtn" class="app-menu-trigger" type="button" popovertarget="appMenu" aria-expanded="false" aria-controls="appMenu">ttp<span id="connectionDot" data-connected="false">.</span></button></h1>
           <input id="editMode" type="hidden" value="granular" />
           <div class="mode-switch" role="group" aria-label="Editing mode">
             <button id="modeGranularBtn" class="mode-button" type="button" aria-pressed="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/></svg>
               Single
             </button>
             <button id="modeListBtn" class="mode-button" type="button" aria-pressed="false">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
               List
             </button>
           </div>
-        </div>
+      <div class="toolbar-actions">
+        <button id="printBtn" class="btn-primary" type="button" disabled>Print</button>
+      </div>
+  </header>
+  <nav id="appMenu" class="app-menu" popover aria-label="File and printer">
+          <button id="importBtn" class="menu-item" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3m-5 5 5-5 5 5M4 16v4h16v-4"/></svg>
+            Import TSPL
+          </button>
+          <button id="dlBtn" class="menu-item" type="button" aria-label="Export TSPL" title="Export TSPL">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></svg>
+            Export TSPL
+          </button>
+        <button id="connectBtn" class="menu-item" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 8V3m10 5V3M5 8h14v3a7 7 0 0 1-7 7v3m0-3a7 7 0 0 1-7-7"/></svg>
+            <span id="connectLabel">Connect printer</span>
+          </button>
+  </nav>
+  <main class="sheet">
+    <div class="workspace">
+      <form class="form" onsubmit="return false">
         <div id="granularInputs" class="granular-inputs">
         <div class="field">
           <label for="name">Text</label>
@@ -181,8 +201,36 @@
           <p id="listSummary" class="hint" role="status">Paste a list to preview the labels.</p>
           <ul id="listErrors" class="list-errors" hidden></ul>
         </div>
+        <div>
+          <div class="row2">
+            <div class="field">
+              <label for="offsetX">Bitmap X</label>
+              <div class="offset-value">
+                <input id="offsetX" type="number" value="128" min="0" max="65535" step="1" aria-describedby="offsetXUnits" />
+                <span id="offsetXUnits">dots (<output id="offsetXIn" for="offsetX">0.6305</output> in)</span>
+              </div>
+            </div>
+          </div>
+          <div class="row2" style="margin-top:12px">
+            <div class="field">
+              <label for="offsetY">Bitmap Y</label>
+              <div class="offset-value">
+                <input id="offsetY" type="number" value="0" min="0" max="65535" step="1" aria-describedby="offsetYUnits" />
+                <span id="offsetYUnits">dots (<output id="offsetYIn" for="offsetY">0.0000</output> in)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <input id="importFile" type="file" accept=".tspl,.tsplk,.prn,.bin,application/octet-stream" hidden />
+          <button id="clearImportBtn" class="btn-secondary" type="button" hidden>Clear imported bitmap</button>
+        </div>
+        <p id="importStatus" class="hint" hidden>Imported bitmap. Text cannot be recovered from pixels. Clear it to edit text.</p>
+        <p id="errorMessage" class="hint err" role="alert" hidden></p>
+        <p id="printProgress" class="hint" role="status" hidden></p>
         <details>
-          <summary>Printer settings</summary>
+          <summary>Advanced settings</summary>
           <div class="adv">
             <div class="field">
               <label for="printHeight">Print height (in)</label>
@@ -220,39 +268,6 @@
           <p class="hint">Print height controls TSPL SIZE, not the physical-tag outline. Default 0.25 in. Changing it can change feed spacing; the gap remains a separate setting.</p>
           <label class="check"><input id="alignmentDot" type="checkbox" /> Alignment angle</label>
         </details>
-
-        <div>
-          <div class="row2">
-            <div class="field">
-              <label for="offsetX">Bitmap X</label>
-              <div class="offset-value">
-                <input id="offsetX" type="number" value="128" min="0" max="65535" step="1" aria-describedby="offsetXUnits" />
-                <span id="offsetXUnits">dots (<output id="offsetXIn" for="offsetX">0.6305</output> in)</span>
-              </div>
-            </div>
-          </div>
-          <div class="row2" style="margin-top:12px">
-            <div class="field">
-              <label for="offsetY">Bitmap Y</label>
-              <div class="offset-value">
-                <input id="offsetY" type="number" value="0" min="0" max="65535" step="1" aria-describedby="offsetYUnits" />
-                <span id="offsetYUnits">dots (<output id="offsetYIn" for="offsetY">0.0000</output> in)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="actions">
-          <button id="connectBtn" class="btn-primary" type="button">Connect printer</button>
-          <button id="printBtn" class="btn-primary" disabled>Print label</button>
-          <button id="dlBtn" class="btn-secondary" type="button">Download TSPL</button>
-          <button id="importBtn" class="btn-secondary" type="button">Import TSPL</button>
-          <input id="importFile" type="file" accept=".tspl,.tsplk,.prn,.bin,application/octet-stream" hidden />
-          <button id="clearImportBtn" class="btn-secondary" type="button" hidden>Clear imported bitmap</button>
-        </div>
-        <p id="importStatus" class="hint" hidden>Imported bitmap. Text cannot be recovered from pixels. Clear it to edit text.</p>
-        <p id="errorMessage" class="hint err" role="alert" hidden></p>
-        <p id="printProgress" class="hint" role="status" hidden></p>
       </form>
 
       <section class="canvas" aria-label="Label preview">
@@ -429,10 +444,8 @@ const printerY = dots => iy(PREVIEW_ORIGIN_Y + dots / 203);
 
 function setConn(on){
   updatePrintControls();
-  const btn = $('connectBtn');
-  btn.classList.toggle('btn-primary', !on);
-  btn.classList.toggle('btn-secondary', on);
-  btn.textContent = on ? 'Disconnect printer' : 'Connect printer';
+  $('connectionDot').setAttribute('data-connected', String(on));
+  $('connectLabel').textContent = on ? 'Disconnect printer' : 'Connect printer';
 }
 
 function log(msg, isError){
@@ -534,9 +547,10 @@ function updatePrintControls(parsed = parsePlantList($('listText').value)){
   $('modeGranularBtn').disabled = $('modeListBtn').disabled = printing;
   const invalid = list && (!parsed.entries.length || parsed.errors.length > 0);
   $('printBtn').disabled = printing || !device || invalid;
-  $('printBtn').textContent = printing ? 'Sending…' : list ? 'Print ' + parsed.total.toLocaleString() + ' labels' : 'Print label';
   $('dlBtn').disabled = printing || invalid;
-  $('dlBtn').textContent = list ? 'Download list TSPL' : 'Download TSPL';
+  const downloadLabel = list ? 'Export list TSPL' : 'Export TSPL';
+  $('dlBtn').title = downloadLabel;
+  $('dlBtn').setAttribute('aria-label', downloadLabel);
   $('connectBtn').disabled = $('importBtn').disabled = $('clearImportBtn').disabled = printing;
   $('editMode').disabled = $('listText').disabled = printing;
 }
@@ -948,13 +962,16 @@ target.addEventListener('pointercancel', endDrag);
 /* wire up */
 installResetButtons();
 bindOffsetGuides(canvas);
+$('appMenu').addEventListener('toggle', event => {
+  $('appMenuBtn').setAttribute('aria-expanded', String(event.newState === 'open'));
+});
 $('alignmentDot').addEventListener('change', () => { saveSettings(); drawPreview(); });
 $('modeGranularBtn').onclick = () => setMode('granular');
 $('modeListBtn').onclick = () => setMode('list');
 $('connectBtn').onclick = () => { if(device){ device = null; outEp = null; setConn(false); log('Disconnected.'); } else connect(); };
 $('printBtn').onclick = printLabel;
-$('dlBtn').onclick = download;
-$('importBtn').onclick = () => $('importFile').click();
+$('dlBtn').onclick = () => { $('appMenu').hidePopover(); download(); };
+$('importBtn').onclick = () => { $('appMenu').hidePopover(); $('importFile').click(); };
 $('importFile').addEventListener('change', e => importFile(e.target.files[0]));
 $('clearImportBtn').onclick = () => { importedBitmap = null; saveSettings(); drawPreview(); };
 for(const id of SETTINGS_IDS){

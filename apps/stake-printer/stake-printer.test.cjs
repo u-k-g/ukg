@@ -4,7 +4,7 @@ const vm = require('node:vm');
 
 const source = fs.readFileSync(`${__dirname}/index.html`, 'utf8');
 const css = source.match(/<style>([\s\S]*?)<\/style>/)[1];
-assert.deepEqual([...new Set(css.match(/#[\da-f]{6}\b/gi).map(color => color.toUpperCase()))].sort(), ['#000000', '#FFFEFB']);
+assert.deepEqual([...new Set(css.match(/#[\da-f]{6}\b/gi).map(color => color.toUpperCase()))].sort(), ['#000000', '#6AD69A', '#A41E14', '#FFFEFB']);
 assert.match(source, /id="offsetX"[^>]*value="128"/);
 assert.match(source, /id="offsetY"[^>]*value="0"/);
 assert.match(source, /id="printHeight"[^>]*value="0.25"/);
@@ -62,6 +62,10 @@ const scope = { PRINTER_EXPORTS: printer, document: { getElementById: get,
 vm.createContext(scope);
 vm.runInContext(source.match(/<script>([\s\S]*?)<\/script>/)[1], scope);
 const run = code => vm.runInContext(code, scope);
+run('setConn(true)');
+assert.equal(get('connectionDot').attributes['data-connected'], 'true');
+run('setConn(false)');
+assert.equal(get('connectionDot').attributes['data-connected'], 'false');
 assert(Math.abs(run('LEFT_INSET') - 0.0475) < 1e-10);
 assert(Math.abs(run('TAG_H - 2 * LEFT_INSET') - 0.53) < 1e-10);
 const segments = run('offsetSegments(opts())');
