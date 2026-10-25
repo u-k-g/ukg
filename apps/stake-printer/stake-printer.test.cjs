@@ -4,7 +4,7 @@ const vm = require('node:vm');
 
 const source = fs.readFileSync(`${__dirname}/index.html`, 'utf8');
 const css = source.match(/<style>([\s\S]*?)<\/style>/)[1];
-assert.deepEqual([...new Set(css.match(/#[\da-f]{6}\b/gi).map(color => color.toUpperCase()))].sort(), ['#000000', '#6AD69A', '#A41E14', '#FFFEFB']);
+assert.deepEqual([...new Set(css.match(/#[\da-f]{6}\b/gi).map(color => color.toUpperCase()))].sort(), ['#000000', '#37654C', '#A41E14', '#FFFEFB']);
 assert.match(source, /id="offsetX"[^>]*value="128"/);
 assert.match(source, /id="offsetY"[^>]*value="1"/);
 assert.match(source, /id="printHeight"[^>]*value="0.25"/);
