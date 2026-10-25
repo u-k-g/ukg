@@ -100,6 +100,18 @@ for(const [value, command] of [['0', '0,0'], ['1', '1,0'], ['2', '0,1'], ['3', '
   assert(new TextDecoder().decode(run('buildTSPL(opts())')).includes('DIRECTION ' + command + '\r\n'));
 }
 get('direction').value = '1';
+const orientationCalls = [];
+scope.orientationContext = {
+  translate: (...args) => orientationCalls.push(['translate', ...args]),
+  scale: (...args) => orientationCalls.push(['scale', ...args]),
+};
+run('applyPreviewOrientation(orientationContext, {direction: "1"})');
+assert.equal(orientationCalls.length, 0);
+run('applyPreviewOrientation(orientationContext, {direction: "0"})');
+assert.deepEqual(orientationCalls, [
+  ['translate', run('ix(0) + ix(TAG_W)'), run('iy(0) + iy(TAG_H)')],
+  ['scale', -1, -1],
+]);
 assert(source.includes('<option value="1" selected>'));
 assert(job.includes('SIZE 4.00,0.28\r\nGAP 0.35,0\r\n'));
 assert(!job.includes('REFERENCE '));

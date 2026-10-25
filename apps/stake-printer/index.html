@@ -894,6 +894,7 @@ function drawTag(c, o, bitmap, image = bitmap ? bitmapCanvas(bitmap) : null){
 
   // The physical outline clips the positioned view, not the sent bitmap.
   ctx.save(); tagPath(ctx, 0); ctx.clip();
+  applyPreviewOrientation(ctx, o);
   if(image){
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(image, printerX(bitmap.x), printerY(bitmap.y),
@@ -905,6 +906,7 @@ function drawTag(c, o, bitmap, image = bitmap ? bitmapCanvas(bitmap) : null){
   // Offset path: from the registered printer origin, vertically then horizontally.
   if(!$('showOffsetGuides').checked) return;
   ctx.save();
+  applyPreviewOrientation(ctx, o);
   ctx.beginPath(); ctx.rect(printerX(0) - 2, printerY(0) - 2,
     ix(TAG_W) - printerX(0) + 4, iy(TAG_H) - printerY(0) + 4); ctx.clip();
   ctx.lineWidth = 2;
@@ -913,6 +915,13 @@ function drawTag(c, o, bitmap, image = bitmap ? bitmapCanvas(bitmap) : null){
     ctx.beginPath(); ctx.moveTo(segment.x1, segment.y1); ctx.lineTo(segment.x2, segment.y2); ctx.stroke();
   }
   ctx.restore();
+}
+
+function applyPreviewOrientation(ctx, o){
+  if(Number(o.direction) === 0){
+    ctx.translate(ix(0) + ix(TAG_W), iy(0) + iy(TAG_H));
+    ctx.scale(-1, -1);
+  }
 }
 
 /* drag the guides */
@@ -928,7 +937,10 @@ function offsetSegments(o){
 
 function canvasPos(e, target = canvas){
   const r = target.getBoundingClientRect();
-  return { x: (e.clientX - r.left) * (CV_W / r.width), y: (e.clientY - r.top) * (CV_H / r.height) };
+  const x = (e.clientX - r.left) * (CV_W / r.width), y = (e.clientY - r.top) * (CV_H / r.height);
+  return Number(opts().direction) === 0
+    ? { x: ix(0) + ix(TAG_W) - x, y: iy(0) + iy(TAG_H) - y }
+    : { x, y };
 }
 function hitAxis(x, y, target = canvas){
   if(!$('showOffsetGuides').checked) return null;
