@@ -68,8 +68,18 @@ export default function App() {
   );
   const [connecting, setConnecting] = createSignal(false);
   const [printing, setPrinting] = createSignal(false);
-  const [error, setError] = createSignal(restoreError);
-  const [progress, setProgress] = createSignal("");
+  const [error, setError] = createSignal(restoreError, { equals: false });
+  const [progress, setProgress] = createSignal("", { equals: false });
+  for (const [message, dismiss] of [
+    [error, setError],
+    [progress, setProgress],
+  ] as const) {
+    createEffect(() => {
+      if (!message()) return;
+      const timeout = setTimeout(() => dismiss(""), 10_000);
+      onCleanup(() => clearTimeout(timeout));
+    });
+  }
   const [menuOpen, setMenuOpen] = createSignal(false);
   let menu!: HTMLElement, fileInput!: HTMLInputElement;
   const list = () => settings.editMode === "list";
@@ -171,8 +181,12 @@ export default function App() {
     }
   }
   async function print() {
+    if (busy()) return;
     const target = connection();
-    if (printing() || !target) return;
+    if (!target) {
+      await connect();
+      return;
+    }
     try {
       const jobs = currentJobs(settings, importedBitmap(), alignmentDot());
       batch(() => {
@@ -434,12 +448,7 @@ export default function App() {
           </button>
         </div>
         <div class="toolbar-actions">
-          <button
-            id="printBtn"
-            type="button"
-            disabled={printing() || !connection() || invalid()}
-            onClick={print}
-          >
+          <button id="printBtn" type="button" disabled={busy() || invalid()} onClick={print}>
             Print
           </button>
         </div>
